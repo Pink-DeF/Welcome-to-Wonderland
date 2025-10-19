@@ -1,0 +1,3 @@
+/home/pinkd/Documents/game/build/CMakeFiles/game.dir
+/home/pinkd/Documents/game/build/CMakeFiles/edit_cache.dir
+/home/pinkd/Documents/game/build/CMakeFiles/rebuild_cache.dir
