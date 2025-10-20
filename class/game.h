@@ -57,6 +57,7 @@ public:
         {
             if(key.key == SDLK_A){ office.changeCameraPosition(0); }
             else if(key.key == SDLK_D){ office.changeCameraPosition(1); }
+            else if(key.key == SDLK_S){ office.changeDoorStatus(); }
         }
     }
 private:
@@ -65,13 +66,16 @@ private:
     float _energy = 100.0;
     bool _rechargEnergy = 0;
 
+    bool _doorStatus = 0;
+    bool _windowStatus = 0;
+
     OfficeScene office = OfficeScene
     {
         std::array<object, SIZE_OFFICE>
             {
-                object {{0, 0, (float)width * 3, (float)height}, {0, 255, 0, 255}}, //Офисс
-                object {{0, (float)height / 10, (float)width * 2 / 5, (float)height * 5 / 10}, {255, 0, 0, 255}},//Окно
-                object {{(float)width * 13 / 5, (float)height / 10, (float)width * 2 / 5, (float)height * 9 / 10}, {255, 0, 0, 255}}//Дверь
+                object {{0, 0, (float)width * 3, (float)height}, {0, 0, 255, 255}}, //Офисс
+                object {{0, (float)height / 10, (float)width * 2 / 5, (float)height * 5 / 10}, {0, 255, 0, 255}},//Окно
+                object {{(float)width * 13 / 5, (float)height / 10, (float)width * 2 / 5, (float)height * 9 / 10}, {0, 255, 0, 255}}//Дверь
             }
     };
 

@@ -57,6 +57,17 @@ public:
         return 0;
     }
 
+    void changeDoorStatus()
+    {
+        if(this->noMove() && _cameraPosition != 0)
+        {
+            size_t i = _cameraPosition == 1 ? 2 : 1;
+            auto tmp = _objects[i].color.r;
+            _objects[i].color.r = _objects[i].color.g;
+            _objects[i].color.g = tmp;
+        }
+    }
+
 private:
     std::array<object, SIZE_OFFICE> _objects;
 
