@@ -24,11 +24,12 @@ private:
         }
 
         //Ппросто отрисовка
-        void draw() override
+        float draw() override
         { 
             SDL_SetRenderViewport(renderer, &_viewport);
             SDL_SetRenderDrawColor(renderer, _object.color.r, _object.color.g, _object.color.b, _object.color.a);
             SDL_RenderFillRect(renderer, &(_object.position));
+            return 0;
         }
 
     private:
@@ -47,13 +48,15 @@ public:
     LabtopScene(){}
 
     void switchCamera(size_t num){ _cam = num < SIZE_LABTOP ? num : _cam; }
-    void draw() override
+    float draw() override
     {
         if(_visible)
         {
             monitorTime++;
             _cams[_cam].draw();
+            return -0.5;
         }
+        return 0;
     }
 private:
     size_t monitorTime = 0;

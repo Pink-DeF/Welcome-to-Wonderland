@@ -22,7 +22,7 @@ public:
         return first.itVisible() > second.itVisible() ? &first : &second;
     }
     */
-    virtual void draw() = 0;
+    virtual float draw() = 0;
     void changeVisible(){ _visible = !_visible; }
     bool itVisible(){ return _visible; }
 

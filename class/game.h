@@ -17,21 +17,34 @@ public:
     }
     SDL_AppResult iterate()
     {
-        if(nightTime == 0 || energy <= 0) return SDL_APP_SUCCESS;
-        if(energy < 100.0) { energy += 0.1; }
-        nightTime--;
+        if(_nightTime == 0) return SDL_APP_SUCCESS;
+        //_nightTime--;
+
+        if(_energy <= 0){ _rechargEnergy = 1; }
+        else if( _energy >= 100){ _rechargEnergy = 0; }
+
+        if(_rechargEnergy && labtop.itVisible())
+        {
+            office.changeVisible();
+            labtop.changeVisible();
+        }
 
         SDL_SetRenderViewport(renderer, &full_viewport);
         SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
         SDL_RenderClear(renderer);
 
-        office.draw();
-        labtop.draw();
+        _energy += office.draw();
+        _energy += labtop.draw();
         return SDL_APP_CONTINUE;
+    }
+
+    void changeEnergy(float energy)
+    {
+        _energy += energy;
     }
     void gameEvent(SDL_KeyboardEvent key)
     {
-        if(key.key == SDLK_S && !office.getPosition())
+        if(key.key == SDLK_S && !office.getPosition() && !_rechargEnergy)
         {
             office.changeVisible();
             labtop.changeVisible();
@@ -47,8 +60,10 @@ public:
         }
     }
 private:
-    size_t nightTime = 1000;
-    float energy = 100.0;
+    size_t _nightTime = 1000;
+
+    float _energy = 100.0;
+    bool _rechargEnergy = 0;
 
     OfficeScene office = OfficeScene
     {

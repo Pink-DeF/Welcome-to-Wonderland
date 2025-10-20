@@ -35,7 +35,7 @@ public:
     int getPosition(){ return _cameraPosition; }
 
     //Ппросто отрисовка
-    void draw() override
+    float draw() override
     {
         if(_visible)
         {
@@ -52,7 +52,9 @@ public:
                 SDL_SetRenderDrawColor(renderer, i.color.r, i.color.g, i.color.b, i.color.a);
                 SDL_RenderFillRect(renderer, &(i.position));
             }
+            return 0.5;
         }
+        return 0;
     }
 
 private:
