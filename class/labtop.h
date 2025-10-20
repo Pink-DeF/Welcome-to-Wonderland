@@ -27,14 +27,14 @@ private:
         //Ппросто отрисовка
         float draw() override
         { 
-            //SDL_SetRenderViewport(renderer, &_viewport);
+            SDL_SetRenderViewport(renderer, &_viewport);
             SDL_SetRenderDrawColor(renderer, _object.color.r, _object.color.g, _object.color.b, _object.color.a);
             SDL_RenderFillRect(renderer, &(_object.position));
             return 0;
         }
 
     private:
-        //SDL_Rect _viewport = {0, 0, 2 * width, height};
+        SDL_Rect _viewport = {0, 0, 2 * width, height};
         object _object;
     };
 
