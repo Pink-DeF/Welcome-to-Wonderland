@@ -16,13 +16,12 @@ private:
         //Конструктор
         CameraScene(){}
         CameraScene(SDL_Color tmp){ _object = object { SDL_FRect { 0, 0, (float)width, (float)height }, tmp}; } 
-
-        /*
+ 
         void move(bool direct)
         {
-            if(direct && width <= 0){ _viewport.x += width * 0.05; }
+            if(direct && width <= width / 2){ _viewport.x += width * 0.05; }
             else if(!direct && width >= 0){ _viewport.x -= width * 0.05; }
-        }*/
+        }
 
         //Ппросто отрисовка
         float draw() override
@@ -48,8 +47,6 @@ public:
     }
     LabtopScene(){}
 
-    //void move(int direct){ _cams[_cam].move(direct); }
-
     void switchCamera(size_t num){ _cam = num < SIZE_LABTOP ? num : _cam; }
     float draw() override
     {
@@ -57,7 +54,7 @@ public:
         {
             monitorTime++;
             _cams[_cam].draw();
-            return -0.5;
+            return -1.0;
         }
         return 0;
     }

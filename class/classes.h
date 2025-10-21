@@ -4,6 +4,8 @@
 #include <array>
 #include <cmath>
 
+#define SIZE_ENEMY 10
+
 struct object
 {
     SDL_FRect position;
@@ -13,19 +15,18 @@ struct object
 class Scene
 {
 public:
-    /*
-    Scene* swap(Scene first, Scene second)
-    {
-        first.changeVisible();
-        second.changeVisible();
-
-        return first.itVisible() > second.itVisible() ? &first : &second;
-    }
-    */
     virtual float draw() = 0;
     void changeVisible(){ _visible = !_visible; }
     bool itVisible(){ return _visible; }
 
 protected:
     bool _visible = false;
+};
+
+class Enemy
+{
+public:
+    virtual size_t move() = 0;
+private:
+    std::array<bool, SIZE_ENEMY> _position;
 };
