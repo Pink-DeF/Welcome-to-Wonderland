@@ -264,4 +264,5 @@ CMakeFiles/game.dir/main.cpp.o: /home/pinkd/Documents/game/main.cpp \
   /home/pinkd/Documents/game/class/office.h \
   /home/pinkd/Documents/game/class/preset.h \
   /home/pinkd/Documents/game/class/classes.h \
-  /home/pinkd/Documents/game/class/labtop.h
+  /home/pinkd/Documents/game/class/labtop.h \
+  /home/pinkd/Documents/game/class/scene.h

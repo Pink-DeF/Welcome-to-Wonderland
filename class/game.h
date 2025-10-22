@@ -13,14 +13,14 @@
 class Game
 {
 public:
-    Game()
+    Game(size_t night) : _night(night)
     {
         office.changeVisible();
     }
     SDL_AppResult iterate()
     {
         if(_nightTime == 0) return SDL_APP_SUCCESS;
-        //_nightTime--;
+        _nightTime--;
 
         if(_energy <= 0){ _rechargEnergy = 1; }
         else if( _energy >= 100){ _rechargEnergy = 0; }
@@ -31,7 +31,7 @@ public:
             labtop.changeVisible();
         }
 
-        SDL_SetRenderViewport(renderer, &full_viewport);
+        SDL_SetRenderViewport(renderer, NULL);
         SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
         SDL_RenderClear(renderer);
 
@@ -64,6 +64,7 @@ public:
         }
     }
 private:
+    size_t _night = 0;
     size_t _nightTime = 1000;
     size_t _monitorTime = 0;
 
@@ -103,4 +104,4 @@ private:
     };
 };
 
-Game game;
+//Game game(1);

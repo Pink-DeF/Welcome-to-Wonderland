@@ -6,6 +6,7 @@
 #include <cmath>
 
 #include "class/game.h"
+#include "class/scene.h"
 
 SDL_AppResult SDL_AppInit(void** appstate, int argc, char* argv[])
 {
@@ -17,6 +18,11 @@ SDL_AppResult SDL_AppInit(void** appstate, int argc, char* argv[])
 
 SDL_AppResult SDL_AppIterate(void* appstate)
 {
+    if(!gameStatus)
+    {
+        gameStatus = 1;
+        Game game(night);
+    }
     SDL_RenderPresent(renderer);
     SDL_Delay(15);
     return game.iterate();
