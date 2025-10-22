@@ -52,14 +52,12 @@ public:
     {
         if(_visible)
         {
-            monitorTime++;
             _cams[_cam].draw();
             return -1.0;
         }
         return 0;
     }
 private:
-    size_t monitorTime = 0;
     std::array<CameraScene, SIZE_LABTOP> _cams;
     size_t _cam = 0;
 };

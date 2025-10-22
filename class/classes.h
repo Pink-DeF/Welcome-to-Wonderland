@@ -4,7 +4,7 @@
 #include <array>
 #include <cmath>
 
-#define SIZE_ENEMY 10
+#define SIZE_ENEMY 11
 
 struct object
 {
@@ -28,5 +28,7 @@ class Enemy
 public:
     virtual size_t move() = 0;
 private:
-    std::array<bool, SIZE_ENEMY> _position;
+    std::array<bool, SIZE_ENEMY> _manyPosition;
+    size_t _position;
+    bool _active = 0;
 };

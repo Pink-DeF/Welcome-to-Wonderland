@@ -4,41 +4,17 @@
 #include <array>
 #include <cmath>
 
-#define SIZE_ENEMY 10;
-
-class FoxDen : public Enemy
-{
-public:
-    FoxDen()
-    {
-        _position = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-    }
-    size_t move() override {}
-
-private:
-};
-
-class MasterOfPuppet : public Enemy
-{
-public:
-    MasterOfPuppet()
-    {
-        _position = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-    }
-    size_t move() override {}
-
-private:
-
-};
+#define SIZE_ENEMY 11;
 
 class SpringTime : public Enemy
 {
 public:
     SpringTime()
     {
-        _position = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
     }
-    size_t move() override {}
+    size_t move() override
+    {
+    }
 
 private:
 
@@ -49,10 +25,32 @@ class ErrorTime : public Enemy
 public:
     ErrorTime()
     {
-        _position = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
     }
     size_t move() override {}
 
 private:
 
+};
+
+class MasterOfPuppet : public Enemy
+{
+public:
+    MasterOfPuppet()
+    {
+    }
+    size_t move() override {}
+
+private:
+
+};
+
+class FoxDen : public Enemy
+{
+public:
+    FoxDen()
+    {
+    }
+    size_t move() override {}
+
+private:
 };

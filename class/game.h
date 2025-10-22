@@ -8,6 +8,8 @@
 #include "office.h"
 #include "labtop.h"
 
+#define ENEMY_COUNT 4
+
 class Game
 {
 public:
@@ -35,6 +37,7 @@ public:
 
         _energy += office.draw();
         _energy += labtop.draw();
+        _monitorTime += labtop.itVisible() ? 1 : 0;
         return SDL_APP_CONTINUE;
     }
 
@@ -62,12 +65,15 @@ public:
     }
 private:
     size_t _nightTime = 1000;
+    size_t _monitorTime = 0;
 
     float _energy = 100.0;
     bool _rechargEnergy = 0;
 
     bool _doorStatus = 0;
     bool _windowStatus = 0;
+
+    std::array<size_t, ENEMY_COUNT> _enemyPosition;
 
     OfficeScene office = OfficeScene
     {
