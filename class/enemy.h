@@ -4,8 +4,6 @@
 #include <array>
 #include <cmath>
 
-#define SIZE_ENEMY 11;
-
 class SpringTime : public Enemy
 {
 public:

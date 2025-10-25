@@ -64,19 +64,19 @@ public:
         }
     }
 private:
-    size_t _night = 0;
-    size_t _nightTime = 1000;
-    size_t _monitorTime = 0;
+    const size_t _night = 0; //Номер ночи, для коррекции поведения противников
+    size_t _nightTime = 1000; //Время отведенное на ночь
+    size_t _monitorTime = 0; // Счетчик времени в мониторе, нужен для коррекции поведения противников
 
-    float _energy = 100.0;
-    bool _rechargEnergy = 0;
+    float _energy = 100.0; //Максимальная энергия, для планшета и дверей
+    bool _rechargEnergy = 0; //Статус перезарядки энергии, нужен для отката методов зависящих от энергии
 
-    bool _doorStatus = 0;
-    bool _windowStatus = 0;
+    bool _doorStatus = 0; //Статус закрытия правой двери
+    bool _windowStatus = 0; //Статус закрытия левого окна
 
-    std::array<size_t, ENEMY_COUNT> _enemyPosition;
+    std::array<size_t, ENEMY_COUNT> _enemy; //Массив противников
 
-    OfficeScene office = OfficeScene
+    OfficeScene office = OfficeScene //Сцена Офиса и его компонентов
     {
         std::array<object, SIZE_OFFICE>
             {
@@ -86,7 +86,7 @@ private:
             }
     };
 
-    LabtopScene labtop = LabtopScene
+    LabtopScene labtop = LabtopScene //Сцена планшета и камер
     {
         std::array<SDL_Color, SIZE_LABTOP>
             {
