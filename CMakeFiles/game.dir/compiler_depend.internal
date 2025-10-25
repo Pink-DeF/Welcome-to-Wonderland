@@ -8,6 +8,7 @@ CMakeFiles/game.dir/main.cpp.o
  /home/pinkd/Documents/game/class/labtop.h
  /home/pinkd/Documents/game/class/office.h
  /home/pinkd/Documents/game/class/preset.h
+ /home/pinkd/Documents/game/class/scene.h
  /nix/store/46l693qq0kayi3qibm68jid77iwx8d9l-sdl3-3.2.20-dev/include/SDL3/SDL.h
  /nix/store/46l693qq0kayi3qibm68jid77iwx8d9l-sdl3-3.2.20-dev/include/SDL3/SDL_assert.h
  /nix/store/46l693qq0kayi3qibm68jid77iwx8d9l-sdl3-3.2.20-dev/include/SDL3/SDL_asyncio.h

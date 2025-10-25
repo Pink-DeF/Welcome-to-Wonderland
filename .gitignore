@@ -1,0 +1,8 @@
+.direnv
+build
+CMakeFiles
+.envrc
+
+*.cmake
+*.txt
+*.lock

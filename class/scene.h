@@ -5,4 +5,4 @@
 #include <cmath>
 
 #include "game.h"
-static Game game(night);
+static Night game(night);

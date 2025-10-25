@@ -10,10 +10,10 @@
 
 #define ENEMY_COUNT 4
 
-class Game
+class Night
 {
 public:
-    Game(size_t night) : _night(night)
+    Night(size_t night) : _night(night)
     {
         office.changeVisible();
     }
@@ -103,5 +103,3 @@ private:
             }
     };
 };
-
-//Game game(1);
