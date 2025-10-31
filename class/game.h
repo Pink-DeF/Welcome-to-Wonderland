@@ -7,28 +7,34 @@
 
 #include "office.h"
 #include "labtop.h"
+#include "enemy.h"
 
 #define ENEMY_COUNT 4
 
 class Night
 {
 public:
-    Night(size_t night) : _night(night)
+    Night(size_t night) : _night(night), _springTime(night)
     {
         office.changeVisible();
     }
     SDL_AppResult iterate()
     {
         if(_nightTime == 0) return SDL_APP_SUCCESS;
-        _nightTime--;
+        //_nightTime--;
 
         if(_energy <= 0){ _rechargEnergy = 1; }
         else if( _energy >= 100){ _rechargEnergy = 0; }
 
-        if(_rechargEnergy && labtop.itVisible())
+        if(_rechargEnergy)
         {
-            office.changeVisible();
-            labtop.changeVisible();
+            if(labtop.itVisible())
+            {
+                office.changeVisible();
+                labtop.changeVisible();
+            }
+            
+            office.openAll();
         }
 
         SDL_SetRenderViewport(renderer, NULL);
@@ -37,7 +43,7 @@ public:
 
         _energy += office.draw();
         _energy += labtop.draw();
-        _monitorTime += labtop.itVisible() ? 1 : 0;
+        _monitorTime += labtop.itVisible();
         return SDL_APP_CONTINUE;
     }
 
@@ -47,7 +53,7 @@ public:
     }
     void gameEvent(SDL_KeyboardEvent key)
     {
-        if(key.key == SDLK_S && !office.getPosition() && !_rechargEnergy)
+        if(key.key == SDLK_S && !office.getCameraPosition() && !_rechargEnergy)
         {
             office.changeVisible();
             labtop.changeVisible();
@@ -60,7 +66,7 @@ public:
         {
             if(key.key == SDLK_A){ office.changeCameraPosition(0); }
             else if(key.key == SDLK_D){ office.changeCameraPosition(1); }
-            else if(key.key == SDLK_S){ office.changeDoorStatus(); }
+            else if(!_rechargEnergy && key.key == SDLK_S){ office.changeDoorStatus(); }
         }
     }
 private:
@@ -75,6 +81,8 @@ private:
     bool _windowStatus = 0; //Статус закрытия левого окна
 
     std::array<size_t, ENEMY_COUNT> _enemy; //Массив противников
+
+    SpringTime _springTime = (0);
 
     OfficeScene office = OfficeScene //Сцена Офиса и его компонентов
     {

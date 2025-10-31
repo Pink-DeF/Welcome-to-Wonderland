@@ -53,7 +53,7 @@ public:
         if(_visible)
         {
             _cams[_cam].draw();
-            return -1.0;
+            return -1;
         }
         return 0;
     }

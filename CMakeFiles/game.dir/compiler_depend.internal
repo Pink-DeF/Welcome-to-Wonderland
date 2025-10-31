@@ -4,6 +4,7 @@
 CMakeFiles/game.dir/main.cpp.o
  /home/pinkd/Documents/game/main.cpp
  /home/pinkd/Documents/game/class/classes.h
+ /home/pinkd/Documents/game/class/enemy.h
  /home/pinkd/Documents/game/class/game.h
  /home/pinkd/Documents/game/class/labtop.h
  /home/pinkd/Documents/game/class/office.h
@@ -123,6 +124,8 @@ CMakeFiles/game.dir/main.cpp.o
  /nix/store/82kmz7r96navanrc2fgckh2bamiqrgsw-gcc-14.3.0/include/c++/14.3.0/cmath
  /nix/store/82kmz7r96navanrc2fgckh2bamiqrgsw-gcc-14.3.0/include/c++/14.3.0/compare
  /nix/store/82kmz7r96navanrc2fgckh2bamiqrgsw-gcc-14.3.0/include/c++/14.3.0/concepts
+ /nix/store/82kmz7r96navanrc2fgckh2bamiqrgsw-gcc-14.3.0/include/c++/14.3.0/cstdlib
+ /nix/store/82kmz7r96navanrc2fgckh2bamiqrgsw-gcc-14.3.0/include/c++/14.3.0/ctime
  /nix/store/82kmz7r96navanrc2fgckh2bamiqrgsw-gcc-14.3.0/include/c++/14.3.0/cwchar
  /nix/store/82kmz7r96navanrc2fgckh2bamiqrgsw-gcc-14.3.0/include/c++/14.3.0/debug/assertions.h
  /nix/store/82kmz7r96navanrc2fgckh2bamiqrgsw-gcc-14.3.0/include/c++/14.3.0/debug/debug.h

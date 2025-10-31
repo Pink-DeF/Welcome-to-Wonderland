@@ -20,13 +20,3 @@ public:
 protected:
     bool _visible = false;
 };
-
-class Enemy
-{
-public:
-    virtual size_t move() = 0;
-private:
-    size_t _position;
-    size_t _doorStatus = 0;
-    bool _active = 0;
-};

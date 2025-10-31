@@ -4,10 +4,13 @@
 #include <array>
 #include <cmath>
 #include <memory>
+
 #include "preset.h"
 
 #define TIME_PAR 0.05
 #define SIZE_OFFICE 3
+
+class Enemy;
 
 class OfficeScene : public Scene
 {
@@ -22,17 +25,17 @@ public:
         {
             if(direct)
             {
-                _cameraTargetPosition = _cameraTargetPosition != 1 ? _cameraTargetPosition += 1 : _cameraTargetPosition;
+                _cameraTargetPosition = _cameraTargetPosition != 1 ? _cameraTargetPosition + 1 : _cameraTargetPosition;
                 return;
             }        
-            _cameraTargetPosition = _cameraTargetPosition != -1 ? _cameraTargetPosition -= 1 : _cameraTargetPosition;
+            _cameraTargetPosition = _cameraTargetPosition != -1 ? _cameraTargetPosition - 1 : _cameraTargetPosition;
         }
     }
     bool noMove()
     {
         return _cameraPosition == _cameraTargetPosition ? 1 : 0;
     }
-    int getPosition(){ return _cameraPosition; }
+    int getCameraPosition(){ return _cameraPosition; }
 
     //Ппросто отрисовка
     float draw() override
@@ -52,16 +55,42 @@ public:
                 SDL_SetRenderDrawColor(renderer, i.color.r, i.color.g, i.color.b, i.color.a);
                 SDL_RenderFillRect(renderer, &(i.position));
             }
-            return 0.5;
+            return  (!_rightDoorStatus && !_leftDoorStatus ? 0.5 : 0) +
+                    (_rightDoorStatus ? -1.5 : 0) +
+                    (_leftDoorStatus ? -1.5 : 0);
         }
         return 0;
     }
 
+    void openAll()
+    {
+        _leftDoorStatus = 0;
+        _rightDoorStatus = 0;
+
+        _objects[1].color.r = 0;
+        _objects[1].color.g = 255;
+
+        _objects[2].color.r = 0;
+        _objects[2].color.g = 255;
+    }
     void changeDoorStatus()
     {
-        if(this->noMove() && _cameraPosition != 0)
+        if(this->noMove())
         {
-            size_t i = _cameraPosition == 1 ? 2 : 1;
+            size_t i;
+            switch(_cameraPosition)
+                {
+                case(0):
+                    return;
+                case(1):
+                    i = 2;
+                    _rightDoorStatus = !_rightDoorStatus;
+                    break;
+                case(-1):
+                    i = 1;
+                    _leftDoorStatus = !_leftDoorStatus;
+                    break;
+                }
             auto tmp = _objects[i].color.r;
             _objects[i].color.r = _objects[i].color.g;
             _objects[i].color.g = tmp;
@@ -70,6 +99,9 @@ public:
 
 private:
     std::array<object, SIZE_OFFICE> _objects;
+
+    bool _leftDoorStatus = 0;
+    bool _rightDoorStatus = 0;
 
     SDL_Rect _viewport = {-width, 0, 3 * width, height};
     float _timePar = 0;
