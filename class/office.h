@@ -10,13 +10,11 @@
 #define TIME_PAR 0.05
 #define SIZE_OFFICE 3
 
-class Enemy;
-
 class OfficeScene : public Scene
 {
 public:
     //Конструктор
-    OfficeScene(std::array<object, SIZE_OFFICE> &&tmp){ _objects = std::move(tmp); }
+    OfficeScene(std::array<object, SIZE_OFFICE> &&tmp, nightDB *data): _data(data) { _objects = std::move(tmp); }
 
     //Методы связанные с вращением на пятой точке
     void changeCameraPosition(bool direct)
@@ -38,7 +36,7 @@ public:
     int getCameraPosition(){ return _cameraPosition; }
 
     //Ппросто отрисовка
-    float draw() override
+    void draw() override
     {
         if(_visible)
         {
@@ -55,17 +53,21 @@ public:
                 SDL_SetRenderDrawColor(renderer, i.color.r, i.color.g, i.color.b, i.color.a);
                 SDL_RenderFillRect(renderer, &(i.position));
             }
-            return  (!_rightDoorStatus && !_leftDoorStatus ? 0.5 : 0) +
-                    (_rightDoorStatus ? -1.5 : 0) +
-                    (_leftDoorStatus ? -1.5 : 0);
+
+            if(!_data->rightDoorStatus && !_data->leftDoorStatus) { _data->energy += 0.5; }
+            else
+            {
+                _data->energy += _data->rightDoorStatus ? -1.5 : 0;
+                _data->energy += _data->leftDoorStatus ? -1.5 : 0;
+            }
         }
-        return 0;
+        return;
     }
 
     void openAll()
     {
-        _leftDoorStatus = 0;
-        _rightDoorStatus = 0;
+        _data->leftDoorStatus = 0;
+        _data->rightDoorStatus = 0;
 
         _objects[1].color.r = 0;
         _objects[1].color.g = 255;
@@ -84,11 +86,11 @@ public:
                     return;
                 case(1):
                     i = 2;
-                    _rightDoorStatus = !_rightDoorStatus;
+                    _data->rightDoorStatus = !_data->rightDoorStatus;
                     break;
                 case(-1):
                     i = 1;
-                    _leftDoorStatus = !_leftDoorStatus;
+                    _data->leftDoorStatus = !_data->leftDoorStatus;
                     break;
                 }
             auto tmp = _objects[i].color.r;
@@ -98,10 +100,8 @@ public:
     }
 
 private:
+    nightDB *_data;
     std::array<object, SIZE_OFFICE> _objects;
-
-    bool _leftDoorStatus = 0;
-    bool _rightDoorStatus = 0;
 
     SDL_Rect _viewport = {-width, 0, 3 * width, height};
     float _timePar = 0;

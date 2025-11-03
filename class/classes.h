@@ -10,10 +10,26 @@ struct object
     SDL_Color color;
 };
 
+struct nightDB
+{
+    nightDB(size_t data): night(data){}
+    const size_t night = 0;
+    size_t nightTime = 10000;
+    size_t monitorTime = 0;
+
+    float energy = 100.0;
+    bool rechargEnergy = 0;
+
+    bool leftDoorStatus = 0;
+    bool rightDoorStatus = 0;
+
+    std::array<size_t, 4> enemyPosition;
+};
+
 class Scene
 {
 public:
-    virtual float draw() = 0;
+    virtual void draw() = 0;
     void changeVisible(){ _visible = !_visible; }
     bool itVisible(){ return _visible; }
 

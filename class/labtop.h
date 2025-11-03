@@ -24,12 +24,12 @@ private:
         }
 
         //Ппросто отрисовка
-        float draw() override
+        void draw() override
         { 
             SDL_SetRenderViewport(renderer, &_viewport);
             SDL_SetRenderDrawColor(renderer, _object.color.r, _object.color.g, _object.color.b, _object.color.a);
             SDL_RenderFillRect(renderer, &(_object.position));
-            return 0;
+            return;
         }
 
     private:
@@ -38,7 +38,7 @@ private:
     };
 
 public:
-    LabtopScene(std::array<SDL_Color, SIZE_LABTOP> tmp)
+    LabtopScene(std::array<SDL_Color, SIZE_LABTOP> tmp, nightDB *data): _data(data)
     {
         for(size_t i = 0; i < SIZE_LABTOP; i++)
         {
@@ -48,16 +48,17 @@ public:
     LabtopScene(){}
 
     void switchCamera(size_t num){ _cam = num < SIZE_LABTOP ? num : _cam; }
-    float draw() override
+    void draw() override
     {
         if(_visible)
         {
             _cams[_cam].draw();
-            return -1;
+            _data->energy -= 1;
         }
-        return 0;
+        return;
     }
 private:
+    nightDB *_data;
     std::array<CameraScene, SIZE_LABTOP> _cams;
     size_t _cam = 0;
 };

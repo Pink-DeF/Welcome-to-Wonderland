@@ -12,7 +12,9 @@ using namespace std;
 class Enemy
 {
 public:
+    friend class OfficeScene;
     virtual void move(size_t nightTime, size_t labtopTime) = 0;
+    size_t r;
 
 protected:
     size_t _night = 0;
@@ -71,6 +73,7 @@ private:
 
 };
 
+/*
 class ErrorTime : public Enemy
 {
 public:
@@ -86,7 +89,6 @@ public:
 private:
 
 };
-/*
 
 class MasterOfPuppet : public Enemy
 {
