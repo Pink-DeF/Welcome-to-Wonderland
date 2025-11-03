@@ -32,7 +32,7 @@ private:
     }
 
 public:
-    Night(size_t night): _data(night), _springTime(night)
+    Night(size_t night): _data(night)
     {
         office.changeVisible();
     }
@@ -74,7 +74,7 @@ public:
 private:
     nightDB _data;
 
-    SpringTime _springTime = (0);
+    SpringTime _springTime = (&_data);
 
     OfficeScene office = OfficeScene //Сцена Офиса и его компонентов
     {

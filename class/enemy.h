@@ -17,7 +17,7 @@ public:
     size_t r;
 
 protected:
-    size_t _night = 0;
+    nightDB *_data;
 
     size_t _doorStatus = 0;
     bool _enemyActive = 0;
@@ -29,18 +29,18 @@ protected:
 class SpringTime : public Enemy
 {
 public:
-    SpringTime(size_t night)
+    SpringTime(nightDB *data)
     {
+        _data = data;
         _enemyPosition = 0;
         _enemyActive = 1;
-        _night = night;
     }
     void move(size_t nightTime, size_t labtopTime) override
     {
         srand(time(nullptr));
         if(_enemyActive)
         {
-            if(_night * _timeOut >= std::rand() % 1000)
+            if(_data->night * _timeOut >= std::rand() % 1000)
             {
                 switch(_enemyPosition)
                 {
