@@ -13,6 +13,8 @@ struct object
 struct nightDB
 {
     nightDB(size_t data): night(data){}
+    bool live = 1;
+
     const size_t night = 0;
     size_t nightTime = 10000;
     size_t monitorTime = 0;

@@ -38,7 +38,7 @@ public:
     }
     SDL_AppResult iterate()
     {
-        if(_data.nightTime == 0) return SDL_APP_SUCCESS;
+        if(_data.nightTime == 0 || _data.live == 0) return SDL_APP_SUCCESS;
         //_data.nightTime--;
 
         setRechargEnergy();
