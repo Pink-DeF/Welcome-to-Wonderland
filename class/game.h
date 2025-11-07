@@ -17,7 +17,7 @@ private:
     void setRechargEnergy()
     {
         if(_data.energy <= 0){ _data.rechargEnergy = 1; }
-        else if(_data.energy >= 100){ _data.rechargEnergy = 0; }
+        else if(_data.energy >= ENERGY_CAPACITY){ _data.rechargEnergy = 0; }
 
         if(_data.rechargEnergy)
         {
@@ -42,6 +42,7 @@ public:
         //_data.nightTime--;
 
         setRechargEnergy();
+        _springTime.move();
 
         SDL_SetRenderViewport(renderer, NULL);
         SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);

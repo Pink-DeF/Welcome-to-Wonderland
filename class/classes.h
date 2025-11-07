@@ -4,10 +4,12 @@
 #include <array>
 #include <cmath>
 
+#define ENERGY_CAPACITY 5000000.0
+
 struct object
 {
-    SDL_FRect position;
-    SDL_Color color;
+    SDL_FRect position = {0, 0 , 0, 0};
+    SDL_Color color = {0, 0, 0, 0};
 };
 
 struct nightDB
@@ -19,13 +21,44 @@ struct nightDB
     size_t nightTime = 10000;
     size_t monitorTime = 0;
 
-    float energy = 100.0;
+    float energy = ENERGY_CAPACITY;
     bool rechargEnergy = 0;
 
     bool leftDoorStatus = 0;
     bool rightDoorStatus = 0;
 
     std::array<size_t, 4> enemyPosition;
+    const std::array<std::array<object, 12>, 4> enemyFrame =
+    {
+        std::array<object, 12> {
+            object {SDL_FRect {100, 100, 400, 400}, SDL_Color {0, 0, 0 ,255}},object {SDL_FRect {100, 100, 400, 400}, SDL_Color {0, 0, 0 ,255}},
+            object {SDL_FRect {100, 100, 400, 400}, SDL_Color {0, 0, 0 ,255}},object {SDL_FRect {100, 100, 400, 400}, SDL_Color {0, 0, 0 ,255}},
+            object {SDL_FRect {100, 100, 400, 400}, SDL_Color {0, 0, 0 ,255}},object {SDL_FRect {100, 100, 400, 400}, SDL_Color {0, 0, 0 ,255}},
+            object {SDL_FRect {100, 100, 400, 400}, SDL_Color {0, 0, 0 ,255}},object {SDL_FRect {100, 100, 400, 400}, SDL_Color {0, 0, 0 ,255}},
+            object {SDL_FRect {100, 100, 400, 400}, SDL_Color {0, 0, 0 ,255}},object {SDL_FRect {100, 100, 400, 400}, SDL_Color {0, 0, 0 ,255}},
+        },
+        std::array<object, 12> {
+            object {SDL_FRect {100, 100, 400, 400}, SDL_Color {0, 0, 0 ,255}},object {SDL_FRect {100, 100, 400, 400}, SDL_Color {0, 0, 0 ,255}},
+            object {SDL_FRect {100, 100, 400, 400}, SDL_Color {0, 0, 0 ,255}},object {SDL_FRect {100, 100, 400, 400}, SDL_Color {0, 0, 0 ,255}},
+            object {SDL_FRect {100, 100, 400, 400}, SDL_Color {0, 0, 0 ,255}},object {SDL_FRect {100, 100, 400, 400}, SDL_Color {0, 0, 0 ,255}},
+            object {SDL_FRect {100, 100, 400, 400}, SDL_Color {0, 0, 0 ,255}},object {SDL_FRect {100, 100, 400, 400}, SDL_Color {0, 0, 0 ,255}},
+            object {SDL_FRect {100, 100, 400, 400}, SDL_Color {0, 0, 0 ,255}},object {SDL_FRect {100, 100, 400, 400}, SDL_Color {0, 0, 0 ,255}},
+        },
+        std::array<object, 12> {
+            object {SDL_FRect {100, 100, 400, 400}, SDL_Color {0, 0, 0 ,255}},object {SDL_FRect {100, 100, 400, 400}, SDL_Color {0, 0, 0 ,255}},
+            object {SDL_FRect {100, 100, 400, 400}, SDL_Color {0, 0, 0 ,255}},object {SDL_FRect {100, 100, 400, 400}, SDL_Color {0, 0, 0 ,255}},
+            object {SDL_FRect {100, 100, 400, 400}, SDL_Color {0, 0, 0 ,255}},object {SDL_FRect {100, 100, 400, 400}, SDL_Color {0, 0, 0 ,255}},
+            object {SDL_FRect {100, 100, 400, 400}, SDL_Color {0, 0, 0 ,255}},object {SDL_FRect {100, 100, 400, 400}, SDL_Color {0, 0, 0 ,255}},
+            object {SDL_FRect {100, 100, 400, 400}, SDL_Color {0, 0, 0 ,255}},object {SDL_FRect {100, 100, 400, 400}, SDL_Color {0, 0, 0 ,255}},
+        },
+        std::array<object, 12> {
+            object {SDL_FRect {100, 100, 400, 400}, SDL_Color {0, 0, 0 ,255}},object {SDL_FRect {100, 100, 400, 400}, SDL_Color {0, 0, 0 ,255}},
+            object {SDL_FRect {100, 100, 400, 400}, SDL_Color {0, 0, 0 ,255}},object {SDL_FRect {100, 100, 400, 400}, SDL_Color {0, 0, 0 ,255}},
+            object {SDL_FRect {100, 100, 400, 400}, SDL_Color {0, 0, 0 ,255}},object {SDL_FRect {100, 100, 400, 400}, SDL_Color {0, 0, 0 ,255}},
+            object {SDL_FRect {100, 100, 400, 400}, SDL_Color {0, 0, 0 ,255}},object {SDL_FRect {100, 100, 400, 400}, SDL_Color {0, 0, 0 ,255}},
+            object {SDL_FRect {100, 100, 400, 400}, SDL_Color {0, 0, 0 ,255}},object {SDL_FRect {100, 100, 400, 400}, SDL_Color {0, 0, 0 ,255}},
+        }
+    };
 };
 
 class Scene

@@ -53,6 +53,15 @@ public:
         if(_visible)
         {
             _cams[_cam].draw();
+            for(size_t i = 0; i < 1; i++)
+            {
+                if(_data->enemyPosition[i] == _cam)
+                {
+                    SDL_SetRenderDrawColor(renderer, _data->enemyFrame[i][_cam].color.r, _data->enemyFrame[i][_cam].color.g,
+                                                     _data->enemyFrame[i][_cam].color.b, _data->enemyFrame[i][_cam].color.a);
+                    SDL_RenderFillRect(renderer, &_data->enemyFrame[i][_cam].position);
+                }
+            }
             _data->energy -= 1;
         }
         return;

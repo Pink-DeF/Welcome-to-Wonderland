@@ -39,11 +39,12 @@ public:
     {
         if(_enemyActive)
         {
-            if(_timeOut * _data->night >= std::rand() % 10)
+            //if(_timeOut * _data->night >=  1000 + std::rand() % 10000)
+            if(_timeOut * _data->night >=  1000)
             {
                 switch(_data->enemyPosition[_numPos])
                 {
-                    case(100):
+                    case(10):
                         _doorStatus = 1;
                         attack();
                         break;
@@ -51,11 +52,11 @@ public:
                         _data->enemyPosition[_numPos]= 7;
                         break;
                     case(7): //7->5 || 7->9
-                        if(_data->monitorTime / _data->nightTime >= 0.3f){ _data->enemyPosition[_numPos] = 5; }
+                        if(std::rand() % 10 >= 3){ _data->enemyPosition[_numPos] = 5; }
                         else { _data->enemyPosition[_numPos] = 9; }
                         break;
                     case(9): //9->attack right
-                        _data->enemyPosition[_numPos] = 100;
+                        _data->enemyPosition[_numPos] = 10;
                         _doorStatus = 1;
                         break;
                     case(5): //5->6
@@ -80,8 +81,8 @@ public:
             {
                 if(_data->rightDoorStatus == 0)
                 {
-                    _data->live = 0;
                     killcam();
+                    _data->live = 0;
                 }
                 _data->enemyPosition[_numPos] = 0;
                 _doorStatus = 0;
