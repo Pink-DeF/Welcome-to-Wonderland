@@ -64,12 +64,14 @@ public:
         else if(labtop.itVisible() && (key.key >= SDLK_0 && key.key <= SDLK_9))
         {
             labtop.switchCamera(key.key - SDLK_0);
+            if(labtop.itVisible()){ labtop.useShock(); }
         }
         else if(office.itVisible())
         {
             if(key.key == SDLK_A){ office.changeCameraPosition(0); }
             else if(key.key == SDLK_D){ office.changeCameraPosition(1); }
             else if(!_data.rechargEnergy && key.key == SDLK_S){ office.changeDoorStatus(); }
+            else if(!_data.rechargEnergy && key.key == SDLK_F){ office.useDoorFlesh(); }
         }
     }
 private:

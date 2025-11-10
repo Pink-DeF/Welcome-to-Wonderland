@@ -4,7 +4,7 @@
 #include <array>
 #include <cmath>
 
-#define ENERGY_CAPACITY 5000000.0
+#define ENERGY_CAPACITY 3000.0
 
 struct object
 {
