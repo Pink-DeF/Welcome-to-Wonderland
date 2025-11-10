@@ -61,7 +61,7 @@ private:
     
     void calculateEnergy()
     {
-        if(_data->rightDoorStatus + _leftFlesh + _data->leftDoorStatus + _rightFlesh == 0 && _visible){ _data->energy += 3}
+        if(_data->rightDoorStatus + _leftFlesh + _data->leftDoorStatus + _rightFlesh == 0 && _visible){ _data->energy += 3; }
         else
         {
             _data->energy += _data->rightDoorStatus || _leftFlesh ? -1.5 : 0;
