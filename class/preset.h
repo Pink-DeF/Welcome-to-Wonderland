@@ -13,7 +13,9 @@ static int width = 1020;
 static int height = 800;
 //static const SDL_Rect full_viewport = {-width, 0, 3 * width, height};
 
+static bool gameStatus = 1;
 static size_t night = 1;
+
 static size_t fps = 0;
 
-static bool gameStatus = 1;
+static bool attencion = 1;

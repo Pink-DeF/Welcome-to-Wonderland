@@ -4,5 +4,5 @@
 #include <array>
 #include <cmath>
 
-#include "game.h"
+#include "night.h"
 static Night game(night);

@@ -5,7 +5,7 @@
 #include <array>
 #include <cmath>
 
-#include "class/game.h"
+#include "class/night.h"
 #include "class/scene.h"
 
 SDL_AppResult SDL_AppInit(void** appstate, int argc, char* argv[])

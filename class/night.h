@@ -11,7 +11,7 @@
 
 #define ENEMY_COUNT 4
 
-class Night
+class Night : public Scene
 {
 private:
     void setRechargEnergy()
@@ -30,6 +30,16 @@ private:
             office.openAll();
         }
     }
+    void draw() override
+    {
+        SDL_SetRenderViewport(renderer, NULL);
+        SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+        SDL_RenderClear(renderer);
+
+        office.draw();
+        labtop.draw();
+        _data.monitorTime += labtop.itVisible();
+    }
 
 public:
     Night(size_t night): _data(night)
@@ -44,13 +54,7 @@ public:
         setRechargEnergy();
         _springTime.move();
 
-        SDL_SetRenderViewport(renderer, NULL);
-        SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-        SDL_RenderClear(renderer);
-
-        office.draw();
-        labtop.draw();
-        _data.monitorTime += labtop.itVisible();
+        draw();
         return SDL_APP_CONTINUE;
     }
 

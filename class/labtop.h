@@ -47,7 +47,6 @@ public:
     }
     LabtopScene(){}
 
-    void switchCamera(size_t num){ _cam = num < SIZE_LABTOP ? num : _cam; }
     void draw() override
     {
         _shockTimer -= _shockTimer ? 1 : 0;
@@ -69,6 +68,7 @@ public:
         return;
     }
 
+    void switchCamera(size_t num){ _cam = num < SIZE_LABTOP ? num : _cam; }
     void useShock()
     {
         if(_cam == 6 && _rechargShock == 0)
@@ -84,6 +84,7 @@ public:
 private:
     bool _rechargShock = 0;
     size_t _shockTimer = 0;
+
     nightDB *_data;
     std::array<CameraScene, SIZE_LABTOP> _cams;
     size_t _cam = 0;

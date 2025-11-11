@@ -28,8 +28,8 @@ private:
     {
         if(_leftFlesh)
         {
-            _objects[1].color.r = 0;
-            _objects[1].color.g = 0;
+            _objects[1].color.r = 255;
+            _objects[1].color.g = 255;
         }
         else if(_data->leftDoorStatus)
         {
@@ -44,8 +44,8 @@ private:
 
         if(_rightFlesh)
         {
-            _objects[2].color.r = 0;
-            _objects[2].color.g = 0;
+            _objects[2].color.r = 255;
+            _objects[2].color.g = 255;
         }
         else if(_data->rightDoorStatus)
         {

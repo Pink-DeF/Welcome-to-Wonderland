@@ -32,7 +32,7 @@ class SpringTime : public Enemy
 private:
     void attack() override
     {
-        if(_timeWait >= 50 + std::rand() % (7200 / _data->night))
+        if(_timeWait >= 500 + std::rand() % (7200 / _data->night))
         {
             if(_data->rightDoorStatus == 0)
             {
@@ -78,7 +78,7 @@ public:
         if(_enemyActive)
         {
             if(_data->enemyPosition[_numPos] == 10){ attack(); }
-            if(_timeOut * _data->night >=  1000)
+            if(_timeOut * _data->night >=  500)
             {
                 if(std::rand() % 10 >= 7){ rollback(); }
                 switch(_data->enemyPosition[_numPos])
@@ -87,7 +87,7 @@ public:
                         _data->enemyPosition[_numPos]= 7;
                         break;
                     case(7): //7->5 || 7->9
-                        if(std::rand() % 10 >= 0){ _data->enemyPosition[_numPos] = 5; }
+                        if(std::rand() % 10 >= 11){ _data->enemyPosition[_numPos] = 5; }
                         else { _data->enemyPosition[_numPos] = 9; }
                         break;
                     case(9): //9->attack right
