@@ -12,14 +12,14 @@ using namespace std;
 class Enemy
 {
 public:
-    virtual void move() = 0;
+    virtual void move(int doorStatus) = 0;
+    virtual void attack(int doorStatus) = 0;
 
 protected:
     virtual void rollback() = 0;
-    virtual void attack() = 0;
     virtual void killcam() = 0;
 
-    std::shared_ptr<nightDB> _data;
+    shared_ptr<nightDB> _data;
 
     bool _enemyActive = 0;
 
@@ -30,22 +30,6 @@ protected:
 class SpringTime : public Enemy
 {
 private:
-    void attack() override
-    {
-        if(_timeWait >= 500 + std::rand() % (7200 / _data->night))
-        {
-            if(_data->rightDoorStatus == 0)
-            {
-                killcam();
-                _data->live = 0;
-            }
-            _data->enemyPosition[_numPos] = 0;
-
-            _timeWait = 0;
-        }
-        _timeWait++;
-    }
-
     void rollback() override
     {
         switch(_data->enemyPosition[_numPos])
@@ -73,11 +57,11 @@ public:
         _enemyActive = 1;
     }
 
-    void move() override
+    void move(int doorStatus) override
     {
         if(_enemyActive)
         {
-            if(_data->enemyPosition[_numPos] == 10){ attack(); }
+            if(_data->enemyPosition[_numPos] == 10){ attack(doorStatus); }
             if(_timeOut * _data->night >=  500)
             {
                 if(std::rand() % 10 >= 7){ rollback(); }
@@ -107,6 +91,22 @@ public:
             }
             _timeOut++;
         }
+    }
+
+    void attack(int doorStatus) override
+    {
+        if(_timeWait >= 500 + std::rand() % (7200 / _data->night))
+        {
+            if(doorStatus != 1)
+            {
+                killcam();
+                _data->live = 0;
+            }
+            _data->enemyPosition[_numPos] = 0;
+
+            _timeWait = 0;
+        }
+        _timeWait++;
     }
 
 

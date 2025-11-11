@@ -52,7 +52,7 @@ public:
         //_data.nightTime--;
 
         setRechargEnergy();
-        _springTime.move();
+        _springTime.move(office.getLeftDoorStatus());
 
         draw();
         return SDL_APP_CONTINUE;

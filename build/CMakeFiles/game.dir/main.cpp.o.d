@@ -184,7 +184,7 @@ CMakeFiles/game.dir/main.cpp.o: /home/pinkd/Documents/game/main.cpp \
  /nix/store/82kmz7r96navanrc2fgckh2bamiqrgsw-gcc-14.3.0/include/c++/14.3.0/tr1/poly_hermite.tcc \
  /nix/store/82kmz7r96navanrc2fgckh2bamiqrgsw-gcc-14.3.0/include/c++/14.3.0/tr1/poly_laguerre.tcc \
  /nix/store/82kmz7r96navanrc2fgckh2bamiqrgsw-gcc-14.3.0/include/c++/14.3.0/tr1/riemann_zeta.tcc \
- /home/pinkd/Documents/game/class/office.h \
+ /home/pinkd/Documents/game/class/night.h \
  /nix/store/82kmz7r96navanrc2fgckh2bamiqrgsw-gcc-14.3.0/include/c++/14.3.0/memory \
  /nix/store/82kmz7r96navanrc2fgckh2bamiqrgsw-gcc-14.3.0/include/c++/14.3.0/bits/memoryfwd.h \
  /nix/store/82kmz7r96navanrc2fgckh2bamiqrgsw-gcc-14.3.0/include/c++/14.3.0/bits/allocator.h \
@@ -246,6 +246,12 @@ CMakeFiles/game.dir/main.cpp.o: /home/pinkd/Documents/game/main.cpp \
  /nix/store/82kmz7r96navanrc2fgckh2bamiqrgsw-gcc-14.3.0/include/c++/14.3.0/backward/auto_ptr.h \
  /nix/store/82kmz7r96navanrc2fgckh2bamiqrgsw-gcc-14.3.0/include/c++/14.3.0/pstl/glue_memory_defs.h \
  /nix/store/82kmz7r96navanrc2fgckh2bamiqrgsw-gcc-14.3.0/include/c++/14.3.0/pstl/execution_defs.h \
- /home/pinkd/Documents/game/class/game.h \
+ /home/pinkd/Documents/game/class/office.h \
  /home/pinkd/Documents/game/class/preset.h \
- /home/pinkd/Documents/game/class/labtop.h
+ /home/pinkd/Documents/game/class/classes.h \
+ /home/pinkd/Documents/game/class/labtop.h \
+ /home/pinkd/Documents/game/class/enemy.h \
+ /nix/store/82kmz7r96navanrc2fgckh2bamiqrgsw-gcc-14.3.0/include/c++/14.3.0/ctime \
+ /nix/store/82kmz7r96navanrc2fgckh2bamiqrgsw-gcc-14.3.0/include/c++/14.3.0/cstdlib \
+ /home/pinkd/Documents/game/class/ui.h \
+ /home/pinkd/Documents/game/class/scene.h

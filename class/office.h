@@ -31,7 +31,7 @@ private:
             _objects[1].color.r = 255;
             _objects[1].color.g = 255;
         }
-        else if(_data->leftDoorStatus)
+        else if(_leftDoorStatus)
         {
             _objects[1].color.r = 255;
             _objects[1].color.g = 0;
@@ -47,7 +47,7 @@ private:
             _objects[2].color.r = 255;
             _objects[2].color.g = 255;
         }
-        else if(_data->rightDoorStatus)
+        else if(_rightDoorStatus)
         {
             _objects[2].color.r = 255;
             _objects[2].color.g = 0;
@@ -61,11 +61,11 @@ private:
     
     void calculateEnergy()
     {
-        if(_data->rightDoorStatus + _leftFlesh + _data->leftDoorStatus + _rightFlesh == 0 && _visible){ _data->energy += 3; }
+        if(_rightDoorStatus + _leftFlesh + _leftDoorStatus + _rightFlesh == 0 && _visible){ _data->energy += 3; }
         else
         {
-            _data->energy += _data->rightDoorStatus || _leftFlesh ? -1.5 : 0;
-            _data->energy += _data->leftDoorStatus || _rightFlesh ? -1.5 : 0;
+            _data->energy += _rightDoorStatus || _leftFlesh ? -1.5 : 0;
+            _data->energy += _leftDoorStatus || _rightFlesh ? -1.5 : 0;
         }
     }
 public:
@@ -94,6 +94,8 @@ public:
 
     //Geters
     int getCameraPosition(){ return _cameraPosition; }
+    int getLeftDoorStatus(){ return _leftDoorStatus ? 1 : 0;}
+    int getRightDoorStatus(){ return _rightDoorStatus ? 1 : 0;}
     bool noMove()
     {
         return _cameraPosition == _cameraTargetPosition ? 1 : 0;
@@ -102,8 +104,8 @@ public:
     //chengers
     void openAll()
     {
-        _data->leftDoorStatus = 0;
-        _data->rightDoorStatus = 0;
+        _leftDoorStatus = 0;
+        _rightDoorStatus = 0;
 
         _leftFlesh = 0;
         _rightFlesh = 0;
@@ -117,10 +119,10 @@ public:
             switch(_cameraPosition)
                 {
                 case(-1):
-                    _data->leftDoorStatus = _leftFlesh == 0 ? !_data->leftDoorStatus : _data->leftDoorStatus;
+                    _leftDoorStatus = _leftFlesh == 0 ? !_leftDoorStatus : _leftDoorStatus;
                     break;
                 case(1):
-                    _data->rightDoorStatus = _rightFlesh == 0 ? !_data->rightDoorStatus : _data->rightDoorStatus;
+                    _rightDoorStatus = _rightFlesh == 0 ? !_rightDoorStatus : _rightDoorStatus;
                     break;
                 }
         }
@@ -134,10 +136,10 @@ public:
             switch(_cameraPosition)
             {
                 case(-1):
-                    _leftFlesh = _data->leftDoorStatus == 0 ? !_leftFlesh : _leftFlesh;
+                    _leftFlesh = _leftDoorStatus == 0 ? !_leftFlesh : _leftFlesh;
                     break;
                 case(1):
-                    _rightFlesh = _data->rightDoorStatus == 0 ? !_rightFlesh : _rightFlesh;
+                    _rightFlesh = _rightDoorStatus == 0 ? !_rightFlesh : _rightFlesh;
                     break;
             }
         }
@@ -159,6 +161,9 @@ public:
 private:
     std::shared_ptr<nightDB> _data;
     std::array<object, SIZE_OFFICE> _objects;
+
+    bool _leftDoorStatus = 0;
+    bool _rightDoorStatus = 0;
 
     bool _leftFlesh= 0;
     bool _rightFlesh = 0;

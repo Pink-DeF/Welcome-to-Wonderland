@@ -7,7 +7,19 @@
 
 class MainMenuScene : public Scene
 {
-    SDL_SetRenderViewport(renderer, NULL);
-    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-    SDL_RenderClear(renderer);
+private:
+    void draw() override
+    {
+        SDL_SetRenderViewport(renderer, NULL);
+        SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+        SDL_RenderClear(renderer);
+    }
+
+public:
+    void iterate()
+    {
+    }
+
+private:
+    std::array<object, 3> _buttoms;
 };

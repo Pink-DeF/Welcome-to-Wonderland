@@ -1,8 +1,10 @@
-.direnv
-build
-CMakeFiles
-.envrc
+.direnv/
+build/
+CMakeFiles/
+.envrc/
 
+Makefile
+*.nix
 *.cmake
 *.txt
 *.lock

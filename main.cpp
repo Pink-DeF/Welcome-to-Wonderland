@@ -6,6 +6,7 @@
 #include <cmath>
 
 #include "class/night.h"
+#include "class/ui.h"
 #include "class/scene.h"
 
 SDL_AppResult SDL_AppInit(void** appstate, int argc, char* argv[])

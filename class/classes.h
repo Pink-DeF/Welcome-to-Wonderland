@@ -24,9 +24,6 @@ struct nightDB
     float energy = ENERGY_CAPACITY;
     bool rechargEnergy = 0;
 
-    bool leftDoorStatus = 0;
-    bool rightDoorStatus = 0;
-
     std::array<size_t, 4> enemyPosition;
     const std::array<std::array<object, 12>, 4> enemyFrame =
     {
