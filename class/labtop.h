@@ -38,7 +38,7 @@ private:
     };
 
 public:
-    LabtopScene(std::array<SDL_Color, SIZE_LABTOP> tmp, nightDB *data): _data(data)
+    LabtopScene(std::array<SDL_Color, SIZE_LABTOP> tmp, std::shared_ptr<nightDB> data): _data(data)
     {
         for(size_t i = 0; i < SIZE_LABTOP; i++)
         {
@@ -85,7 +85,7 @@ private:
     bool _rechargShock = 0;
     size_t _shockTimer = 0;
 
-    nightDB *_data;
+    std::shared_ptr<nightDB> _data;
     std::array<CameraScene, SIZE_LABTOP> _cams;
     size_t _cam = 0;
 };

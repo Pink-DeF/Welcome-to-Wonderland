@@ -70,7 +70,7 @@ private:
     }
 public:
     //Конструктор
-    OfficeScene(std::array<object, SIZE_OFFICE> &&tmp, nightDB *data): _data(data) { _objects = std::move(tmp); }
+    OfficeScene(std::array<object, SIZE_OFFICE> &&tmp, std::shared_ptr<nightDB> data): _data(data) { _objects = std::move(tmp); }
 
     //Ппросто отрисовка
     void draw() override
@@ -157,7 +157,7 @@ public:
         }
     }
 private:
-    nightDB *_data;
+    std::shared_ptr<nightDB> _data;
     std::array<object, SIZE_OFFICE> _objects;
 
     bool _leftFlesh= 0;

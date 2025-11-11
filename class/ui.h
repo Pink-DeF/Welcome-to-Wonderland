@@ -5,7 +5,9 @@
 #include <cmath>
 #include "preset.h"
 
-class UIScene : public Scene
+class MainMenuScene : public Scene
 {
-
+    SDL_SetRenderViewport(renderer, NULL);
+    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+    SDL_RenderClear(renderer);
 };

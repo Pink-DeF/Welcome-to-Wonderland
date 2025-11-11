@@ -19,7 +19,7 @@ protected:
     virtual void attack() = 0;
     virtual void killcam() = 0;
 
-    nightDB *_data;
+    std::shared_ptr<nightDB> _data;
 
     bool _enemyActive = 0;
 
@@ -66,7 +66,7 @@ private:
     {
     }
 public:
-    SpringTime(nightDB *data): _numPos(0)
+    SpringTime(std::shared_ptr<nightDB> data): _numPos(0)
     {
         _data = data;
         _data->enemyPosition[_numPos] = 0;

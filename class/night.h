@@ -16,10 +16,10 @@ class Night : public Scene
 private:
     void setRechargEnergy()
     {
-        if(_data.energy <= 0){ _data.rechargEnergy = 1; }
-        else if(_data.energy >= ENERGY_CAPACITY){ _data.rechargEnergy = 0; }
+        if(_data->energy <= 0){ _data->rechargEnergy = 1; }
+        else if(_data->energy >= ENERGY_CAPACITY){ _data->rechargEnergy = 0; }
 
-        if(_data.rechargEnergy)
+        if(_data->rechargEnergy)
         {
             if(labtop.itVisible())
             {
@@ -38,17 +38,17 @@ private:
 
         office.draw();
         labtop.draw();
-        _data.monitorTime += labtop.itVisible();
+        _data->monitorTime += labtop.itVisible();
     }
 
 public:
-    Night(size_t night): _data(night)
+    Night(size_t night): _data(std::make_shared<nightDB>(night))
     {
         office.changeVisible();
     }
     SDL_AppResult iterate()
     {
-        if(_data.nightTime == 0 || _data.live == 0) return SDL_APP_SUCCESS;
+        if(_data->nightTime == 0 || _data->live == 0) return SDL_APP_SUCCESS;
         //_data.nightTime--;
 
         setRechargEnergy();
@@ -60,7 +60,7 @@ public:
 
     void gameEvent(SDL_KeyboardEvent key)
     {
-        if(key.key == SDLK_S && !office.getCameraPosition() && !_data.rechargEnergy)
+        if(key.key == SDLK_S && !office.getCameraPosition() && !_data->rechargEnergy)
         {
             office.changeVisible();
             labtop.changeVisible();
@@ -74,14 +74,15 @@ public:
         {
             if(key.key == SDLK_A){ office.changeCameraPosition(0); }
             else if(key.key == SDLK_D){ office.changeCameraPosition(1); }
-            else if(!_data.rechargEnergy && key.key == SDLK_S){ office.changeDoorStatus(); }
-            else if(!_data.rechargEnergy && key.key == SDLK_F){ office.useDoorFlesh(); }
+            else if(!_data->rechargEnergy && key.key == SDLK_S){ office.changeDoorStatus(); }
+            else if(!_data->rechargEnergy && key.key == SDLK_F){ office.useDoorFlesh(); }
         }
     }
 private:
-    nightDB _data;
+    std::shared_ptr<nightDB> _data;
+    //nightDB *_data;
 
-    SpringTime _springTime = (&_data);
+    SpringTime _springTime = _data;
 
     OfficeScene office = OfficeScene //Сцена Офиса и его компонентов
     {
@@ -90,7 +91,7 @@ private:
                 object {{0, 0, (float)width * 3, (float)height}, {0, 0, 255, 255}}, //Офисс
                 object {{0, (float)height / 10, (float)width * 2 / 5, (float)height * 5 / 10}, {0, 255, 0, 255}},//Окно
                 object {{(float)width * 13 / 5, (float)height / 10, (float)width * 2 / 5, (float)height * 9 / 10}, {0, 255, 0, 255}}//Дверь
-            }, &_data
+            }, _data
     };
 
     LabtopScene labtop = LabtopScene //Сцена планшета и камер
@@ -107,6 +108,6 @@ private:
                 SDL_Color {27, 45, 80, 255},
                 SDL_Color {187, 179, 230, 255},
                 SDL_Color {203, 73, 176, 255}
-            }, &_data
+            }, _data
     };
 };
