@@ -12,8 +12,8 @@ using namespace std;
 class Enemy
 {
 public:
-    virtual void move(int doorStatus) = 0;
-    virtual void attack(int doorStatus) = 0;
+    virtual int move() = 0;
+    virtual bool attack(int doorStatus) = 0;
 
 protected:
     virtual void rollback() = 0;
@@ -21,6 +21,7 @@ protected:
 
     shared_ptr<nightDB> _data;
 
+    int _enemyPosition;
     bool _enemyActive = 0;
 
     size_t _timeOut = 0;
@@ -32,16 +33,16 @@ class SpringTime : public Enemy
 private:
     void rollback() override
     {
-        switch(_data->enemyPosition[_numPos])
+        switch(_enemyPosition)
         {
             case(7): //0->7
-                _data->enemyPosition[_numPos] = 0;
+                _enemyPosition = 0;
                 break;
             case(9): //9->attack right
-                _data->enemyPosition[_numPos] = 7;
+                _enemyPosition = 7;
                 break;
             case(5): //5->6
-                _data->enemyPosition[_numPos] = 7;
+                _enemyPosition = 7;
                 break;
         }
     }
@@ -50,68 +51,70 @@ private:
     {
     }
 public:
-    SpringTime(std::shared_ptr<nightDB> data): _numPos(0)
+    SpringTime(std::shared_ptr<nightDB> data)
     {
         _data = data;
-        _data->enemyPosition[_numPos] = 0;
+        _enemyPosition = 0;
         _enemyActive = 1;
     }
 
-    void move(int doorStatus) override
+    int move() override
     {
-        if(_enemyActive)
+        if(_enemyActive && _enemyPosition != 10)
         {
-            if(_data->enemyPosition[_numPos] == 10){ attack(doorStatus); }
             if(_timeOut * _data->night >=  500)
             {
                 if(std::rand() % 10 >= 7){ rollback(); }
-                switch(_data->enemyPosition[_numPos])
+                switch(_enemyPosition)
                 {
                     case(0): //0->7
-                        _data->enemyPosition[_numPos]= 7;
+                        _enemyPosition = 7;
                         break;
                     case(7): //7->5 || 7->9
-                        if(std::rand() % 10 >= 11){ _data->enemyPosition[_numPos] = 5; }
-                        else { _data->enemyPosition[_numPos] = 9; }
+                        if(std::rand() % 10 >= 11){ _enemyPosition = 5; }
+                        else { _enemyPosition = 9; }
                         break;
                     case(9): //9->attack right
-                        _data->enemyPosition[_numPos] = 10;
+                        _enemyPosition = 10;
                         break;
                     case(5): //5->6
-                        _data->enemyPosition[_numPos] = 6;
+                        _enemyPosition = 6;
                         break;
                     case(6): //6-> do any && return
                         _data->energy = -3000.0;
                         _data->rechargEnergy = 1;
-                        _data->enemyPosition[_numPos] = 0;
+                        _enemyPosition = 0;
                         break;
                 }
 
-                _timeOut = (_data->monitorTime - _data->nightTime) % 100;
+                _timeOut = 0;
             }
             _timeOut++;
         }
+        return _enemyPosition;
     }
 
-    void attack(int doorStatus) override
+    bool attack(int doorStatus) override
     {
-        if(_timeWait >= 500 + std::rand() % (7200 / _data->night))
+        if(_enemyPosition == 10)
         {
-            if(doorStatus != 1)
+            if(_timeWait >= 500 + std::rand() % (7200 / _data->night))
             {
-                killcam();
-                _data->live = 0;
+                if(doorStatus != 1)
+                {
+                    killcam();
+                    return 0;
+                }
+                _enemyPosition = 0;
+
+                _timeWait = 0;
             }
-            _data->enemyPosition[_numPos] = 0;
-
-            _timeWait = 0;
+            _timeWait++;
         }
-        _timeWait++;
+
+        _timeWait = 0;
+        return 1;
     }
-
-
-private:
-    const size_t _numPos;
 };
 
 /*

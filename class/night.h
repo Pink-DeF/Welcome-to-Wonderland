@@ -38,7 +38,16 @@ private:
 
         office.draw();
         labtop.draw();
-        _data->monitorTime += labtop.itVisible();
+        _monitorTime += labtop.itVisible();
+    }
+
+    void enemyMove()
+    {
+        for(int i = 0; i < 4; i++)
+        {
+            _data->enemyPosition[i] = _springTime.move();
+            _live = _springTime.attack(office.getLeftDoorStatus());
+        }
     }
 
 public:
@@ -48,11 +57,11 @@ public:
     }
     SDL_AppResult iterate()
     {
-        if(_data->nightTime == 0 || _data->live == 0) return SDL_APP_SUCCESS;
+        if(_nightTime == 0 || _live == 0) return SDL_APP_SUCCESS;
         //_data.nightTime--;
 
         setRechargEnergy();
-        _springTime.move(office.getLeftDoorStatus());
+        enemyMove();
 
         draw();
         return SDL_APP_CONTINUE;
@@ -79,6 +88,9 @@ public:
         }
     }
 private:
+    bool _live = 1;
+    size_t _nightTime = 10000;
+    size_t _monitorTime = 0;
     std::shared_ptr<nightDB> _data;
     //nightDB *_data;
 

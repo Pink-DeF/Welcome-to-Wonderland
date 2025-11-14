@@ -2,6 +2,7 @@
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
 #include <array>
+#include <map>
 #include <cmath>
 
 #define ENERGY_CAPACITY 3000.0
@@ -15,16 +16,26 @@ struct object
 struct nightDB
 {
     nightDB(size_t data): night(data){}
-    bool live = 1;
 
     const size_t night = 0;
-    size_t nightTime = 10000;
-    size_t monitorTime = 0;
 
     float energy = ENERGY_CAPACITY;
     bool rechargEnergy = 0;
 
     std::array<size_t, 4> enemyPosition;
+    
+    std::array<std::map<size_t, object>, 4> enemyFrame =
+    {
+        std::map<size_t, object>
+        {
+            {0, object {SDL_FRect {100, 100, 400, 400}}},
+            {5, object {SDL_FRect {100, 100, 400, 400}}},
+            {6, object {SDL_FRect {100, 100, 400, 400}}},
+            {7, object {SDL_FRect {100, 100, 400, 400}}},
+            {9, object {SDL_FRect {100, 100, 400, 400}}},
+        }
+    };
+    /*
     const std::array<std::array<object, 12>, 4> enemyFrame =
     {
         std::array<object, 12> {
@@ -56,6 +67,7 @@ struct nightDB
             object {SDL_FRect {100, 100, 400, 400}, SDL_Color {0, 0, 0 ,255}},object {SDL_FRect {100, 100, 400, 400}, SDL_Color {0, 0, 0 ,255}},
         }
     };
+    */
 };
 
 class Scene
