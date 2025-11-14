@@ -6,6 +6,7 @@
 #include "preset.h"
 
 #define SIZE_LABTOP 10
+#define SHOCK_TIME_RELOAD 300
 
 class LabtopScene: public Scene
 {
@@ -77,7 +78,7 @@ public:
             {
                 _data->enemyPosition[0] = 0;
                 _rechargShock = 1;
-                _shockTimer = 300;
+                _shockTimer = SHOCK_TIME_RELOAD;
             }
         }
     }

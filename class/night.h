@@ -10,6 +10,7 @@
 #include "enemy.h"
 
 #define ENEMY_COUNT 4
+#define BASED_NIGHT_TIME 10000
 
 class Night : public Scene
 {
@@ -89,7 +90,7 @@ public:
     }
 private:
     bool _live = 1;
-    size_t _nightTime = 10000;
+    size_t _nightTime = BASED_NIGHT_TIME;
     size_t _monitorTime = 0;
     std::shared_ptr<nightDB> _data;
     //nightDB *_data;
