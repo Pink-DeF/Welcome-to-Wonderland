@@ -52,6 +52,7 @@ private:
     }
 
 public:
+    Night() {}
     Night(size_t night): _data(std::make_shared<nightDB>(night))
     {
         office = OfficeScene //Сцена Офиса и его компонентов
