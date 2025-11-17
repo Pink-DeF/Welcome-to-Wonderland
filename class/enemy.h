@@ -7,7 +7,7 @@
 #include <cstdlib>
 
 #include "office.h"
-using namespace std;
+//using namespace std;
 
 class Enemy
 {
@@ -19,7 +19,7 @@ protected:
     virtual void rollback() = 0;
     virtual void killcam() = 0;
 
-    shared_ptr<nightDB> _data;
+    std::shared_ptr<nightDB> _data;
 
     int _enemyPosition;
     bool _enemyActive = 0;

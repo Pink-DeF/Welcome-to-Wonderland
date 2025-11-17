@@ -95,7 +95,7 @@ private:
     std::shared_ptr<nightDB> _data;
     //nightDB *_data;
 
-    SpringTime _springTime = _data;
+    SpringTime _springTime {_data};
 
     OfficeScene office = OfficeScene //Сцена Офиса и его компонентов
     {

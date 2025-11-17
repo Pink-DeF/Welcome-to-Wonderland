@@ -17,7 +17,7 @@ struct nightDB
 {
     nightDB(size_t data): night(data){}
 
-    const size_t night = 0;
+    const size_t night = 1;
 
     float energy = ENERGY_CAPACITY;
     bool rechargEnergy = 0;

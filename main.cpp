@@ -23,7 +23,11 @@ SDL_AppResult SDL_AppIterate(void* appstate)
 {
     SDL_RenderPresent(renderer);
     SDL_Delay(15);
-    return game.iterate();
+    if(config.getGameStatus())
+    {
+        return game.iterate();
+    }
+    return SDL_APP_SUCCESS;
 }
 
 SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event)
