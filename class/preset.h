@@ -3,7 +3,6 @@
 #include <SDL3/SDL_main.h>
 #include <array>
 #include <cmath>
-//#include "classes.h"
 
 /*
 class Singleton
@@ -42,8 +41,11 @@ public:
         return config;
     }
 
+    void setWindow(SDL_Window* window){ _window = window; }
+    void setRenderer(SDL_Renderer* renderer) { _renderer = renderer; }
+
     SDL_Window* getWindow(){ return _window; }
-    SDL_Renderer*getRenderer() { return _renderer; }
+    SDL_Renderer* getRenderer() { return _renderer; }
 
     int getWidth(){ return _width; }
     int getHeight(){ return _height; }
@@ -66,11 +68,6 @@ private:
 
 GameConfig& config = GameConfig::Instance();
 
-static SDL_Window* window;
-static SDL_Renderer* renderer;
-
-//static int width = 1020;
-//static int height = 800;
 //static const SDL_Rect full_viewport = {-width, 0, 3 * width, height};
 
 //static size_t fps = 0;

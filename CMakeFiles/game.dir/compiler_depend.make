@@ -9,7 +9,6 @@ CMakeFiles/game.dir/main.cpp.o: main.cpp \
   class/office.h \
   class/preset.h \
   class/scene.h \
-  class/ui.h \
   /nix/store/46l693qq0kayi3qibm68jid77iwx8d9l-sdl3-3.2.20-dev/include/SDL3/SDL.h \
   /nix/store/46l693qq0kayi3qibm68jid77iwx8d9l-sdl3-3.2.20-dev/include/SDL3/SDL_assert.h \
   /nix/store/46l693qq0kayi3qibm68jid77iwx8d9l-sdl3-3.2.20-dev/include/SDL3/SDL_asyncio.h \
@@ -368,8 +367,6 @@ game: /nix/store/41ym1jm1b7j3rhglk82gwg9jml26z1km-gcc-14.3.0-lib/lib/libgcc_s.so
 
 /nix/store/gf3wh0x0rzb1dkx0wx1jvmipydwfzzd5-glibc-2.40-66-dev/include/bits/wchar2-decl.h:
 
-/nix/store/gf3wh0x0rzb1dkx0wx1jvmipydwfzzd5-glibc-2.40-66-dev/include/bits/wchar.h:
-
 /nix/store/82kmz7r96navanrc2fgckh2bamiqrgsw-gcc-14.3.0/include/c++/14.3.0/bits/erase_if.h:
 
 /nix/store/82kmz7r96navanrc2fgckh2bamiqrgsw-gcc-14.3.0/include/c++/14.3.0/bits/uses_allocator_args.h:
@@ -409,6 +406,10 @@ game: /nix/store/41ym1jm1b7j3rhglk82gwg9jml26z1km-gcc-14.3.0-lib/lib/libgcc_s.so
 /nix/store/82kmz7r96navanrc2fgckh2bamiqrgsw-gcc-14.3.0/include/c++/14.3.0/bits/memory_resource.h:
 
 /nix/store/82kmz7r96navanrc2fgckh2bamiqrgsw-gcc-14.3.0/include/c++/14.3.0/bits/exception_defines.h:
+
+/nix/store/82kmz7r96navanrc2fgckh2bamiqrgsw-gcc-14.3.0/include/c++/14.3.0/cmath:
+
+/nix/store/82kmz7r96navanrc2fgckh2bamiqrgsw-gcc-14.3.0/include/c++/14.3.0/bits/uses_allocator.h:
 
 /nix/store/gf3wh0x0rzb1dkx0wx1jvmipydwfzzd5-glibc-2.40-66-dev/include/features-time64.h:
 
@@ -474,6 +475,10 @@ game: /nix/store/41ym1jm1b7j3rhglk82gwg9jml26z1km-gcc-14.3.0-lib/lib/libgcc_s.so
 
 /nix/store/46l693qq0kayi3qibm68jid77iwx8d9l-sdl3-3.2.20-dev/include/SDL3/SDL_gamepad.h:
 
+/nix/store/46l693qq0kayi3qibm68jid77iwx8d9l-sdl3-3.2.20-dev/include/SDL3/SDL_error.h:
+
+/nix/store/46l693qq0kayi3qibm68jid77iwx8d9l-sdl3-3.2.20-dev/include/SDL3/SDL_process.h:
+
 /nix/store/46l693qq0kayi3qibm68jid77iwx8d9l-sdl3-3.2.20-dev/include/SDL3/SDL_dialog.h:
 
 /nix/store/46l693qq0kayi3qibm68jid77iwx8d9l-sdl3-3.2.20-dev/include/SDL3/SDL_init.h:
@@ -491,24 +496,6 @@ game: /nix/store/41ym1jm1b7j3rhglk82gwg9jml26z1km-gcc-14.3.0-lib/lib/libgcc_s.so
 /nix/store/gf3wh0x0rzb1dkx0wx1jvmipydwfzzd5-glibc-2.40-66-dev/include/bits/pthreadtypes-arch.h:
 
 /nix/store/gf3wh0x0rzb1dkx0wx1jvmipydwfzzd5-glibc-2.40-66-dev/include/bits/uintn-identity.h:
-
-/nix/store/82kmz7r96navanrc2fgckh2bamiqrgsw-gcc-14.3.0/include/c++/14.3.0/bits/invoke.h:
-
-/nix/store/gf3wh0x0rzb1dkx0wx1jvmipydwfzzd5-glibc-2.40-66-dev/include/bits/struct_mutex.h:
-
-/nix/store/gf3wh0x0rzb1dkx0wx1jvmipydwfzzd5-glibc-2.40-66-dev/include/bits/types/sigset_t.h:
-
-/nix/store/gf3wh0x0rzb1dkx0wx1jvmipydwfzzd5-glibc-2.40-66-dev/include/bits/time.h:
-
-/nix/store/46l693qq0kayi3qibm68jid77iwx8d9l-sdl3-3.2.20-dev/include/SDL3/SDL_endian.h:
-
-/nix/store/46l693qq0kayi3qibm68jid77iwx8d9l-sdl3-3.2.20-dev/include/SDL3/SDL_clipboard.h:
-
-/nix/store/gf3wh0x0rzb1dkx0wx1jvmipydwfzzd5-glibc-2.40-66-dev/include/bits/flt-eval-method.h:
-
-/nix/store/46l693qq0kayi3qibm68jid77iwx8d9l-sdl3-3.2.20-dev/include/SDL3/SDL_filesystem.h:
-
-/nix/store/gf3wh0x0rzb1dkx0wx1jvmipydwfzzd5-glibc-2.40-66-dev/include/bits/select2.h:
 
 /nix/store/82kmz7r96navanrc2fgckh2bamiqrgsw-gcc-14.3.0/include/c++/14.3.0/bits/stl_raw_storage_iter.h:
 
@@ -552,6 +539,8 @@ class/scene.h:
 
 /nix/store/gf3wh0x0rzb1dkx0wx1jvmipydwfzzd5-glibc-2.40-66-dev/include/bits/types/__sigset_t.h:
 
+/nix/store/82kmz7r96navanrc2fgckh2bamiqrgsw-gcc-14.3.0/include/c++/14.3.0/bits/move.h:
+
 /nix/store/gf3wh0x0rzb1dkx0wx1jvmipydwfzzd5-glibc-2.40-66-dev/include/bits/types/struct___jmp_buf_tag.h:
 
 /nix/store/46l693qq0kayi3qibm68jid77iwx8d9l-sdl3-3.2.20-dev/include/SDL3/SDL_asyncio.h:
@@ -567,10 +556,6 @@ class/office.h:
 /nix/store/gf3wh0x0rzb1dkx0wx1jvmipydwfzzd5-glibc-2.40-66-dev/include/bits/types/time_t.h:
 
 class/preset.h:
-
-/nix/store/46l693qq0kayi3qibm68jid77iwx8d9l-sdl3-3.2.20-dev/include/SDL3/SDL_error.h:
-
-/nix/store/46l693qq0kayi3qibm68jid77iwx8d9l-sdl3-3.2.20-dev/include/SDL3/SDL_process.h:
 
 /nix/store/46l693qq0kayi3qibm68jid77iwx8d9l-sdl3-3.2.20-dev/include/SDL3/SDL_events.h:
 
@@ -592,7 +577,23 @@ class/preset.h:
 
 /nix/store/46l693qq0kayi3qibm68jid77iwx8d9l-sdl3-3.2.20-dev/include/SDL3/SDL_oldnames.h:
 
-/nix/store/82kmz7r96navanrc2fgckh2bamiqrgsw-gcc-14.3.0/include/c++/14.3.0/bits/move.h:
+/nix/store/82kmz7r96navanrc2fgckh2bamiqrgsw-gcc-14.3.0/include/c++/14.3.0/bits/invoke.h:
+
+/nix/store/gf3wh0x0rzb1dkx0wx1jvmipydwfzzd5-glibc-2.40-66-dev/include/bits/struct_mutex.h:
+
+/nix/store/gf3wh0x0rzb1dkx0wx1jvmipydwfzzd5-glibc-2.40-66-dev/include/bits/types/sigset_t.h:
+
+/nix/store/gf3wh0x0rzb1dkx0wx1jvmipydwfzzd5-glibc-2.40-66-dev/include/bits/time.h:
+
+/nix/store/46l693qq0kayi3qibm68jid77iwx8d9l-sdl3-3.2.20-dev/include/SDL3/SDL_endian.h:
+
+/nix/store/46l693qq0kayi3qibm68jid77iwx8d9l-sdl3-3.2.20-dev/include/SDL3/SDL_clipboard.h:
+
+/nix/store/gf3wh0x0rzb1dkx0wx1jvmipydwfzzd5-glibc-2.40-66-dev/include/bits/flt-eval-method.h:
+
+/nix/store/46l693qq0kayi3qibm68jid77iwx8d9l-sdl3-3.2.20-dev/include/SDL3/SDL_filesystem.h:
+
+/nix/store/gf3wh0x0rzb1dkx0wx1jvmipydwfzzd5-glibc-2.40-66-dev/include/bits/select2.h:
 
 /nix/store/82kmz7r96navanrc2fgckh2bamiqrgsw-gcc-14.3.0/include/c++/14.3.0/bits/allocated_ptr.h:
 
@@ -676,9 +677,9 @@ main.cpp:
 
 /nix/store/gf3wh0x0rzb1dkx0wx1jvmipydwfzzd5-glibc-2.40-66-dev/include/bits/stdlib-float.h:
 
-/nix/store/46l693qq0kayi3qibm68jid77iwx8d9l-sdl3-3.2.20-dev/include/SDL3/SDL_assert.h:
-
 /nix/store/46l693qq0kayi3qibm68jid77iwx8d9l-sdl3-3.2.20-dev/include/SDL3/SDL_loadso.h:
+
+/nix/store/46l693qq0kayi3qibm68jid77iwx8d9l-sdl3-3.2.20-dev/include/SDL3/SDL_assert.h:
 
 /nix/store/82kmz7r96navanrc2fgckh2bamiqrgsw-gcc-14.3.0/include/c++/14.3.0/bits/stl_construct.h:
 
@@ -697,10 +698,6 @@ main.cpp:
 /nix/store/46l693qq0kayi3qibm68jid77iwx8d9l-sdl3-3.2.20-dev/include/SDL3/SDL_render.h:
 
 /nix/store/82kmz7r96navanrc2fgckh2bamiqrgsw-gcc-14.3.0/include/c++/14.3.0/ext/aligned_buffer.h:
-
-/nix/store/82kmz7r96navanrc2fgckh2bamiqrgsw-gcc-14.3.0/include/c++/14.3.0/bits/uses_allocator.h:
-
-/nix/store/82kmz7r96navanrc2fgckh2bamiqrgsw-gcc-14.3.0/include/c++/14.3.0/cmath:
 
 /nix/store/gf3wh0x0rzb1dkx0wx1jvmipydwfzzd5-glibc-2.40-66-dev/include/bits/wordsize.h:
 
@@ -737,8 +734,6 @@ main.cpp:
 /nix/store/82kmz7r96navanrc2fgckh2bamiqrgsw-gcc-14.3.0/include/c++/14.3.0/limits:
 
 /nix/store/82kmz7r96navanrc2fgckh2bamiqrgsw-gcc-14.3.0/include/c++/14.3.0/memory:
-
-class/ui.h:
 
 /nix/store/82kmz7r96navanrc2fgckh2bamiqrgsw-gcc-14.3.0/include/c++/14.3.0/tr1/beta_function.tcc:
 
@@ -903,3 +898,5 @@ class/classes.h:
 /nix/store/gf3wh0x0rzb1dkx0wx1jvmipydwfzzd5-glibc-2.40-66-dev/include/bits/types/mbstate_t.h:
 
 /nix/store/gf3wh0x0rzb1dkx0wx1jvmipydwfzzd5-glibc-2.40-66-dev/include/bits/typesizes.h:
+
+/nix/store/gf3wh0x0rzb1dkx0wx1jvmipydwfzzd5-glibc-2.40-66-dev/include/bits/wchar.h:

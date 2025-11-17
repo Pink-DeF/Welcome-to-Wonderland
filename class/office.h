@@ -80,11 +80,11 @@ public:
         {
             move();
 
-            SDL_SetRenderViewport(renderer, &_viewport);
+            SDL_SetRenderViewport(_data->renderer, &_viewport);
             for(auto i: _objects)
             {
-                SDL_SetRenderDrawColor(renderer, i.color.r, i.color.g, i.color.b, i.color.a);
-                SDL_RenderFillRect(renderer, &(i.position));
+                SDL_SetRenderDrawColor(_data->renderer, i.color.r, i.color.g, i.color.b, i.color.a);
+                SDL_RenderFillRect(_data->renderer, &(i.position));
             }
 
         }

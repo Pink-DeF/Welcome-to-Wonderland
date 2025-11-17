@@ -277,5 +277,4 @@ CMakeFiles/game.dir/main.cpp.o: /home/pinkd/Documents/game/main.cpp \
   /home/pinkd/Documents/game/class/enemy.h \
   /nix/store/82kmz7r96navanrc2fgckh2bamiqrgsw-gcc-14.3.0/include/c++/14.3.0/ctime \
   /nix/store/82kmz7r96navanrc2fgckh2bamiqrgsw-gcc-14.3.0/include/c++/14.3.0/cstdlib \
-  /home/pinkd/Documents/game/class/ui.h \
   /home/pinkd/Documents/game/class/scene.h
