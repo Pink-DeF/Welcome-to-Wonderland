@@ -2,4 +2,4 @@
 #include "night.h"
 #include "ui.h"
 
-static Night game(night);
+static Night game(config.getNight());

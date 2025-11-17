@@ -93,7 +93,6 @@ private:
     size_t _nightTime = BASED_NIGHT_TIME;
     size_t _monitorTime = 0;
     std::shared_ptr<nightDB> _data;
-    //nightDB *_data;
 
     SpringTime _springTime {_data};
 
@@ -101,9 +100,9 @@ private:
     {
         std::array<object, SIZE_OFFICE>
             {
-                object {{0, 0, (float)width * 3, (float)height}, {0, 0, 255, 255}}, //Офисс
-                object {{0, (float)height / 10, (float)width * 2 / 5, (float)height * 5 / 10}, {0, 255, 0, 255}},//Окно
-                object {{(float)width * 13 / 5, (float)height / 10, (float)width * 2 / 5, (float)height * 9 / 10}, {0, 255, 0, 255}}//Дверь
+                object {{0, 0, (float)_data->width * 3, (float)_data->height}, {0, 0, 255, 255}}, //Офисс
+                object {{0, (float)_data->height / 10, (float)_data->width * 2 / 5, (float)_data->height * 5 / 10}, {0, 255, 0, 255}},//Окно
+                object {{(float)_data->width * 13 / 5, (float)_data->height / 10, (float)_data->width * 2 / 5, (float)_data->height * 9 / 10}, {0, 255, 0, 255}}//Дверь
             }, _data
     };
 

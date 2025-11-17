@@ -3,7 +3,9 @@
 #include <SDL3/SDL_main.h>
 #include <array>
 #include <cmath>
+
 #include "preset.h"
+#include "classes.h"
 
 #define SIZE_LABTOP 10
 #define SHOCK_TIME_RELOAD 300
@@ -16,12 +18,15 @@ private:
     public:
         //Конструктор
         CameraScene(){}
-        CameraScene(SDL_Color tmp){ _object = object { SDL_FRect { 0, 0, (float)width, (float)height }, tmp}; } 
+        CameraScene(SDL_Color tmp, std::shared_ptr<nightDB> data): _data(data)
+        {
+            _object = object { SDL_FRect { 0, 0, (float)_data->width, (float)_data->height }, tmp};
+        }
  
         void move(bool direct)
         {
-            if(direct && width <= width / 2){ _viewport.x += width * 0.05; }
-            else if(!direct && width >= 0){ _viewport.x -= width * 0.05; }
+            if(direct && _data->width <= _data->width / 2){ _viewport.x += _data->width * 0.05; }
+            else if(!direct && _data->width >= 0){ _viewport.x -= _data->width * 0.05; }
         }
 
         //Ппросто отрисовка
@@ -34,7 +39,9 @@ private:
         }
 
     private:
-        SDL_Rect _viewport = {0, 0, 2 * width, height};
+        std::shared_ptr<nightDB> _data;
+
+        SDL_Rect _viewport = {0, 0, 2 * _data->width, _data->height};
         object _object;
     };
 
@@ -43,7 +50,7 @@ public:
     {
         for(size_t i = 0; i < SIZE_LABTOP; i++)
         {
-            _cams[i] = CameraScene(tmp[i]);
+            _cams[i] = CameraScene(tmp[i], data);
         }
     }
     LabtopScene(){}

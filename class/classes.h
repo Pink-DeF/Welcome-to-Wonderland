@@ -4,6 +4,7 @@
 #include <array>
 #include <map>
 #include <cmath>
+#include "preset.h"
 
 #define ENERGY_CAPACITY 3000.0
 
@@ -17,6 +18,11 @@ struct nightDB
 {
     nightDB(size_t data): night(data){}
 
+    //render info
+    const int width = config.getWidth();
+    const int height = config.getHeight();
+    
+    //game info
     const size_t night = 1;
 
     float energy = ENERGY_CAPACITY;
