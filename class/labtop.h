@@ -21,6 +21,7 @@ private:
         CameraScene(SDL_Color tmp, std::shared_ptr<nightDB> data): _data(data)
         {
             _object = object { SDL_FRect { 0, 0, (float)_data->width, (float)_data->height }, tmp};
+            _viewport = {0, 0, 2 * _data->width, _data->height};
         }
  
         void move(bool direct)
@@ -41,7 +42,7 @@ private:
     private:
         std::shared_ptr<nightDB> _data;
 
-        SDL_Rect _viewport = {0, 0, 2 * _data->width, _data->height};
+        SDL_Rect _viewport;
         object _object;
     };
 

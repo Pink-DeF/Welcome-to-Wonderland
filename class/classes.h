@@ -19,10 +19,12 @@ struct nightDB
     nightDB(size_t data): night(data){}
 
     //render info
+    //const int width = 1;
+    //const int height = 1;
+
     const int width = config.getWidth();
     const int height = config.getHeight();
     
-    //SDL_Renderer* renderer = config.getRenderer();
     //game info
     const size_t night = 1;
 

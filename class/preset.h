@@ -20,12 +20,6 @@ public:
         return config;
     }
 
-    void setWindow(SDL_Window* window){ _window = window; }
-    void setRenderer(SDL_Renderer* renderer) { _renderer = renderer; }
-
-    SDL_Window* getWindow() const { return _window; }
-    SDL_Renderer* getRenderer() { return _renderer; }
-
     int getWidth(){ return _width; }
     int getHeight(){ return _height; }
 
@@ -35,9 +29,6 @@ public:
     size_t getNight(){ return _night; }
 
 private:
-    SDL_Window* _window;
-    SDL_Renderer* _renderer;
-
     int _width = 1020;
     int _height = 800;
 
@@ -45,7 +36,7 @@ private:
     size_t _night = 1;
 };
 
-GameConfig& config = GameConfig::Instance();
+static GameConfig& config = GameConfig::Instance();
 
 static SDL_Window* window;
 static SDL_Renderer* renderer;

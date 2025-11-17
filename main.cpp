@@ -4,21 +4,17 @@
 #include <SDL3/SDL_main.h>
 #include <array>
 #include <cmath>
-#include <iostream>
 
 #include "class/night.h"
 //#include "class/ui.h"
-#include "class/scene.h"
 
+Night game(1);
 SDL_AppResult SDL_AppInit(void** appstate, int argc, char* argv[])
 {
     if(!SDL_Init(SDL_INIT_VIDEO)) return SDL_APP_FAILURE;
 
-    std::cout<< 1 << std::endl;
     SDL_CreateWindowAndRenderer("Welcome to Wonderland", config.getWidth(), config.getHeight(), 0, &window, &renderer);
-    config.setWindow(window);
-    config.setRenderer(renderer);
-    
+
     srand(time(nullptr));
 
     return SDL_APP_CONTINUE;
@@ -26,7 +22,7 @@ SDL_AppResult SDL_AppInit(void** appstate, int argc, char* argv[])
 
 SDL_AppResult SDL_AppIterate(void* appstate)
 {
-    SDL_RenderPresent(config.getRenderer());
+    SDL_RenderPresent(renderer);
     SDL_Delay(15);
 
     return game.iterate();

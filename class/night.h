@@ -54,6 +54,33 @@ private:
 public:
     Night(size_t night): _data(std::make_shared<nightDB>(night))
     {
+        office = OfficeScene //Сцена Офиса и его компонентов
+        {
+            std::array<object, SIZE_OFFICE>
+                {
+                    object {{0, 0, (float)_data->width * 3, (float)_data->height}, {0, 0, 255, 255}}, //Офисс
+                    object {{0, (float)_data->height / 10, (float)_data->width * 2 / 5, (float)_data->height * 5 / 10}, {0, 255, 0, 255}},//Окно
+                    object {{(float)_data->width * 13 / 5, (float)_data->height / 10, (float)_data->width * 2 / 5, (float)_data->height * 9 / 10}, {0, 255, 0, 255}}//Дверь
+                }, _data
+        };
+
+        labtop = LabtopScene //Сцена планшета и камер
+        {
+            std::array<SDL_Color, SIZE_LABTOP>
+                {
+                    SDL_Color {218, 131, 225, 255},
+                    SDL_Color {70, 83, 15, 255},
+                    SDL_Color {177, 29, 22, 255},
+                    SDL_Color {126, 65, 101, 255},
+                    SDL_Color {2, 70, 189, 255},
+                    SDL_Color {67, 34, 116, 255},
+                    SDL_Color {180, 20, 3, 255},
+                    SDL_Color {27, 45, 80, 255},
+                    SDL_Color {187, 179, 230, 255},
+                    SDL_Color {203, 73, 176, 255}
+                }, _data
+        };
+
         office.changeVisible();
     }
     SDL_AppResult iterate()
@@ -96,30 +123,7 @@ private:
 
     SpringTime _springTime {_data};
 
-    OfficeScene office = OfficeScene //Сцена Офиса и его компонентов
-    {
-        std::array<object, SIZE_OFFICE>
-            {
-                object {{0, 0, (float)_data->width * 3, (float)_data->height}, {0, 0, 255, 255}}, //Офисс
-                object {{0, (float)_data->height / 10, (float)_data->width * 2 / 5, (float)_data->height * 5 / 10}, {0, 255, 0, 255}},//Окно
-                object {{(float)_data->width * 13 / 5, (float)_data->height / 10, (float)_data->width * 2 / 5, (float)_data->height * 9 / 10}, {0, 255, 0, 255}}//Дверь
-            }, _data
-    };
+    OfficeScene office; 
 
-    LabtopScene labtop = LabtopScene //Сцена планшета и камер
-    {
-        std::array<SDL_Color, SIZE_LABTOP>
-            {
-                SDL_Color {218, 131, 225, 255},
-                SDL_Color {70, 83, 15, 255},
-                SDL_Color {177, 29, 22, 255},
-                SDL_Color {126, 65, 101, 255},
-                SDL_Color {2, 70, 189, 255},
-                SDL_Color {67, 34, 116, 255},
-                SDL_Color {180, 20, 3, 255},
-                SDL_Color {27, 45, 80, 255},
-                SDL_Color {187, 179, 230, 255},
-                SDL_Color {203, 73, 176, 255}
-            }, _data
-    };
+    LabtopScene labtop;
 };

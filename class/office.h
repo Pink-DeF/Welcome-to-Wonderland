@@ -4,6 +4,7 @@
 #include <array>
 #include <cmath>
 #include <memory>
+#include <iostream>
 
 #include "preset.h"
 #include "classes.h"
@@ -71,7 +72,13 @@ private:
     }
 public:
     //Конструктор
-    OfficeScene(std::array<object, SIZE_OFFICE> &&tmp, std::shared_ptr<nightDB> data): _data(data) { _objects = std::move(tmp); }
+    OfficeScene(){}
+    OfficeScene(std::array<object, SIZE_OFFICE> &&tmp, std::shared_ptr<nightDB> data): _data(data)
+    {
+        //std::cout << 1 << std::endl;
+        _objects = std::move(tmp); 
+        _viewport = {-_data->width, 0, 3 * _data->width, _data->height};
+    }
 
     //Ппросто отрисовка
     void draw() override
@@ -169,7 +176,7 @@ private:
     bool _leftFlesh= 0;
     bool _rightFlesh = 0;
 
-    SDL_Rect _viewport = {-_data->width, 0, 3 * _data->width, _data->height};
+    SDL_Rect _viewport; 
     float _timePar = 0;
     int _cameraPosition = 0; 
     int _cameraTargetPosition = 0;
