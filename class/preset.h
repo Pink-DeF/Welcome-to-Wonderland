@@ -4,27 +4,6 @@
 #include <array>
 #include <cmath>
 
-/*
-class Singleton
-{
-  public:
-    static Singleton& Instance()
-    {
-        // согласно стандарту, этот код ленивый и потокобезопасный
-        static Singleton s;
-        return s;
-    }
-
-  private:
-    Singleton() {}  // конструктор недоступен
-    ~Singleton() {} // и деструктор
-
-    // необходимо также запретить копирование
-    Singleton(Singleton const&); // реализация не нужна
-    Singleton& operator= (Singleton const&);  // и тут
-};
-*/
-
 class GameConfig
 {
 private:
@@ -44,7 +23,7 @@ public:
     void setWindow(SDL_Window* window){ _window = window; }
     void setRenderer(SDL_Renderer* renderer) { _renderer = renderer; }
 
-    SDL_Window* getWindow(){ return _window; }
+    SDL_Window* getWindow() const { return _window; }
     SDL_Renderer* getRenderer() { return _renderer; }
 
     int getWidth(){ return _width; }
@@ -67,6 +46,9 @@ private:
 };
 
 GameConfig& config = GameConfig::Instance();
+
+static SDL_Window* window;
+static SDL_Renderer* renderer;
 
 //static const SDL_Rect full_viewport = {-width, 0, 3 * width, height};
 

@@ -32,9 +32,9 @@ private:
         //Ппросто отрисовка
         void draw() override
         { 
-            SDL_SetRenderViewport(_data->renderer, &_viewport);
-            SDL_SetRenderDrawColor(_data->renderer, _object.color.r, _object.color.g, _object.color.b, _object.color.a);
-            SDL_RenderFillRect(_data->renderer, &(_object.position));
+            SDL_SetRenderViewport(renderer, &_viewport);
+            SDL_SetRenderDrawColor(renderer, _object.color.r, _object.color.g, _object.color.b, _object.color.a);
+            SDL_RenderFillRect(renderer, &(_object.position));
             return;
         }
 
@@ -66,9 +66,9 @@ public:
             {
                 if(_data->enemyPosition[i] == _cam)
                 {
-                    SDL_SetRenderDrawColor(_data->renderer, _data->enemyFrame[i][_cam].color.r, _data->enemyFrame[i][_cam].color.g,
+                    SDL_SetRenderDrawColor(renderer, _data->enemyFrame[i][_cam].color.r, _data->enemyFrame[i][_cam].color.g,
                                                      _data->enemyFrame[i][_cam].color.b, _data->enemyFrame[i][_cam].color.a);
-                    SDL_RenderFillRect(_data->renderer, &_data->enemyFrame[i][_cam].position);
+                    SDL_RenderFillRect(renderer, &_data->enemyFrame[i][_cam].position);
                 }
             }
             _data->energy -= 1;

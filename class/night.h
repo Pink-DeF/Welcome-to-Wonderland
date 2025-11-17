@@ -33,9 +33,9 @@ private:
     }
     void draw() override
     {
-        SDL_SetRenderViewport(_data->renderer, NULL);
-        SDL_SetRenderDrawColor(_data->renderer, 255, 255, 255, 255);
-        SDL_RenderClear(_data->renderer);
+        SDL_SetRenderViewport(renderer, NULL);
+        SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+        SDL_RenderClear(renderer);
 
         office.draw();
         labtop.draw();

@@ -37,7 +37,24 @@
     "root": {
       "inputs": {
         "flake-utils": "flake-utils",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs",
+        "sdl3pp": "sdl3pp"
+      }
+    },
+    "sdl3pp": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1763132528,
+        "narHash": "sha256-dtwfxdpkOwbEqiYODY7MF91sQUKds08Sq9lqQ77WHF0=",
+        "owner": "talesm",
+        "repo": "SDL3pp",
+        "rev": "c2d7f97ba40fed3223d3ad11e21b791320b2a943",
+        "type": "github"
+      },
+      "original": {
+        "owner": "talesm",
+        "repo": "SDL3pp",
+        "type": "github"
       }
     },
     "systems": {
