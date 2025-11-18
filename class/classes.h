@@ -10,6 +10,12 @@
 
 struct object
 {
+    void draw()
+    {
+        SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
+        SDL_RenderFillRect(renderer, &position);
+    }
+
     SDL_FRect position = {0, 0 , 0, 0};
     SDL_Color color = {0, 0, 0, 0};
 };
@@ -19,8 +25,6 @@ struct nightDB
     nightDB(size_t data): night(data){}
 
     //render info
-    //const int width = 1;
-    //const int height = 1;
 
     const int width = config.getWidth();
     const int height = config.getHeight();
@@ -42,6 +46,7 @@ struct nightDB
             {6, object {SDL_FRect {100, 100, 400, 400}}},
             {7, object {SDL_FRect {100, 100, 400, 400}}},
             {9, object {SDL_FRect {100, 100, 400, 400}}},
+            {12, object {SDL_FRect {100, 100, 400, 400}}}
         }
     };
 };

@@ -28,7 +28,7 @@ private:
                 labtop.changeVisible();
             }
             
-            office.openAll();
+            office.changeDoorStatus(0);
         }
     }
     void draw() override
@@ -112,8 +112,8 @@ public:
         {
             if(key.key == SDLK_A){ office.changeCameraPosition(0); }
             else if(key.key == SDLK_D){ office.changeCameraPosition(1); }
-            else if(!_data->rechargEnergy && key.key == SDLK_S){ office.changeDoorStatus(); }
-            else if(!_data->rechargEnergy && key.key == SDLK_F){ office.useDoorFlesh(); }
+            else if(!_data->rechargEnergy && key.key == SDLK_S){ office.changeDoorStatus(1); }
+            else if(!_data->rechargEnergy && key.key == SDLK_F){ office.changeDoorStatus(2); }
         }
     }
 private:

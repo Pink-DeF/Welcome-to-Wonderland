@@ -15,6 +15,61 @@
 class OfficeScene : public Scene
 {
 private:
+    class _Door
+    {
+    public:
+        _Door(){}
+        _Door(object obj): _position(obj){}
+
+        object getPosition(){ return _position; }
+        bool getStatus(){ return _closeStatus; }
+
+        void changeDoorStatus(size_t target)
+        {
+            switch(target)
+            {
+                case(0):
+                    _closeStatus = _flashStatus = 0;
+                    break;
+                case(1):
+                    _closeStatus = _flashStatus == 0 ? !_closeStatus : _closeStatus;
+                    break;
+                case(2):
+                    _flashStatus = _closeStatus == 0 ? !_flashStatus : _flashStatus;
+                    break;
+            }
+        }
+
+        void changeDoorColor()
+        {
+            if(_flashStatus)
+            {
+                _position.color.r = 255;
+                _position.color.g = 255;
+            }
+            else if(_closeStatus)
+            {
+                _position.color.r = 255;
+                _position.color.g = 0;
+            }
+            else
+            {
+                _position.color.r = 0;
+                _position.color.g = 255;
+            }
+        }
+
+        float useEnergy()
+        {
+            return _flashStatus || _closeStatus ? -1.5 : 0;
+        }
+
+    private:
+        object _position;
+
+        bool _closeStatus = 0;
+        bool _flashStatus = 0;
+    };
     //Методы связанные с вращением на пятой точке
     void move()
     {
@@ -26,48 +81,12 @@ private:
         }
     }
     //Измение текстуры двери
-    void changeDoorColor()
-    {
-        if(_leftFlesh)
-        {
-            _objects[1].color.r = 255;
-            _objects[1].color.g = 255;
-        }
-        else if(_leftDoorStatus)
-        {
-            _objects[1].color.r = 255;
-            _objects[1].color.g = 0;
-        }
-        else
-        {
-            _objects[1].color.r = 0;
-            _objects[1].color.g = 255;
-        }
-
-        if(_rightFlesh)
-        {
-            _objects[2].color.r = 255;
-            _objects[2].color.g = 255;
-        }
-        else if(_rightDoorStatus)
-        {
-            _objects[2].color.r = 255;
-            _objects[2].color.g = 0;
-        }
-        else
-        {
-            _objects[2].color.r = 0;
-            _objects[2].color.g = 255;
-        }
-    }
     
     void calculateEnergy()
     {
-        if(_rightDoorStatus + _leftFlesh + _leftDoorStatus + _rightFlesh == 0 && _visible){ _data->energy += 3; }
-        else
+        if(_visible)
         {
-            _data->energy += _rightDoorStatus || _leftFlesh ? -1.5 : 0;
-            _data->energy += _leftDoorStatus || _rightFlesh ? -1.5 : 0;
+            _data->energy += _leftDoor.useEnergy() + _rightDoor.useEnergy() == 0 ? 3 : _leftDoor.useEnergy() + _rightDoor.useEnergy();
         }
     }
 public:
@@ -75,8 +94,10 @@ public:
     OfficeScene(){}
     OfficeScene(std::array<object, SIZE_OFFICE> &&tmp, std::shared_ptr<nightDB> data): _data(data)
     {
-        //std::cout << 1 << std::endl;
-        _objects = std::move(tmp); 
+        _office = tmp[0];
+        _leftDoor = _Door(tmp[1]);
+        _rightDoor = _Door(tmp[2]);
+
         _viewport = {-_data->width, 0, 3 * _data->width, _data->height};
     }
 
@@ -88,11 +109,9 @@ public:
             move();
 
             SDL_SetRenderViewport(renderer, &_viewport);
-            for(auto i: _objects)
-            {
-                SDL_SetRenderDrawColor(renderer, i.color.r, i.color.g, i.color.b, i.color.a);
-                SDL_RenderFillRect(renderer, &(i.position));
-            }
+            _office.draw();
+            _leftDoor.getPosition().draw();
+            _rightDoor.getPosition().draw();
 
         }
 
@@ -102,56 +121,30 @@ public:
 
     //Geters
     int getCameraPosition(){ return _cameraPosition; }
-    int getLeftDoorStatus(){ return _leftDoorStatus ? 1 : 0;}
-    int getRightDoorStatus(){ return _rightDoorStatus ? 1 : 0;}
+    int getLeftDoorStatus(){ return _leftDoor.getStatus();}
+    int getRightDoorStatus(){ return _rightDoor.getStatus();}
     bool noMove()
     {
         return _cameraPosition == _cameraTargetPosition ? 1 : 0;
     }
 
     //chengers
-    void openAll()
+    void changeDoorStatus(size_t target)
     {
-        _leftDoorStatus = 0;
-        _rightDoorStatus = 0;
-
-        _leftFlesh = 0;
-        _rightFlesh = 0;
-        
-        changeDoorColor();
-    }
-    void changeDoorStatus()
-    {
-        if(noMove())
-        {
-            switch(_cameraPosition)
-                {
-                case(-1):
-                    _leftDoorStatus = _leftFlesh == 0 ? !_leftDoorStatus : _leftDoorStatus;
-                    break;
-                case(1):
-                    _rightDoorStatus = _rightFlesh == 0 ? !_rightDoorStatus : _rightDoorStatus;
-                    break;
-                }
-        }
-        changeDoorColor();
-    }
-
-    void useDoorFlesh()
-    {
-        if(noMove())
+        if(noMove() && target <= 3)
         {
             switch(_cameraPosition)
             {
                 case(-1):
-                    _leftFlesh = _leftDoorStatus == 0 ? !_leftFlesh : _leftFlesh;
+                    _leftDoor.changeDoorStatus(target);
+                    _leftDoor.changeDoorColor();
                     break;
                 case(1):
-                    _rightFlesh = _rightDoorStatus == 0 ? !_rightFlesh : _rightFlesh;
+                    _rightDoor.changeDoorStatus(target);
+                    _rightDoor.changeDoorColor();
                     break;
             }
         }
-        changeDoorColor();
     }
 
     void changeCameraPosition(bool direct)
@@ -168,13 +161,10 @@ public:
     }
 private:
     std::shared_ptr<nightDB> _data;
-    std::array<object, SIZE_OFFICE> _objects;
 
-    bool _leftDoorStatus = 0;
-    bool _rightDoorStatus = 0;
-
-    bool _leftFlesh= 0;
-    bool _rightFlesh = 0;
+    _Door _leftDoor;
+    _Door _rightDoor;
+    object _office;
 
     SDL_Rect _viewport; 
     float _timePar = 0;
