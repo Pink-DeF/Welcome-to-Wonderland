@@ -6,8 +6,7 @@
 #include <cmath>
 #include "preset.h"
 
-#define ENERGY_CAPACITY 3000.0
-
+using namespace GameConstant;
 struct object
 {
     void draw()
@@ -37,7 +36,7 @@ struct nightDB
 
     std::array<size_t, 4> enemyPosition;
     
-    std::array<std::map<size_t, object>, 4> enemyFrame =
+    std::array<std::map<size_t, object>, ENEMY_COUNT> enemyFrame =
     {
         std::map<size_t, object>
         {

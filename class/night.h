@@ -9,9 +9,7 @@
 #include "labtop.h"
 #include "enemy.h"
 
-#define ENEMY_COUNT 4
-#define BASED_NIGHT_TIME 10000
-
+using namespace GameConstant;
 class Night : public Scene
 {
 private:
@@ -125,6 +123,5 @@ private:
     SpringTime _springTime {_data};
 
     OfficeScene office; 
-
     LabtopScene labtop;
 };

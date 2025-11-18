@@ -7,8 +7,8 @@
 #include <cstdlib>
 
 #include "office.h"
-//using namespace std;
 
+using namespace GameConstant;
 class Enemy
 {
 public:

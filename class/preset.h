@@ -4,10 +4,25 @@
 #include <array>
 #include <cmath>
 
+namespace GameConstant
+{
+    constexpr size_t WIDTH = 1020;
+    constexpr size_t HEIGHT = 800;
+
+    constexpr float ENERGY_CAPACITY = 3000.0;
+
+    constexpr size_t ENEMY_COUNT = 4;
+    constexpr size_t BASED_NIGHT_TIME = 10000;
+
+    constexpr size_t SIZE_LABTOP = 10;
+    constexpr size_t SHOCK_TIME_RELOAD = 300;
+};
+
+using namespace GameConstant;
 class GameConfig
 {
 private:
-    GameConfig(){}
+    GameConfig(): _width(WIDTH), _height(HEIGHT){}
     ~GameConfig(){}
 
     GameConfig(GameConfig const&);
@@ -20,8 +35,8 @@ public:
         return config;
     }
 
-    int getWidth(){ return _width; }
-    int getHeight(){ return _height; }
+    size_t getWidth(){ return _width; }
+    size_t getHeight(){ return _height; }
 
     void changeGameStatus(){ _gameStatus = !_gameStatus; }
     bool getGameStatus(){ return _gameStatus; }
@@ -29,8 +44,8 @@ public:
     size_t getNight(){ return _night; }
 
 private:
-    int _width = 1020;
-    int _height = 800;
+    size_t _width = 600;
+    size_t _height = 300;
 
     bool _gameStatus = 1;
     size_t _night = 1;

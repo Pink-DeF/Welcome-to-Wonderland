@@ -7,9 +7,7 @@
 #include "preset.h"
 #include "classes.h"
 
-#define SIZE_LABTOP 10
-#define SHOCK_TIME_RELOAD 300
-
+using namespace GameConstant;
 class LabtopScene: public Scene
 {
 private:
