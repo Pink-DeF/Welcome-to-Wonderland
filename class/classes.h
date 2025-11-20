@@ -45,7 +45,7 @@ struct nightDB
             {6, object {SDL_FRect {100, 100, 400, 400}}},
             {7, object {SDL_FRect {100, 100, 400, 400}}},
             {9, object {SDL_FRect {100, 100, 400, 400}}},
-            {12, object {SDL_FRect {100, 100, 400, 400}}}
+            {10, object {SDL_FRect {100, 100, 400, 400}}}
         }
     };
 };

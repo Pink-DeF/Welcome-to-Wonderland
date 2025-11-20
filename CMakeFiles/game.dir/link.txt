@@ -1,1 +1,0 @@
-/nix/store/fbfcll570w9vimfbh41f9b4rrwnp33f3-clang-wrapper-19.1.7/bin/clang++ -Xlinker --dependency-file=CMakeFiles/game.dir/link.d CMakeFiles/game.dir/main.cpp.o -o game  /nix/store/4z71j4ir0pb709f17mqg1bfy1jc9kmwf-sdl3-3.2.20-lib/lib/libSDL3.so.0.2.20

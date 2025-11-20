@@ -10,12 +10,15 @@ namespace GameConstant
     constexpr size_t HEIGHT = 800;
 
     constexpr float ENERGY_CAPACITY = 3000.0;
+    constexpr size_t BASED_NIGHT_TIME = 10000;
 
     constexpr size_t ENEMY_COUNT = 4;
-    constexpr size_t BASED_NIGHT_TIME = 10000;
 
     constexpr size_t SIZE_LABTOP = 10;
     constexpr size_t SHOCK_TIME_RELOAD = 300;
+
+    constexpr size_t SIZE_OFFICE  = 3;
+    constexpr float TIME_PAR = 0.05;
 };
 
 using namespace GameConstant;

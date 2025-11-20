@@ -9,9 +9,7 @@
 #include "preset.h"
 #include "classes.h"
 
-#define TIME_PAR 0.05
-#define SIZE_OFFICE 3
-
+using namespace GameConstant;
 class OfficeScene : public Scene
 {
 private:
@@ -38,6 +36,7 @@ private:
                     _flashStatus = _closeStatus == 0 ? !_flashStatus : _flashStatus;
                     break;
             }
+            changeDoorColor();
         }
 
         void changeDoorColor()
@@ -137,11 +136,9 @@ public:
             {
                 case(-1):
                     _leftDoor.changeDoorStatus(target);
-                    _leftDoor.changeDoorColor();
                     break;
                 case(1):
                     _rightDoor.changeDoorStatus(target);
-                    _rightDoor.changeDoorColor();
                     break;
             }
         }
