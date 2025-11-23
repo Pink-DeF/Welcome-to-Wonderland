@@ -41,6 +41,9 @@ SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event)
         case SDL_EVENT_KEY_DOWN:
             game.gameEvent(event->key);
             break;
+        case SDL_EVENT_MOUSE_MOTION:
+            game.mouseEvent(event->motion);
+            break;
     }
     return SDL_APP_CONTINUE;
 }

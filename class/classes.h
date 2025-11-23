@@ -19,6 +19,15 @@ struct object
     SDL_Color color = {0, 0, 0, 0};
 };
 
+struct paralax
+{
+    float currentPositionX = 0.0f;
+    float currentPositionY= 0.0f;
+
+    float targetPositionX = 0.0f;
+    float targetPositionY= 0.0f;
+};
+
 struct nightDB
 {
     nightDB(size_t data): night(data){}

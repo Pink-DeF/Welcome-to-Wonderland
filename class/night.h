@@ -31,8 +31,8 @@ private:
     }
     void draw() override
     {
-        SDL_SetRenderViewport(renderer, NULL);
-        SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+        //SDL_SetRenderViewport(renderer, NULL);
+        SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
         SDL_RenderClear(renderer);
 
         office.draw();
@@ -53,7 +53,7 @@ public:
         {
             std::array<object, SIZE_OFFICE>
                 {
-                    object {{0, 0, (float)_data->width * 3, (float)_data->height}, {0, 0, 255, 255}}, //Офисс
+                    object {{-(float)_data->width, -(float)_data->height * 0.5f, (float)_data->width * 4, (float)_data->height * 2}, {0, 0, 255, 255}}, //Офисс
                     object {{0, (float)_data->height / 10, (float)_data->width * 2 / 5, (float)_data->height * 5 / 10}, {0, 255, 0, 255}},//Окно
                     object {{(float)_data->width * 13 / 5, (float)_data->height / 10, (float)_data->width * 2 / 5, (float)_data->height * 9 / 10}, {0, 255, 0, 255}}//Дверь
                 }, _data
@@ -90,7 +90,7 @@ public:
         return SDL_APP_CONTINUE;
     }
 
-    void gameEvent(SDL_KeyboardEvent key)
+    void gameEvent(SDL_KeyboardEvent& key)
     {
         if(key.key == SDLK_S && !office.getCameraPosition() && !_data->rechargEnergy)
         {
@@ -110,6 +110,14 @@ public:
             else if(!_data->rechargEnergy && key.key == SDLK_F){ office.changeDoorStatus(2); }
         }
     }
+    void mouseEvent(SDL_MouseMotionEvent& motion)
+    {
+        if(office.itVisible())
+        {
+            office.mouseMotion(motion);
+        }
+    }
+
 private:
     bool _live = 1;
     size_t _nightTime = BASED_NIGHT_TIME;

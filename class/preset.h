@@ -18,7 +18,8 @@ namespace GameConstant
     constexpr size_t SHOCK_TIME_RELOAD = 300;
 
     constexpr size_t SIZE_OFFICE  = 3;
-    constexpr float TIME_PAR = 0.05;
+    constexpr float TIME_PAR = 0.05f;
+    constexpr float PARALAX_INTENSITY = 0.04f;
 };
 
 enum class CameraName

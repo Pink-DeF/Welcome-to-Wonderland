@@ -99,13 +99,15 @@ private:
         { 
             _timePar = 0; 
             _cameraPosition = _cameraTargetPosition;
-            _viewport.x = -(_data->width * (_cameraPosition + 1));
+            _posViewport.x = -(_data->width * (_cameraPosition + 1));
         }
         else if(_cameraPosition != _cameraTargetPosition)
         {
-            _viewport.x -= (_data->width * _cameraTargetPosition - _data->width * _cameraPosition) * TIME_PAR;
+            _posViewport.x -= (_data->width * _cameraTargetPosition - _data->width * _cameraPosition) * TIME_PAR;
             _timePar += TIME_PAR;
         }
+
+        useParalax();
     }
     //Измение текстуры двери
     
@@ -116,6 +118,15 @@ private:
             _data->energy += _leftDoor.useEnergy() + _rightDoor.useEnergy() == 0 ? 3 : _leftDoor.useEnergy() + _rightDoor.useEnergy();
         }
     }
+    void useParalax()
+    {
+        _paralax.currentPositionX = (_paralax.targetPositionX - _paralax.currentPositionX) * 0.7f;
+        _paralax.currentPositionY = (_paralax.targetPositionX - _paralax.currentPositionY) * 0.7f;
+
+        _viewport.x = _paralax.currentPositionX + static_cast<int>(_posViewport.x);
+        _viewport.y = _paralax.currentPositionY + static_cast<int>(_posViewport.y);
+    }
+
 public:
     //Конструктор
     OfficeScene(){}
@@ -125,6 +136,7 @@ public:
         _leftDoor = _Door(tmp[1]);
         _rightDoor = _Door(tmp[2]);
 
+        _posViewport = {-_data->width, 0, 3 * _data->width, _data->height};
         _viewport = {-_data->width, 0, 3 * _data->width, _data->height};
     }
 
@@ -187,13 +199,24 @@ public:
             _cameraTargetPosition = _cameraTargetPosition != -1 ? _cameraTargetPosition - 1 : _cameraTargetPosition;
         }
     }
+    void mouseMotion(SDL_MouseMotionEvent& motion)
+    {
+        if(_visible)
+        {
+            _paralax.targetPositionX = ((motion.x / (float)_data->width) * 2.0f - 1.0f) * PARALAX_INTENSITY * _data->width;
+            _paralax.targetPositionY = ((motion.y / (float)_data->height) * 2.0f - 1.0f) * PARALAX_INTENSITY * _data->height;
+        }
+    }
+
 private:
     std::shared_ptr<nightDB> _data;
 
+    std::array<object,SIZE_OFFICE> _office;
     _Door _leftDoor;
     _Door _rightDoor;
-    std::array<object,SIZE_OFFICE> _office;
 
+    paralax _paralax;
+    SDL_Rect _posViewport;
     SDL_Rect _viewport; 
     float _timePar = 0;
     int _cameraPosition = 0; 
