@@ -2,6 +2,7 @@
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
 #include <array>
+#include <vector>
 #include <cmath>
 #include <ctime>
 #include <cstdlib>
@@ -12,107 +13,81 @@ using namespace GameConstant;
 class Enemy
 {
 public:
-    virtual int move() = 0;
+    virtual int move(size_t enemyPosition) = 0;
     virtual bool attack(int doorStatus) = 0;
 
 protected:
-    virtual void rollback() = 0;
-    virtual void killcam() = 0;
-
+    virtual size_t calculatePosition(size_t enemyPosition) = 0;
+    virtual size_t selectPosition(std::vector<std::pair<size_t, float>>& weights) =0;
+    size_t _night = 0;
     std::shared_ptr<nightDB> _data;
 
-    int _enemyPosition;
     bool _enemyActive = 0;
 
-    size_t _timeOut = 0;
-    size_t _timeWait = 0;
+    size_t _timeCooldawn = 0;
 };
 
 class SpringTime : public Enemy
 {
 private:
-    void rollback() override
+    size_t calculatePosition(size_t enemyPosition) override
     {
-        switch(_enemyPosition)
+        std::vector<std::pair<size_t, float>> weights;
+
+        switch(enemyPosition)
         {
-            case(7): //0->7
-                _enemyPosition = 0;
+            case 0:
+                weights = { {4, 0.3f}, {7, 0.7f} };
                 break;
-            case(9): //9->attack right
-                _enemyPosition = 7;
+            case 4:
+                weights = { {0, 0.3f}, {5, 0.7f} };
                 break;
-            case(5): //5->6
-                _enemyPosition = 7;
+            case 5:
+                weights = { {4, 0.2f}, {6, 0.6f}, {9, 0.2f} };
+                break;
+            case 6:
+                weights = { {0, 1.0f} };
+                break;
+            case 7:
+                weights = { {0, 0.3f}, {9, 0.7f} };
+                break;
+            case 9:
+                weights = { {10, 0.9f}, {6, 0.1f} };
+                break;
+            case 10:
+                weights = { {0, 1.0f} };
+                break;
+            default:
+                weights = { {0, 1.0f} };
                 break;
         }
+        return selectPosition(weights);
+    }
+    
+    size_t selectPosition(std::vector<std::pair<size_t, float>>& weights) override 
+    {
+        return 0;
     }
 
-    void killcam() override
-    {
-    }
 public:
     SpringTime(std::shared_ptr<nightDB> data)
     {
         _data = data;
-        _enemyPosition = 0;
+        _night = _data->night;
         _enemyActive = 1;
     }
 
-    int move() override
+    int move(size_t enemyPosition) override
     {
-        if(_enemyActive && _enemyPosition != 10)
+        if(_enemyActive)
         {
-            if(_timeOut * _data->night >=  500)
-            {
-                if(std::rand() % 10 >= 7){ rollback(); }
-                switch(_enemyPosition)
-                {
-                    case(0): //0->7
-                        _enemyPosition = 7;
-                        break;
-                    case(7): //7->5 || 7->9
-                        if(std::rand() % 10 >= 11){ _enemyPosition = 5; }
-                        else { _enemyPosition = 9; }
-                        break;
-                    case(9): //9->attack right
-                        _enemyPosition = 10;
-                        break;
-                    case(5): //5->6
-                        _enemyPosition = 6;
-                        break;
-                    case(6): //6-> do any && return
-                        _data->energy = -3000.0;
-                        _data->rechargEnergy = 1;
-                        _enemyPosition = 0;
-                        break;
-                }
-
-                _timeOut = 0;
-            }
-            _timeOut++;
+            enemyPosition = calculatePosition(enemyPosition);
         }
-        return _enemyPosition;
+        return enemyPosition;
     }
 
     bool attack(int doorStatus) override
     {
-        if(_enemyPosition == 10)
-        {
-            if(_timeWait >= 500 + std::rand() % (7200 / _data->night))
-            {
-                if(doorStatus != 1)
-                {
-                    killcam();
-                    return 0;
-                }
-                _enemyPosition = 0;
-
-                _timeWait = 0;
-            }
-            _timeWait++;
-        }
-
-        _timeWait = 0;
         return 1;
     }
 };

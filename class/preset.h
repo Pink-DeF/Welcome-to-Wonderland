@@ -6,7 +6,7 @@
 
 namespace GameConstant
 {
-    constexpr size_t WIDTH = 1020;
+    constexpr size_t WIDTH = 1024;
     constexpr size_t HEIGHT = 800;
 
     constexpr float ENERGY_CAPACITY = 3000.0;
@@ -19,6 +19,20 @@ namespace GameConstant
 
     constexpr size_t SIZE_OFFICE  = 3;
     constexpr float TIME_PAR = 0.05;
+};
+
+enum class CameraName
+{
+    SCENE = 0,
+    CAM_1 = 1,
+    CAM_2 = 2,
+    CAM_3 = 3,
+    CAM_4 = 4,
+    CAM_5 = 5,
+    CAM_6 = 6,
+    CAM_7 = 7,
+    CAM_8 = 8,
+    CAM_9 = 9
 };
 
 using namespace GameConstant;
@@ -41,6 +55,9 @@ public:
     size_t getWidth(){ return _width; }
     size_t getHeight(){ return _height; }
 
+    //void setWidth(size_t  width){ _width = width; }
+    //void setHeight(size_t height){ _height = height; }
+
     void changeGameStatus(){ _gameStatus = !_gameStatus; }
     bool getGameStatus(){ return _gameStatus; }
 
@@ -56,8 +73,8 @@ private:
 
 static GameConfig& config = GameConfig::Instance();
 
-static SDL_Window* window;
-static SDL_Renderer* renderer;
+extern SDL_Window* window;
+extern SDL_Renderer* renderer;
 
 //static const SDL_Rect full_viewport = {-width, 0, 3 * width, height};
 

@@ -72,7 +72,12 @@ private:
     //Методы связанные с вращением на пятой точке
     void move()
     {
-        if(_timePar > 1.0){ _timePar = 0; _cameraPosition = _cameraTargetPosition; }
+        if(_timePar > 1.0 - TIME_PAR)
+        { 
+            _timePar = 0; 
+            _cameraPosition = _cameraTargetPosition;
+            _viewport.x = -(_data->width * (_cameraPosition + 1));
+        }
         else if(_cameraPosition != _cameraTargetPosition)
         {
             _viewport.x -= (_data->width * _cameraTargetPosition - _data->width * _cameraPosition) * TIME_PAR;

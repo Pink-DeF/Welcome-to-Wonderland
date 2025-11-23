@@ -42,15 +42,11 @@ private:
 
     void enemyMove()
     {
-        for(int i = 0; i < 4; i++)
-        {
-            _data->enemyPosition[i] = _springTime.move();
-            _live = _springTime.attack(office.getLeftDoorStatus());
-        }
+        _live = _springTime.attack(office.getLeftDoorStatus());
+        _data->enemyPosition[0] = _springTime.move(_data->enemyPosition[0]);
     }
 
 public:
-    Night() {}
     Night(size_t night): _data(std::make_shared<nightDB>(night))
     {
         office = OfficeScene //Сцена Офиса и его компонентов
