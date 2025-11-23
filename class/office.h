@@ -15,46 +15,63 @@ class OfficeScene : public Scene
 private:
     class _Door
     {
+    private:
+        void animate()
+        {
+            if(_timePar > 1.0 - TIME_PAR)
+            { 
+                _timePar = 0; 
+                _closeAnimStatus = 0;
+
+                _close.position.h = _closeStatus ? _height : 0;
+            }
+            else if(_closeAnimStatus)
+            {
+                _close.position.h += (int)(_height * _closeStatus - (_height * ! _closeStatus))* TIME_PAR;
+                _timePar += TIME_PAR;
+            }
+        }
+
     public:
         _Door(){}
-        _Door(object obj): _position(obj){}
+        _Door(object obj): _close(obj), _flash(obj), _height(obj.position.h)
+        {
+            _close.color.r = 255;
+            _close.color.g = 0;
+            _close.position.h = 0;
 
-        object getPosition(){ return _position; }
+            _flash.color.r = 255;
+            _flash.color.g = 255;
+        }
+
         bool getStatus(){ return _closeStatus; }
+
+        void draw()
+        {
+            animate();
+            if(_closeStatus || _closeAnimStatus){ _close.draw(); }
+            else if(_flashStatus){ _flash.draw(); }
+        }
 
         void changeDoorStatus(size_t target)
         {
-            switch(target)
+            if(!_closeAnimStatus)
             {
-                case(0):
-                    _closeStatus = _flashStatus = 0;
-                    break;
-                case(1):
-                    _closeStatus = _flashStatus == 0 ? !_closeStatus : _closeStatus;
-                    break;
-                case(2):
-                    _flashStatus = _closeStatus == 0 ? !_flashStatus : _flashStatus;
-                    break;
-            }
-            changeDoorColor();
-        }
-
-        void changeDoorColor()
-        {
-            if(_flashStatus)
-            {
-                _position.color.r = 255;
-                _position.color.g = 255;
-            }
-            else if(_closeStatus)
-            {
-                _position.color.r = 255;
-                _position.color.g = 0;
-            }
-            else
-            {
-                _position.color.r = 0;
-                _position.color.g = 255;
+                bool tmp = _closeStatus;
+                switch(target)
+                {
+                    case(0):
+                        _closeStatus = _flashStatus = 0;
+                        _closeAnimStatus = _closeStatus ? 1 : 0;
+                        break;
+                    case(1):
+                        _closeStatus = _flashStatus == 0 ? !_closeStatus : _closeStatus;
+                        _closeAnimStatus = tmp != _closeStatus ? 1 : 0;
+                        break;
+                    case(2):
+                        _flashStatus = _closeStatus == 0 ? !_flashStatus : _flashStatus;
+                        break;
+                }
             }
         }
 
@@ -64,9 +81,15 @@ private:
         }
 
     private:
-        object _position;
+        size_t _height = 0;
+        object _close;
+        object _flash;
+
+        bool inAnimation = 0;
+        float _timePar = 0;
 
         bool _closeStatus = 0;
+        bool _closeAnimStatus = 0;
         bool _flashStatus = 0;
     };
     //Методы связанные с вращением на пятой точке
@@ -98,7 +121,7 @@ public:
     OfficeScene(){}
     OfficeScene(std::array<object, SIZE_OFFICE> &&tmp, std::shared_ptr<nightDB> data): _data(data)
     {
-        _office = tmp[0];
+        _office = tmp;
         _leftDoor = _Door(tmp[1]);
         _rightDoor = _Door(tmp[2]);
 
@@ -113,9 +136,12 @@ public:
             move();
 
             SDL_SetRenderViewport(renderer, &_viewport);
-            _office.draw();
-            _leftDoor.getPosition().draw();
-            _rightDoor.getPosition().draw();
+            for(size_t i = 0; i < SIZE_OFFICE; i++)
+            {
+                _office[i].draw();
+            }
+            _leftDoor.draw();
+            _rightDoor.draw();
 
         }
 
@@ -166,7 +192,7 @@ private:
 
     _Door _leftDoor;
     _Door _rightDoor;
-    object _office;
+    std::array<object,SIZE_OFFICE> _office;
 
     SDL_Rect _viewport; 
     float _timePar = 0;
