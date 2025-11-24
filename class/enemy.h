@@ -73,7 +73,7 @@ public:
     SpringTime(std::shared_ptr<nightDB> data)
     {
         _data = data;
-        _night = _data->night;
+        _night = config.getNight();
         _enemyActive = 1;
     }
 

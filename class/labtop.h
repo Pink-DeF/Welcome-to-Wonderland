@@ -18,14 +18,14 @@ private:
         CameraScene(){}
         CameraScene(SDL_Color tmp, std::shared_ptr<nightDB> data): _data(data)
         {
-            _object = object { SDL_FRect { 0, 0, (float)_data->width, (float)_data->height }, tmp};
-            _viewport = {0, 0, 2 * _data->width, _data->height};
+            _object = object { SDL_FRect { 0, 0, static_cast<float>(config.getWidth()), (float)_data->height }, tmp};
+            _viewport = {0, 0, 2 * static_cast<int>(config.getWidth()), _data->height};
         }
  
         void move(bool direct)
         {
-            if(direct && _data->width <= _data->width / 2){ _viewport.x += _data->width * 0.05; }
-            else if(!direct && _data->width >= 0){ _viewport.x -= _data->width * 0.05; }
+            if(direct && config.getWidth() <= config.getWidth() / 2){ _viewport.x += config.getWidth() * 0.05; }
+            else if(!direct && config.getWidth() >= 0){ _viewport.x -= config.getWidth() * 0.05; }
         }
 
         //Ппросто отрисовка

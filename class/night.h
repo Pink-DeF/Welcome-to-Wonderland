@@ -53,9 +53,9 @@ public:
         {
             std::array<object, SIZE_OFFICE>
                 {
-                    object {{-(float)_data->width, -(float)_data->height * 0.5f, (float)_data->width * 4, (float)_data->height * 2}, {0, 0, 255, 255}}, //Офисс
-                    object {{0, (float)_data->height / 10, (float)_data->width * 2 / 5, (float)_data->height * 5 / 10}, {0, 255, 0, 255}},//Окно
-                    object {{(float)_data->width * 13 / 5, (float)_data->height / 10, (float)_data->width * 2 / 5, (float)_data->height * 9 / 10}, {0, 255, 0, 255}}//Дверь
+                    object {{-static_cast<float>(config.getWidth()), -(float)_data->height * 0.5f, static_cast<float>(config.getWidth())* 4, (float)_data->height * 2}, {0, 0, 255, 255}}, //Офисс
+                    object {{0, (float)_data->height / 10, static_cast<float>(config.getWidth()) * 2 / 5, (float)_data->height * 5 / 10}, {0, 255, 0, 255}},//Окно
+                    object {{static_cast<float>(config.getWidth()) * 13 / 5, (float)_data->height / 10, static_cast<float>(config.getWidth()) * 2 / 5, (float)_data->height * 9 / 10}, {0, 255, 0, 255}}//Дверь
                 }, _data
         };
 

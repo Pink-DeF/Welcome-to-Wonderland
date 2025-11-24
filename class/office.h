@@ -27,7 +27,7 @@ private:
             }
             else if(_closeAnimStatus)
             {
-                _close.position.h += (int)(_height * _closeStatus - (_height * ! _closeStatus))* TIME_PAR;
+                _close.position.h += (int)(_height * _closeStatus - (_height * ! _closeStatus)) * TIME_PAR;
                 _timePar += TIME_PAR;
             }
         }
@@ -99,11 +99,11 @@ private:
         { 
             _timePar = 0; 
             _cameraPosition = _cameraTargetPosition;
-            _posViewport.x = -(_data->width * (_cameraPosition + 1));
+            _posViewport.x = -(static_cast<int>(config.getWidth()) * (_cameraPosition + 1));
         }
         else if(_cameraPosition != _cameraTargetPosition)
         {
-            _posViewport.x -= (_data->width * _cameraTargetPosition - _data->width * _cameraPosition) * TIME_PAR;
+            _posViewport.x -= (config.getWidth() * _cameraTargetPosition - config.getWidth() * _cameraPosition) * TIME_PAR;
             _timePar += TIME_PAR;
         }
 
@@ -121,10 +121,10 @@ private:
     void useParalax()
     {
         _paralax.currentPositionX = (_paralax.targetPositionX - _paralax.currentPositionX) * 0.7f;
-        _paralax.currentPositionY = (_paralax.targetPositionX - _paralax.currentPositionY) * 0.7f;
+        _paralax.currentPositionY = (_paralax.targetPositionY - _paralax.currentPositionY) * 0.7f;
 
-        _viewport.x = _paralax.currentPositionX + static_cast<int>(_posViewport.x);
-        _viewport.y = _paralax.currentPositionY + static_cast<int>(_posViewport.y);
+        _viewport.x = -_paralax.currentPositionX + static_cast<int>(_posViewport.x);
+        _viewport.y = -_paralax.currentPositionY + static_cast<int>(_posViewport.y);
     }
 
 public:
@@ -136,8 +136,8 @@ public:
         _leftDoor = _Door(tmp[1]);
         _rightDoor = _Door(tmp[2]);
 
-        _posViewport = {-_data->width, 0, 3 * _data->width, _data->height};
-        _viewport = {-_data->width, 0, 3 * _data->width, _data->height};
+        _posViewport = {-static_cast<int>(config.getWidth()), 0, 3 * static_cast<int>(config.getWidth()), _data->height};
+        _viewport = _posViewport;
     }
 
     //Ппросто отрисовка
@@ -203,7 +203,7 @@ public:
     {
         if(_visible)
         {
-            _paralax.targetPositionX = ((motion.x / (float)_data->width) * 2.0f - 1.0f) * PARALAX_INTENSITY * _data->width;
+            _paralax.targetPositionX = ((motion.x / (float)config.getWidth()) * 2.0f - 1.0f) * PARALAX_INTENSITY * config.getWidth();
             _paralax.targetPositionY = ((motion.y / (float)_data->height) * 2.0f - 1.0f) * PARALAX_INTENSITY * _data->height;
         }
     }

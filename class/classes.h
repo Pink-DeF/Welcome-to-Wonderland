@@ -30,16 +30,10 @@ struct paralax
 
 struct nightDB
 {
-    nightDB(size_t data): night(data){}
-
-    //render info
-
-    const int width = config.getWidth();
+    nightDB(size_t data){}
     const int height = config.getHeight();
     
     //game info
-    const size_t night = 1;
-
     float energy = ENERGY_CAPACITY;
     bool rechargEnergy = 0;
 

@@ -2,12 +2,13 @@
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
 #include <array>
+#include <fstream>
 #include <cmath>
 
 namespace GameConstant
 {
-    constexpr size_t WIDTH = 1024;
-    constexpr size_t HEIGHT = 800;
+    constexpr int WIDTH = 1024;
+    constexpr int HEIGHT = 800;
 
     constexpr float ENERGY_CAPACITY = 3000.0;
     constexpr size_t BASED_NIGHT_TIME = 10000;
@@ -19,7 +20,7 @@ namespace GameConstant
 
     constexpr size_t SIZE_OFFICE  = 3;
     constexpr float TIME_PAR = 0.05f;
-    constexpr float PARALAX_INTENSITY = 0.04f;
+    constexpr float PARALAX_INTENSITY = 0.3f;
 };
 
 enum class CameraName
@@ -40,7 +41,7 @@ using namespace GameConstant;
 class GameConfig
 {
 private:
-    GameConfig(): _width(WIDTH), _height(HEIGHT){}
+    GameConfig(){ loadFromFile(); }
     ~GameConfig(){}
 
     GameConfig(GameConfig const&);
@@ -53,8 +54,25 @@ public:
         return config;
     }
 
-    size_t getWidth(){ return _width; }
-    size_t getHeight(){ return _height; }
+    void saveToFile()
+    {
+        std::ofstream file("save.dat", std::ios::binary);
+        if(file)
+        {
+            file.write(reinterpret_cast<const char*>(this), sizeof(GameConfig));
+        }
+    }
+    void loadFromFile()
+    {
+        std::ifstream file("save.dat", std::ios::binary);
+        if(file)
+        {
+            file.read(reinterpret_cast<char*>(this), sizeof(GameConfig));
+        }
+    }
+
+    int getWidth(){ return _width; }
+    int getHeight(){ return _height; }
 
     //void setWidth(size_t  width){ _width = width; }
     //void setHeight(size_t height){ _height = height; }
@@ -65,20 +83,19 @@ public:
     size_t getNight(){ return _night; }
 
 private:
-    size_t _width = 600;
-    size_t _height = 300;
+    std::array<size_t, SIZE_LABTOP> _cameraUsage = {0};
+    std::array<size_t, 2> _doorUsage = {0};
+
+    size_t _energyWaste = 0;
+    size_t _death = 0;
+
+    int _width = WIDTH;
+    int _height = HEIGHT;
 
     bool _gameStatus = 1;
     size_t _night = 1;
 };
-
 static GameConfig& config = GameConfig::Instance();
 
 extern SDL_Window* window;
 extern SDL_Renderer* renderer;
-
-//static const SDL_Rect full_viewport = {-width, 0, 3 * width, height};
-
-//static size_t fps = 0;
-
-//static bool attencion = 1;
