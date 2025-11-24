@@ -30,8 +30,7 @@ struct paralax
 
 struct nightDB
 {
-    nightDB(size_t data){}
-    const int height = config.getHeight();
+    nightDB(){}
     
     //game info
     float energy = ENERGY_CAPACITY;

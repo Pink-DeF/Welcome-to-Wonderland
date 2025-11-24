@@ -11,13 +11,12 @@
 SDL_Window* window = nullptr;
 SDL_Renderer* renderer = nullptr;
 
-Night game(1);
+Night game;
 SDL_AppResult SDL_AppInit(void** appstate, int argc, char* argv[])
 {
     if(!SDL_Init(SDL_INIT_VIDEO)) return SDL_APP_FAILURE;
 
     SDL_CreateWindowAndRenderer("Welcome to Wonderland", config.getWidth(), config.getHeight(), 0, &window, &renderer);
-    //game = Night(config.getNight());
 
     srand(time(nullptr));
 
@@ -28,6 +27,7 @@ SDL_AppResult SDL_AppIterate(void* appstate)
 {
     SDL_RenderPresent(renderer);
     SDL_Delay(15);
+    game = Night();
 
     return game.iterate();
 }

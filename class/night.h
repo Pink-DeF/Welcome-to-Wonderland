@@ -47,15 +47,15 @@ private:
     }
 
 public:
-    Night(size_t night): _data(std::make_shared<nightDB>(night))
+    Night(): _data(std::make_shared<nightDB>())
     {
         office = OfficeScene //Сцена Офиса и его компонентов
         {
             std::array<object, SIZE_OFFICE>
                 {
-                    object {{-static_cast<float>(config.getWidth()), -(float)_data->height * 0.5f, static_cast<float>(config.getWidth())* 4, (float)_data->height * 2}, {0, 0, 255, 255}}, //Офисс
-                    object {{0, (float)_data->height / 10, static_cast<float>(config.getWidth()) * 2 / 5, (float)_data->height * 5 / 10}, {0, 255, 0, 255}},//Окно
-                    object {{static_cast<float>(config.getWidth()) * 13 / 5, (float)_data->height / 10, static_cast<float>(config.getWidth()) * 2 / 5, (float)_data->height * 9 / 10}, {0, 255, 0, 255}}//Дверь
+                    object {{-static_cast<float>(config.getWidth()), -static_cast<float>(config.getHeight()) * 0.5f, static_cast<float>(config.getWidth())* 4, static_cast<float>(config.getHeight()) * 2}, {0, 0, 255, 255}}, //Офисс
+                    object {{0, static_cast<float>(config.getHeight()) / 10, static_cast<float>(config.getWidth()) * 2 / 5, static_cast<float>(config.getHeight()) * 5 / 10}, {0, 255, 0, 255}},//Окно
+                    object {{static_cast<float>(config.getWidth()) * 13 / 5, static_cast<float>(config.getHeight()) / 10, static_cast<float>(config.getWidth()) * 2 / 5, static_cast<float>(config.getHeight()) * 9 / 10}, {0, 255, 0, 255}}//Дверь
                 }, _data
         };
 
@@ -81,7 +81,7 @@ public:
     SDL_AppResult iterate()
     {
         if(_nightTime == 0 || _live == 0) return SDL_APP_SUCCESS;
-        //_data.nightTime--;
+        _nightTime--;
 
         setRechargEnergy();
         enemyMove();

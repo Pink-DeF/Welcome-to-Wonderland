@@ -136,7 +136,7 @@ public:
         _leftDoor = _Door(tmp[1]);
         _rightDoor = _Door(tmp[2]);
 
-        _posViewport = {-static_cast<int>(config.getWidth()), 0, 3 * static_cast<int>(config.getWidth()), _data->height};
+        _posViewport = {-config.getWidth(), 0, 3 * config.getWidth(), config.getHeight()};
         _viewport = _posViewport;
     }
 
@@ -203,8 +203,8 @@ public:
     {
         if(_visible)
         {
-            _paralax.targetPositionX = ((motion.x / (float)config.getWidth()) * 2.0f - 1.0f) * PARALAX_INTENSITY * config.getWidth();
-            _paralax.targetPositionY = ((motion.y / (float)_data->height) * 2.0f - 1.0f) * PARALAX_INTENSITY * _data->height;
+            _paralax.targetPositionX = ((motion.x /static_cast<float>(config.getWidth())) * 2.0f - 1.0f) * PARALAX_INTENSITY * config.getWidth();
+            _paralax.targetPositionY = ((motion.y / static_cast<float>(config.getHeight())) * 2.0f - 1.0f) * PARALAX_INTENSITY * config.getHeight();
         }
     }
 

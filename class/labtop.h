@@ -18,8 +18,8 @@ private:
         CameraScene(){}
         CameraScene(SDL_Color tmp, std::shared_ptr<nightDB> data): _data(data)
         {
-            _object = object { SDL_FRect { 0, 0, static_cast<float>(config.getWidth()), (float)_data->height }, tmp};
-            _viewport = {0, 0, 2 * static_cast<int>(config.getWidth()), _data->height};
+            _object = object { SDL_FRect { 0, 0, static_cast<float>(config.getWidth()), static_cast<float>(config.getHeight())}, tmp};
+            _viewport = {0, 0, 2 * config.getWidth(), config.getHeight()};
         }
  
         void move(bool direct)
