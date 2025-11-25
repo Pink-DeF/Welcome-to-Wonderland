@@ -27,7 +27,6 @@ SDL_AppResult SDL_AppIterate(void* appstate)
 {
     SDL_RenderPresent(renderer);
     SDL_Delay(15);
-    game = Night();
 
     return game.iterate();
 }

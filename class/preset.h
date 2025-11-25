@@ -86,7 +86,6 @@ private:
     std::array<size_t, SIZE_LABTOP> _cameraUsage = {0};
     std::array<size_t, 2> _doorUsage = {0};
 
-    size_t _energyWaste = 0;
     size_t _death = 0;
 
     int _width = WIDTH;
