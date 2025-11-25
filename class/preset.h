@@ -69,29 +69,35 @@ public:
         {
             file.read(reinterpret_cast<char*>(this), sizeof(GameConfig));
         }
+
+        _gameStatus = 0;
     }
 
     int getWidth(){ return _width; }
     int getHeight(){ return _height; }
 
-    //void setWidth(size_t  width){ _width = width; }
-    //void setHeight(size_t height){ _height = height; }
-
     void changeGameStatus(){ _gameStatus = !_gameStatus; }
+    void doStart(){ _startGame = 1; }
     bool getGameStatus(){ return _gameStatus; }
+    bool start()
+    {
+        if(_startGame)
+        {
+            _gameStatus = 1;
+            _startGame = 0;
+            return 1;
+        }
+        return 0;
+    }
 
     size_t getNight(){ return _night; }
 
 private:
-    std::array<size_t, SIZE_LABTOP> _cameraUsage = {0};
-    std::array<size_t, 2> _doorUsage = {0};
-
-    size_t _death = 0;
-
     int _width = WIDTH;
     int _height = HEIGHT;
 
-    bool _gameStatus = 1;
+    bool _gameStatus = 0;
+    bool _startGame = 0;
     size_t _night = 1;
 };
 static GameConfig& config = GameConfig::Instance();
