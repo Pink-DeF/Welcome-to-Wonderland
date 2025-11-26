@@ -36,6 +36,8 @@ struct nightDB
     float energy = ENERGY_CAPACITY;
     bool rechargEnergy = 0;
 
+    bool invertControl = 0;
+
     std::array<size_t, 4> enemyPosition;
     
     std::array<std::map<size_t, object>, ENEMY_COUNT> enemyFrame =
@@ -43,6 +45,7 @@ struct nightDB
         std::map<size_t, object>
         {
             {0, object {SDL_FRect {100, 100, 400, 400}}},
+            {4, object {SDL_FRect {100, 100, 400, 400}}},
             {5, object {SDL_FRect {100, 100, 400, 400}}},
             {6, object {SDL_FRect {100, 100, 400, 400}}},
             {7, object {SDL_FRect {100, 100, 400, 400}}},

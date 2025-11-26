@@ -10,6 +10,8 @@ namespace GameConstant
     constexpr int WIDTH = 1024;
     constexpr int HEIGHT = 800;
 
+    constexpr float RANDOM_MAX = 10.0f;
+
     constexpr float ENERGY_CAPACITY = 3000.0;
     constexpr size_t BASED_NIGHT_TIME = 10000;
 
@@ -21,20 +23,6 @@ namespace GameConstant
     constexpr size_t SIZE_OFFICE  = 3;
     constexpr float TIME_PAR = 0.05f;
     constexpr float PARALAX_INTENSITY = 0.3f;
-};
-
-enum class CameraName
-{
-    SCENE = 0,
-    CAM_1 = 1,
-    CAM_2 = 2,
-    CAM_3 = 3,
-    CAM_4 = 4,
-    CAM_5 = 5,
-    CAM_6 = 6,
-    CAM_7 = 7,
-    CAM_8 = 8,
-    CAM_9 = 9
 };
 
 using namespace GameConstant;

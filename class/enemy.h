@@ -19,12 +19,14 @@ public:
 protected:
     virtual size_t calculatePosition(size_t enemyPosition) = 0;
     virtual size_t selectPosition(std::vector<std::pair<size_t, float>>& weights) =0;
-    size_t _night = 0;
+
     std::shared_ptr<nightDB> _data;
 
     bool _enemyActive = 0;
 
-    size_t _timeCooldawn = 0;
+    size_t _moveCooldawn = 0;
+    size_t _cameraAttackTimer = 0;
+    size_t _attackTimer = 0;
 };
 
 class SpringTime : public Enemy
@@ -66,23 +68,53 @@ private:
     
     size_t selectPosition(std::vector<std::pair<size_t, float>>& weights) override 
     {
-        return 0;
+        float totalWeight = 0.0f;
+        for(auto i: weights){ totalWeight += i.second; }
+
+        float random = static_cast<float>(rand()) / RANDOM_MAX * totalWeight;
+        float camulative = 0.0f;
+    
+        for(auto i: weights)
+        {
+            camulative += i.second;
+            if(random <= camulative){ return i.first; }
+        }
+        return weights.back().first;
+    }
+
+    void attackSystem()
+    {
+        if(_cameraAttackTimer > 1000 + rand() % (4000 / config.getNight()))
+        {
+            _data->energy = -3000;
+            _cameraAttackTimer = 0;
+        }
+        _cameraAttackTimer++;
     }
 
 public:
     SpringTime(std::shared_ptr<nightDB> data)
     {
         _data = data;
-        _night = config.getNight();
         _enemyActive = 1;
     }
 
     int move(size_t enemyPosition) override
     {
-        if(_enemyActive)
+        if(enemyPosition == 6)
+        {
+            attackSystem();
+            return enemyPosition;
+        }
+        else if(_enemyActive && _moveCooldawn > 1000 + rand() % (3000 / config.getNight()))
         {
             enemyPosition = calculatePosition(enemyPosition);
+            _moveCooldawn = _attackTimer = _cameraAttackTimer = 0;
+
+            return enemyPosition;
         }
+
+        _moveCooldawn++;
         return enemyPosition;
     }
 

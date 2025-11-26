@@ -191,7 +191,7 @@ public:
     {
         if(_visible && noMove())
         {
-            if(direct)
+            if((direct + _data->invertControl) % 2)
             {
                 _cameraTargetPosition = _cameraTargetPosition != 1 ? _cameraTargetPosition + 1 : _cameraTargetPosition;
                 return;
