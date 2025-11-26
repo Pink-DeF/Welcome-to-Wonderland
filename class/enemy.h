@@ -19,6 +19,13 @@ public:
 protected:
     virtual size_t calculatePosition(size_t enemyPosition) = 0;
     virtual size_t selectPosition(std::vector<std::pair<size_t, float>>& weights) =0;
+    virtual void setupNightParameters()
+    {
+        _aggression = std::min(0.1f + (config.getNight()- 1) * 0.15f, 0.9f);
+        _speed = std::min(0.1f + (config.getNight()- 1) * 0.15f, 0.9f);
+    }
+
+    size_t getMoveCooldawn() { return static_cast<int>(_basedCooldawn / _speed); }
 
     std::shared_ptr<nightDB> _data;
 
@@ -27,6 +34,10 @@ protected:
     size_t _moveCooldawn = 0;
     size_t _cameraAttackTimer = 0;
     size_t _attackTimer = 0;
+
+    float _aggression = 0.1f;
+    float _speed = 0.1f;
+    size_t _basedCooldawn = 1000;
 };
 
 class SpringTime : public Enemy
@@ -35,6 +46,7 @@ private:
     size_t calculatePosition(size_t enemyPosition) override
     {
         std::vector<std::pair<size_t, float>> weights;
+        size_t curDist = _data->_distanceToOffice[enemyPosition];
 
         switch(enemyPosition)
         {
@@ -62,6 +74,13 @@ private:
             default:
                 weights = { {0, 1.0f} };
                 break;
+        }
+
+        for(auto [position, weight]: weights)
+        {
+            size_t newDist = _data->_distanceToOffice[position];
+            if(newDist < curDist) { weight *= 1.0f + _aggression; }
+            else if(newDist > curDist) { weight *= 1.0f - _aggression; }
         }
         return selectPosition(weights);
     }
@@ -97,6 +116,7 @@ public:
     {
         _data = data;
         _enemyActive = 1;
+        setupNightParameters();
     }
 
     int move(size_t enemyPosition) override
@@ -106,7 +126,7 @@ public:
             attackSystem();
             return enemyPosition;
         }
-        else if(_enemyActive && _moveCooldawn > 1000 + rand() % (3000 / config.getNight()))
+        else if(_enemyActive && _moveCooldawn > getMoveCooldawn() + rand() % 1000)
         {
             enemyPosition = calculatePosition(enemyPosition);
             _moveCooldawn = _attackTimer = _cameraAttackTimer = 0;
