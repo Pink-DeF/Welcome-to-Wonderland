@@ -80,13 +80,14 @@ public:
     }
     SDL_AppResult iterate()
     {
-        if(_nightTime == 0 || _live == 0) return SDL_APP_SUCCESS;
         _nightTime--;
 
         setRechargEnergy();
         enemyMove();
 
         draw();
+        if(_nightTime == 0 ) { config.win(); }
+        else if(_live == 0) { config.lose(); }
         return SDL_APP_CONTINUE;
     }
 

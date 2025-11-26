@@ -76,6 +76,7 @@ public:
     int getWidth(){ return _width; }
     int getHeight(){ return _height; }
 
+    void newGame(){ _night = 1; doStart(); }
     void changeGameStatus(){ _gameStatus = !_gameStatus; }
     void doStart(){ _startGame = 1; }
     bool getGameStatus(){ return _gameStatus; }
@@ -91,6 +92,13 @@ public:
     }
 
     size_t getNight(){ return _night; }
+    void lose() { _gameStatus = 0; }
+    void win()
+    {
+        _gameStatus = 0;
+        _night++;
+        saveToFile();
+    }
 
 private:
     int _width = WIDTH;

@@ -52,8 +52,8 @@ public:
 
     SDL_AppResult click(SDL_MouseButtonEvent& button)
     {
-        if(_buttons[0].touch(button.x, button.y)){ config.doStart(); }
-        //else if(_buttons[1].touch(button.x, button.y))
+        if(_buttons[0].touch(button.x, button.y)){ config.newGame(); }
+        if(_buttons[1].touch(button.x, button.y)){ config.doStart(); }
         else if(_buttons[2].touch(button.x, button.y)){ return SDL_APP_SUCCESS; }
 
         return SDL_APP_CONTINUE;
