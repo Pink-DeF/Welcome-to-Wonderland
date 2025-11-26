@@ -34,7 +34,7 @@ private:
 
     public:
         _Door(){}
-        _Door(object obj): _close(obj), _flash(obj), _height(obj.position.h)
+        _Door(std::shared_ptr<nightDB> data, object obj, size_t ID): _close(obj), _flash(obj), _height(obj.position.h), _data(data), _ID(ID)
         {
             _close.color.r = 255;
             _close.color.g = 0;
@@ -45,12 +45,27 @@ private:
         }
 
         bool getStatus(){ return _closeStatus; }
+        bool getFlashStatus(){ return _flashStatus; }
 
         void draw()
         {
             animate();
             if(_closeStatus || _closeAnimStatus){ _close.draw(); }
             else if(_flashStatus){ _flash.draw(); }
+
+            if(_flashStatus)
+            {
+                for(size_t i = 0; i < 1; i++)
+                {
+                    if(_data->enemyPosition[i] == _ID)
+                    {
+                        SDL_SetRenderDrawColor(renderer, _data->enemyFrame[i][_ID].color.r, _data->enemyFrame[i][_ID].color.g,
+                                                        _data->enemyFrame[i][_ID].color.b, _data->enemyFrame[i][_ID].color.a);
+                        object tmp = _flash + _data->enemyFrame[i][_ID];
+                        SDL_RenderFillRect(renderer, &tmp.position);
+                    }
+                }
+            }
         }
 
         void changeDoorStatus(size_t target)
@@ -81,6 +96,9 @@ private:
         }
 
     private:
+        std::shared_ptr<nightDB> _data;
+        size_t _ID = 0;
+
         size_t _height = 0;
         object _close;
         object _flash;
@@ -133,8 +151,8 @@ public:
     OfficeScene(std::array<object, SIZE_OFFICE> &&tmp, std::shared_ptr<nightDB> data): _data(data)
     {
         _office = tmp;
-        _leftDoor = _Door(tmp[1]);
-        _rightDoor = _Door(tmp[2]);
+        _leftDoor = _Door(_data, tmp[1], 11);
+        _rightDoor = _Door(_data, tmp[2], 10);
 
         _posViewport = {-config.getWidth(), 0, 3 * config.getWidth(), config.getHeight()};
         _viewport = _posViewport;
@@ -153,8 +171,7 @@ public:
                 _office[i].draw();
             }
             _leftDoor.draw();
-            _rightDoor.draw();
-
+            _rightDoor.draw(); 
         }
 
         calculateEnergy();

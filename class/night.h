@@ -31,7 +31,7 @@ private:
     }
     void draw() override
     {
-        //SDL_SetRenderViewport(renderer, NULL);
+        SDL_SetRenderViewport(renderer, NULL);
         SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
         SDL_RenderClear(renderer);
 
@@ -42,8 +42,8 @@ private:
 
     void enemyMove()
     {
-        _live = _springTime.attack(office.getLeftDoorStatus());
-        _data->enemyPosition[0] = _springTime.move(_data->enemyPosition[0]);
+        auto [_live, pos] = _springTime.move(0, _data->enemyPosition[0]);
+        _data->enemyPosition[0] = pos;
     }
 
 public:

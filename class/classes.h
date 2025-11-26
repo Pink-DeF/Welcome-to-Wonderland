@@ -17,6 +17,13 @@ struct object
 
     SDL_FRect position = {0, 0 , 0, 0};
     SDL_Color color = {0, 0, 0, 0};
+
+    object operator+(object obj)
+    {
+        obj.position.x += position.x;
+        obj.position.y += position.y;
+        return obj;
+    }
 };
 
 struct paralax
@@ -38,7 +45,7 @@ struct nightDB
 
     bool invertControl = 0;
 
-    std::array<size_t, 4> enemyPosition;
+    std::array<size_t, 4> enemyPosition = {0, 0, 0, 0};
     std::map<size_t, size_t> _distanceToOffice = {
         {0, 3}, {4, 2},
         {5, 1}, {6, 0},
@@ -56,7 +63,7 @@ struct nightDB
             {6, object {SDL_FRect {100, 100, 400, 400}}},
             {7, object {SDL_FRect {100, 100, 400, 400}}},
             {9, object {SDL_FRect {100, 100, 400, 400}}},
-            {10, object {SDL_FRect {100, 100, 400, 400}}}
+            {10, object {SDL_FRect {30, 50, 300, 600}, SDL_Color{100, 100, 100, 255}}}
         }
     };
 };

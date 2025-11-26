@@ -13,19 +13,42 @@ using namespace GameConstant;
 class Enemy
 {
 public:
-    virtual int move(size_t enemyPosition) = 0;
-    virtual bool attack(int doorStatus) = 0;
+    virtual std::pair<bool, size_t> move(bool doorStatus, size_t enemyPosition) = 0;
 
 protected:
+    virtual bool attack(size_t enemyPosition, int doorStatus) = 0;
     virtual size_t calculatePosition(size_t enemyPosition) = 0;
-    virtual size_t selectPosition(std::vector<std::pair<size_t, float>>& weights) =0;
-    virtual void setupNightParameters()
+    size_t selectPosition(std::vector<std::pair<size_t, float>>& weights, size_t enemyPosition)
     {
-        _aggression = std::min(0.1f + (config.getNight()- 1) * 0.15f, 0.9f);
-        _speed = std::min(0.1f + (config.getNight()- 1) * 0.15f, 0.9f);
+        size_t curDist = _data->_distanceToOffice[enemyPosition];
+        for(auto [position, weight]: weights)
+        {
+            size_t newDist = _data->_distanceToOffice[position];
+            if(newDist < curDist) { weight *= 1.0f + _aggression; }
+            else if(newDist > curDist) { weight *= 1.0f - _aggression; }
+        }
+
+        float totalWeight = 0.0f;
+        for(auto i: weights){ totalWeight += i.second; }
+
+        float random = static_cast<float>(rand()) / RANDOM_MAX * totalWeight;
+        float camulative = 0.0f;
+    
+        for(auto i: weights)
+        {
+            camulative += i.second;
+            if(random <= camulative){ return i.first; }
+        }
+        return weights.back().first;
     }
 
-    size_t getMoveCooldawn() { return static_cast<int>(_basedCooldawn / _speed); }
+    virtual void setupNightParameters()
+    {
+        _aggression = std::min(_aggression + (config.getNight()- 1) * 0.15f, 0.9f);
+        _speed = std::min(_speed + (config.getNight()- 1) * 0.15f, 0.9f);
+    }
+
+    size_t getMoveCooldawn() { return static_cast<size_t>(_basedCooldawn * _speed); }
 
     std::shared_ptr<nightDB> _data;
 
@@ -35,8 +58,8 @@ protected:
     size_t _cameraAttackTimer = 0;
     size_t _attackTimer = 0;
 
-    float _aggression = 0.1f;
-    float _speed = 0.1f;
+    float _aggression = 0.3f;
+    float _speed = 0.3f;
     size_t _basedCooldawn = 1000;
 };
 
@@ -46,7 +69,6 @@ private:
     size_t calculatePosition(size_t enemyPosition) override
     {
         std::vector<std::pair<size_t, float>> weights;
-        size_t curDist = _data->_distanceToOffice[enemyPosition];
 
         switch(enemyPosition)
         {
@@ -76,39 +98,33 @@ private:
                 break;
         }
 
-        for(auto [position, weight]: weights)
-        {
-            size_t newDist = _data->_distanceToOffice[position];
-            if(newDist < curDist) { weight *= 1.0f + _aggression; }
-            else if(newDist > curDist) { weight *= 1.0f - _aggression; }
-        }
-        return selectPosition(weights);
-    }
-    
-    size_t selectPosition(std::vector<std::pair<size_t, float>>& weights) override 
-    {
-        float totalWeight = 0.0f;
-        for(auto i: weights){ totalWeight += i.second; }
-
-        float random = static_cast<float>(rand()) / RANDOM_MAX * totalWeight;
-        float camulative = 0.0f;
-    
-        for(auto i: weights)
-        {
-            camulative += i.second;
-            if(random <= camulative){ return i.first; }
-        }
-        return weights.back().first;
+        return selectPosition(weights, enemyPosition);
     }
 
-    void attackSystem()
+    size_t attackSystem(size_t enemyPosition)
     {
         if(_cameraAttackTimer > 1000 + rand() % (4000 / config.getNight()))
         {
             _data->energy = -3000;
             _cameraAttackTimer = 0;
+            enemyPosition = 0;
         }
         _cameraAttackTimer++;
+
+        return enemyPosition;
+    }
+
+    bool attack(size_t enemyPosition, int doorStatus) override
+    {
+        if(enemyPosition == 10)
+        {
+            if(_attackTimer > getMoveCooldawn() + rand() % 1000)
+            {
+                return doorStatus;
+            }
+            _attackTimer++;
+        }
+        return 1;
     }
 
 public:
@@ -119,28 +135,27 @@ public:
         setupNightParameters();
     }
 
-    int move(size_t enemyPosition) override
+    std::pair<bool, size_t> move(bool doorStatus, size_t enemyPosition) override
     {
-        if(enemyPosition == 6)
+        switch(enemyPosition)
         {
-            attackSystem();
-            return enemyPosition;
+            case(6):
+                attackSystem(enemyPosition);
+                break;
+            case(10):
+                attack(enemyPosition, doorStatus);
+                break;
+            default:
+                if(_enemyActive && _moveCooldawn > getMoveCooldawn() + rand() % 1000)
+                {
+                    enemyPosition = calculatePosition(enemyPosition);
+                    _moveCooldawn = _attackTimer = _cameraAttackTimer = 0;
+                }
+                else { _moveCooldawn++; }
+                break;
         }
-        else if(_enemyActive && _moveCooldawn > getMoveCooldawn() + rand() % 1000)
-        {
-            enemyPosition = calculatePosition(enemyPosition);
-            _moveCooldawn = _attackTimer = _cameraAttackTimer = 0;
 
-            return enemyPosition;
-        }
-
-        _moveCooldawn++;
-        return enemyPosition;
-    }
-
-    bool attack(int doorStatus) override
-    {
-        return 1;
+        return std::pair<bool, size_t>(1, enemyPosition);
     }
 };
 
