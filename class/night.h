@@ -42,7 +42,8 @@ private:
 
     void enemyMove()
     {
-        auto [_live, pos] = _springTime.move(0, _data->enemyPosition[0]);
+        auto [live, pos] = _springTime.move(office.getLeftDoorStatus(), _data->enemyPosition[0]);
+        _live = live;
         _data->enemyPosition[0] = pos;
     }
 
@@ -101,8 +102,8 @@ public:
         else if(labtop.itVisible() && (key.key >= SDLK_0 && key.key <= SDLK_9))
         {
             labtop.switchCamera(key.key - SDLK_0);
-            if(labtop.itVisible()){ labtop.useShock(); }
         }
+        else if(labtop.itVisible() && key.key == SDLK_F){ labtop.useShock(); }
         else if(office.itVisible())
         {
             if(key.key == SDLK_A){ office.changeCameraPosition(0); }

@@ -80,12 +80,9 @@ public:
     {
         if(_cam == 6 && _rechargShock == 0)
         {
-            if(_data->enemyPosition[0] == _cam)
-            {
-                _data->enemyPosition[0] = 0;
-                _rechargShock = 1;
-                _shockTimer = SHOCK_TIME_RELOAD;
-            }
+            if(_data->enemyPosition[0] == _cam) { _data->enemyPosition[0] = 0; }
+            _rechargShock = 1;
+            _shockTimer = SHOCK_TIME_RELOAD;
         }
     }
 private:

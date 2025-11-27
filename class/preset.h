@@ -10,8 +10,6 @@ namespace GameConstant
     constexpr int WIDTH = 1024;
     constexpr int HEIGHT = 800;
 
-    constexpr float RANDOM_MAX = 10.0f;
-
     constexpr float ENERGY_CAPACITY = 3000.0;
     constexpr size_t BASED_NIGHT_TIME = 10000;
 

@@ -16,8 +16,6 @@ public:
     virtual std::pair<bool, size_t> move(bool doorStatus, size_t enemyPosition) = 0;
 
 protected:
-    virtual bool attack(size_t enemyPosition, int doorStatus) = 0;
-    virtual size_t calculatePosition(size_t enemyPosition) = 0;
     size_t selectPosition(std::vector<std::pair<size_t, float>>& weights, size_t enemyPosition)
     {
         size_t curDist = _data->_distanceToOffice[enemyPosition];
@@ -30,8 +28,9 @@ protected:
 
         float totalWeight = 0.0f;
         for(auto i: weights){ totalWeight += i.second; }
+        if(totalWeight == 0.0f){ return enemyPosition; }
 
-        float random = static_cast<float>(rand()) / RANDOM_MAX * totalWeight;
+        float random = static_cast<float>(rand() % RAND_MAX) / static_cast<float>(RAND_MAX) * totalWeight;
         float camulative = 0.0f;
     
         for(auto i: weights)
@@ -48,22 +47,80 @@ protected:
         _speed = std::min(_speed + (config.getNight()- 1) * 0.15f, 0.9f);
     }
 
-    size_t getMoveCooldawn() { return static_cast<size_t>(_basedCooldawn * _speed); }
+    size_t getMoveCooldawn() { return static_cast<size_t>(_basedCooldawn / _speed); }
 
     std::shared_ptr<nightDB> _data;
 
     bool _enemyActive = 0;
 
     size_t _moveCooldawn = 0;
-    size_t _cameraAttackTimer = 0;
-    size_t _attackTimer = 0;
 
-    float _aggression = 0.3f;
-    float _speed = 0.3f;
+    float _aggression = 0.1f;
+    float _speed = 0.1f;
     size_t _basedCooldawn = 1000;
 };
 
 class SpringTime : public Enemy
+{
+public:
+    SpringTime(std::shared_ptr<nightDB> data)
+    {
+        _data = data;
+        _enemyActive = 1;
+
+        _aggression = 0.3f;
+        _speed = 1.0f;
+        setupNightParameters();
+    }
+
+    std::pair<bool, size_t> move(bool doorStatus, size_t enemyPosition) override
+    {
+        if(_enemyActive && _moveCooldawn > getMoveCooldawn() + rand() % 1000)
+        {
+            std::vector<std::pair<size_t, float>> weights;
+
+            switch(enemyPosition)
+            {
+                case 0:
+                    weights = { {4, 0.3f}, {7, 0.7f} };
+                    break;
+                case 4:
+                    weights = { {0, 0.3f}, {5, 0.7f} };
+                    break;
+                case 5:
+                    weights = { {4, 0.2f}, {6, 0.6f}, {9, 0.2f} };
+                    break;
+                case 6:
+                    _data->energy = -3000;
+                    enemyPosition = 0;
+                    break;
+                case 7:
+                    weights = { {0, 0.3f}, {9, 0.7f} };
+                    break;
+                case 9:
+                    weights = { {10, 0.9f}, {6, 0.1f} };
+                    break;
+                case 10:
+                    enemyPosition = 0;
+                    return std::pair<bool, size_t>(doorStatus, enemyPosition);
+                    break;
+                default:
+                    weights = { {0, 1.0f} };
+                    break;
+            }
+
+            _moveCooldawn = 0;
+            enemyPosition = selectPosition(weights, enemyPosition);
+        }
+        else { _moveCooldawn++; }
+
+        return std::pair<bool, size_t>(1, enemyPosition);
+    }
+};
+
+
+/*
+class ErrorTime : public Enemy
 {
 private:
     size_t calculatePosition(size_t enemyPosition) override
@@ -114,7 +171,7 @@ private:
         return enemyPosition;
     }
 
-    bool attack(size_t enemyPosition, int doorStatus) override
+    bool attack(size_t& enemyPosition, bool& doorStatus) override
     {
         if(enemyPosition == 10)
         {
@@ -128,10 +185,13 @@ private:
     }
 
 public:
-    SpringTime(std::shared_ptr<nightDB> data)
+    ErrorTime(std::shared_ptr<nightDB> data)
     {
         _data = data;
-        _enemyActive = 1;
+        _enemyActive = config.getNight() > 1 ? 1 : 0;
+
+        _aggression = 0.1f;
+        _speed = 0.5f;
         setupNightParameters();
     }
 
@@ -158,24 +218,8 @@ public:
         return std::pair<bool, size_t>(1, enemyPosition);
     }
 };
-
+*/
 /*
-class ErrorTime : public Enemy
-{
-public:
-    ErrorTime()
-    {
-    }
-
-    void move(size_t nightTime, size_t labtopTime) override
-    {
-
-    }
-
-private:
-
-};
-
 class MasterOfPuppet : public Enemy
 {
 public:
