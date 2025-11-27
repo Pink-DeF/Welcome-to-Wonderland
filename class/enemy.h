@@ -68,13 +68,14 @@ public:
         _data = data;
         _enemyActive = 1;
 
-        _aggression = 0.3f;
-        _speed = 1.0f;
+        _aggression = 0.5f;
+        _speed = 0.3f;
         setupNightParameters();
     }
 
     std::pair<bool, size_t> move(bool doorStatus, size_t enemyPosition) override
     {
+        //std::cout<<doorStatus<<std::endl;
         if(_enemyActive && _moveCooldawn > getMoveCooldawn() + rand() % 1000)
         {
             std::vector<std::pair<size_t, float>> weights;

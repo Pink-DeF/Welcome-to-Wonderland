@@ -42,7 +42,7 @@ private:
 
     void enemyMove()
     {
-        auto [live, pos] = _springTime.move(office.getLeftDoorStatus(), _data->enemyPosition[0]);
+        auto [live, pos] = _springTime.move(office.getRightDoorStatus(), _data->enemyPosition[0]);
         _live = live;
         _data->enemyPosition[0] = pos;
     }

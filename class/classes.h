@@ -45,7 +45,7 @@ struct nightDB
 
     bool invertControl = 0;
 
-    std::array<size_t, 4> enemyPosition = {10, 0, 0, 0};
+    std::array<size_t, 4> enemyPosition = {0, 0, 0, 0};
     std::map<size_t, size_t> _distanceToOffice = {
         {0, 3}, {4, 2},
         {5, 1}, {6, 2},

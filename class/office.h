@@ -27,7 +27,7 @@ private:
             }
             else if(_closeAnimStatus)
             {
-                _close.position.h += (int)(_height * _closeStatus - (_height * ! _closeStatus)) * TIME_PAR;
+                _close.position.h += static_cast<int>(_height * _closeStatus - (_height * ! _closeStatus)) * TIME_PAR;
                 _timePar += TIME_PAR;
             }
         }
@@ -77,7 +77,7 @@ private:
                 {
                     case(0):
                         _closeStatus = _flashStatus = 0;
-                        _closeAnimStatus = _closeStatus ? 1 : 0;
+                        _closeAnimStatus = tmp != _closeStatus ? 1 : 0;
                         break;
                     case(1):
                         _closeStatus = _flashStatus == 0 ? !_closeStatus : _closeStatus;
