@@ -61,7 +61,7 @@ public:
         if(_visible)
         {
             _cams[_cam].draw();
-            for(size_t i = 0; i < 1; i++)
+            for(size_t i = 0; i < 2; i++)
             {
                 if(_data->enemyPosition[i] == _cam)
                 {

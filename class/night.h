@@ -42,9 +42,8 @@ private:
 
     void enemyMove()
     {
-        auto [live, pos] = _springTime.move(office.getRightDoorStatus(), _data->enemyPosition[0]);
-        _live = live;
-        _data->enemyPosition[0] = pos;
+        if(!_springTime.move(office.getRightDoorStatus())){ _live = 0; return; }
+        if(!_errorTime.move(office.getRightDoorStatus())){ _live = 0; return; }
     }
 
 public:
@@ -127,6 +126,7 @@ private:
     std::shared_ptr<nightDB> _data;
 
     SpringTime _springTime {_data};
+    ErrorTime _errorTime {_data};
 
     OfficeScene office; 
     LabtopScene labtop;

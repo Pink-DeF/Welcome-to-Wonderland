@@ -13,7 +13,7 @@ using namespace GameConstant;
 class Enemy
 {
 public:
-    virtual std::pair<bool, size_t> move(bool doorStatus, size_t enemyPosition) = 0;
+    virtual bool move(bool doorStatus) = 0;
 
 protected:
     size_t selectPosition(std::vector<std::pair<size_t, float>>& weights, size_t enemyPosition)
@@ -73,14 +73,13 @@ public:
         setupNightParameters();
     }
 
-    std::pair<bool, size_t> move(bool doorStatus, size_t enemyPosition) override
+    bool move(bool doorStatus) override
     {
-        //std::cout<<doorStatus<<std::endl;
         if(_enemyActive && _moveCooldawn > getMoveCooldawn() + rand() % 1000)
         {
             std::vector<std::pair<size_t, float>> weights;
 
-            switch(enemyPosition)
+            switch(_data->enemyPosition[0])
             {
                 case 0:
                     weights = { {4, 0.3f}, {7, 0.7f} };
@@ -93,17 +92,27 @@ public:
                     break;
                 case 6:
                     _data->energy = -3000;
-                    enemyPosition = 0;
+                    _data->enemyPosition[0] = 0;
                     break;
                 case 7:
                     weights = { {0, 0.3f}, {9, 0.7f} };
                     break;
                 case 9:
-                    weights = { {10, 0.9f}, {6, 0.1f} };
+                    weights = { {10, 0.6f}, {7, 0.3f}, {6, 0.1f} };
+                    for(auto i: _data->enemyPosition)
+                    {
+                        if(i == 10)
+                        {
+                            weights[1].second += weights[1].second / 2;
+                            weights[2].second += weights[1].second / 2;
+                            weights[0].second = 0.0f;
+                            break;
+                        }
+                    }
                     break;
                 case 10:
-                    enemyPosition = 0;
-                    return std::pair<bool, size_t>(doorStatus, enemyPosition);
+                    _data->enemyPosition[0] = 0;
+                    return doorStatus;
                     break;
                 default:
                     weights = { {0, 1.0f} };
@@ -111,80 +120,16 @@ public:
             }
 
             _moveCooldawn = 0;
-            enemyPosition = selectPosition(weights, enemyPosition);
+            _data->enemyPosition[0] = selectPosition(weights, _data->enemyPosition[0]);
         }
         else { _moveCooldawn++; }
 
-        return std::pair<bool, size_t>(1, enemyPosition);
+        return 1; 
     }
 };
 
-
-/*
 class ErrorTime : public Enemy
 {
-private:
-    size_t calculatePosition(size_t enemyPosition) override
-    {
-        std::vector<std::pair<size_t, float>> weights;
-
-        switch(enemyPosition)
-        {
-            case 0:
-                weights = { {4, 0.3f}, {7, 0.7f} };
-                break;
-            case 4:
-                weights = { {0, 0.3f}, {5, 0.7f} };
-                break;
-            case 5:
-                weights = { {4, 0.2f}, {6, 0.6f}, {9, 0.2f} };
-                break;
-            case 6:
-                weights = { {0, 1.0f} };
-                break;
-            case 7:
-                weights = { {0, 0.3f}, {9, 0.7f} };
-                break;
-            case 9:
-                weights = { {10, 0.9f}, {6, 0.1f} };
-                break;
-            case 10:
-                weights = { {0, 1.0f} };
-                break;
-            default:
-                weights = { {0, 1.0f} };
-                break;
-        }
-
-        return selectPosition(weights, enemyPosition);
-    }
-
-    size_t attackSystem(size_t enemyPosition)
-    {
-        if(_cameraAttackTimer > 1000 + rand() % (4000 / config.getNight()))
-        {
-            _data->energy = -3000;
-            _cameraAttackTimer = 0;
-            enemyPosition = 0;
-        }
-        _cameraAttackTimer++;
-
-        return enemyPosition;
-    }
-
-    bool attack(size_t& enemyPosition, bool& doorStatus) override
-    {
-        if(enemyPosition == 10)
-        {
-            if(_attackTimer > getMoveCooldawn() + rand() % 1000)
-            {
-                return doorStatus;
-            }
-            _attackTimer++;
-        }
-        return 1;
-    }
-
 public:
     ErrorTime(std::shared_ptr<nightDB> data)
     {
@@ -192,34 +137,62 @@ public:
         _enemyActive = config.getNight() > 1 ? 1 : 0;
 
         _aggression = 0.1f;
-        _speed = 0.5f;
+        _speed = 0.7f;
         setupNightParameters();
     }
 
-    std::pair<bool, size_t> move(bool doorStatus, size_t enemyPosition) override
+    bool move(bool doorStatus) override
     {
-        switch(enemyPosition)
+        if(_data->enemyPosition[1]){ return doorStatus; }
+        if(_enemyActive && _moveCooldawn > getMoveCooldawn() + rand() % 1000)
         {
-            case(6):
-                attackSystem(enemyPosition);
-                break;
-            case(10):
-                attack(enemyPosition, doorStatus);
-                break;
-            default:
-                if(_enemyActive && _moveCooldawn > getMoveCooldawn() + rand() % 1000)
-                {
-                    enemyPosition = calculatePosition(enemyPosition);
-                    _moveCooldawn = _attackTimer = _cameraAttackTimer = 0;
-                }
-                else { _moveCooldawn++; }
-                break;
-        }
+            std::vector<std::pair<size_t, float>> weights;
 
-        return std::pair<bool, size_t>(1, enemyPosition);
+            switch(_data->enemyPosition[0])
+            {
+                case 0:
+                    weights = { {4, 0.3f}, {7, 0.7f} };
+                    break;
+                case 4:
+                    weights = { {0, 0.3f}, {5, 0.7f} };
+                    break;
+                case 5:
+                    weights = { {4, 0.2f}, {6, 0.6f}, {9, 0.2f} };
+                    break;
+                case 6:
+                    break;
+                case 7:
+                    weights = { {0, 0.3f}, {9, 0.7f} };
+                    break;
+                case 9:
+                    weights = { {10, 0.6f}, {7, 0.3f}, {6, 0.1f} };
+                    for(auto i: _data->enemyPosition)
+                    {
+                        if(i == 10)
+                        {
+                            weights[1].second += weights[1].second / 2;
+                            weights[2].second += weights[1].second / 2;
+                            weights[0].second = 0.0f;
+                            break;
+                        }
+                    }
+                    break;
+                case 10:
+                    break;
+                default:
+                    weights = { {0, 1.0f} };
+                    break;
+            }
+
+            _moveCooldawn = 0;
+            _data->enemyPosition[1] = selectPosition(weights, _data->enemyPosition[1]);
+        }
+        else { _moveCooldawn++; }
+
+        return 1; 
     }
 };
-*/
+
 /*
 class MasterOfPuppet : public Enemy
 {
