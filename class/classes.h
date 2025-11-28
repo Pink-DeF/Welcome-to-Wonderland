@@ -43,7 +43,7 @@ struct nightDB
     float energy = ENERGY_CAPACITY;
     bool rechargEnergy = 0;
 
-    bool invertControl = 0;
+    size_t invertTime = 0;
 
     std::array<size_t, 4> enemyPosition = {0, 0, 0, 0};
     std::map<size_t, size_t> _distanceToOffice = {

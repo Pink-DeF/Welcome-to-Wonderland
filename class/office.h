@@ -161,6 +161,8 @@ public:
     //Ппросто отрисовка
     void draw() override
     {
+        _data->invertTime -= _data->invertTime != 0 ? 1 : 0;
+        _invertControl = _data->invertTime != 0 ? 1 : 0;
         if(_visible)
         {
             move();
@@ -171,7 +173,7 @@ public:
                 _office[i].draw();
             }
             _leftDoor.draw();
-            _rightDoor.draw(); 
+            _rightDoor.draw();
         }
 
         calculateEnergy();
@@ -179,9 +181,13 @@ public:
     }
 
     //Geters
+    bool getLeftDoorStatus(){ return _leftDoor.getStatus();}
+    bool getRightDoorStatus(){ return _rightDoor.getStatus();}
+
+    bool getLeftDoorFlash(){ return _leftDoor.getFlashStatus();}
+    bool getRightDoorFlash(){ return _rightDoor.getFlashStatus();}
+
     int getCameraPosition(){ return _cameraPosition; }
-    int getLeftDoorStatus(){ return _leftDoor.getStatus();}
-    int getRightDoorStatus(){ return _rightDoor.getStatus();}
     bool noMove()
     {
         return _cameraPosition == _cameraTargetPosition ? 1 : 0;
@@ -208,7 +214,7 @@ public:
     {
         if(_visible && noMove())
         {
-            if((direct + _data->invertControl) % 2)
+            if((direct + _invertControl) % 2)
             {
                 _cameraTargetPosition = _cameraTargetPosition != 1 ? _cameraTargetPosition + 1 : _cameraTargetPosition;
                 return;
@@ -235,6 +241,9 @@ private:
     paralax _paralax;
     SDL_Rect _posViewport;
     SDL_Rect _viewport; 
+
+    bool _invertControl = 0;
+
     float _timePar = 0;
     int _cameraPosition = 0; 
     int _cameraTargetPosition = 0;

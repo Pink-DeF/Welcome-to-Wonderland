@@ -141,54 +141,70 @@ public:
         setupNightParameters();
     }
 
+    void joke()
+    {
+        size_t random = static_cast<size_t>(rand() % 100);
+        switch(random)
+        {
+            case(1):
+                _data->invertTime = 300;
+                break;
+        }
+    }
+
     bool move(bool doorStatus) override
     {
-        if(_data->enemyPosition[1]){ return doorStatus; }
-        if(_enemyActive && _moveCooldawn > getMoveCooldawn() + rand() % 1000)
+        if(_enemyActive)
         {
-            std::vector<std::pair<size_t, float>> weights;
-
-            switch(_data->enemyPosition[0])
+            if(_data->enemyPosition[1] == 10 && doorStatus){ return 0; }
+            else if(_moveCooldawn > getMoveCooldawn() + rand() % 1000)
             {
-                case 0:
-                    weights = { {4, 0.3f}, {7, 0.7f} };
-                    break;
-                case 4:
-                    weights = { {0, 0.3f}, {5, 0.7f} };
-                    break;
-                case 5:
-                    weights = { {4, 0.2f}, {6, 0.6f}, {9, 0.2f} };
-                    break;
-                case 6:
-                    break;
-                case 7:
-                    weights = { {0, 0.3f}, {9, 0.7f} };
-                    break;
-                case 9:
-                    weights = { {10, 0.6f}, {7, 0.3f}, {6, 0.1f} };
-                    for(auto i: _data->enemyPosition)
-                    {
-                        if(i == 10)
+                std::vector<std::pair<size_t, float>> weights;
+
+                switch(_data->enemyPosition[1])
+                {
+                    case 0:
+                        weights = { {4, 0.3f}, {7, 0.7f} };
+                        break;
+                    case 4:
+                        weights = { {0, 0.3f}, {5, 0.7f} };
+                        break;
+                    case 5:
+                        weights = { {4, 0.2f}, {9, 0.2f} };
+                        break;
+                    case 7:
+                        weights = { {0, 0.3f}, {9, 0.7f} };
+                        break;
+                    case 9:
+                        weights = { {10, 0.6f}, {7, 0.3f} };
+                        for(auto i: _data->enemyPosition)
                         {
-                            weights[1].second += weights[1].second / 2;
-                            weights[2].second += weights[1].second / 2;
-                            weights[0].second = 0.0f;
-                            break;
+                            if(i == 10)
+                            {
+                                weights[1].second += weights[1].second / 2;
+                                weights[2].second += weights[1].second / 2;
+                                weights[0].second = 0.0f;
+                                break;
+                            }
                         }
-                    }
-                    break;
-                case 10:
-                    break;
-                default:
-                    weights = { {0, 1.0f} };
-                    break;
+                        break;
+                    case 10:
+                        weights = { {0, 1.0f} };
+                        break;
+                    default:
+                        weights = { {0, 1.0f} };
+                        break;
+                }
+
+                _moveCooldawn = 0;
+                _data->enemyPosition[1] = selectPosition(weights, _data->enemyPosition[1]);
             }
-
-            _moveCooldawn = 0;
-            _data->enemyPosition[1] = selectPosition(weights, _data->enemyPosition[1]);
+            else
+            {
+                _moveCooldawn++;
+                joke();
+            }
         }
-        else { _moveCooldawn++; }
-
         return 1; 
     }
 };
