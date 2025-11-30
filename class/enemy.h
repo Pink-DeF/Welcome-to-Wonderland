@@ -93,8 +93,8 @@ private:
                 {
                     if(i == 10)
                     {
-                        weights[1].second += weights[1].second / 2;
-                        weights[2].second += weights[1].second / 2;
+                        weights[1].second += weights[0].second / 2;
+                        weights[2].second += weights[0].second / 2;
                         weights[0].second = 0.0f;
                         break;
                     }
@@ -127,7 +127,7 @@ public:
             _moveCooldawn = 0;
             if(_data->enemyPosition[_ID] == 10)
             {
-                _data->enemyPosition[0] = 0;
+                _data->enemyPosition[_ID] = 0;
                 return doorStatus;
             }
             getMovePosition();
@@ -160,19 +160,18 @@ private:
                 weights = { {0, 0.3f}, {9, 0.7f} };
                 break;
             case 9:
-                weights = { {10, 0.6f}, {7, 0.3f} };
+                weights = { {11, 0.6f}, {7, 0.3f} };
                 for(auto i: _data->enemyPosition)
                 {
-                    if(i == 10)
+                    if(i == 11)
                     {
-                        weights[1].second += weights[1].second / 2;
-                        weights[2].second += weights[1].second / 2;
+                        weights[1].second += weights[0].second;
                         weights[0].second = 0.0f;
                         break;
                     }
                 }
                 break;
-            case 10:
+            case 11:
                 weights = { {0, 1.0f} };
                 break;
             default:
@@ -188,7 +187,7 @@ public:
     {
         _data = data;
         _ID = 1;
-        _enemyActive = config.getNight() > 1 ? 1 : 0;
+        _enemyActive = config.getNight() > 2 ? 1 : 0;
 
         _aggression = 0.1f;
         _speed = 0.5f;
@@ -235,36 +234,30 @@ private:
 
         switch(_data->enemyPosition[1])
         {
-            case 0:
-                weights = { {4, 0.3f}, {7, 0.7f} };
-                break;
-            case 4:
-                weights = { {0, 0.3f}, {5, 0.7f} };
-                break;
-            case 5:
-                weights = { {4, 0.2f}, {9, 0.2f} };
-                break;
-            case 7:
-                weights = { {0, 0.3f}, {9, 0.7f} };
-                break;
-            case 9:
-                weights = { {10, 0.6f}, {7, 0.3f} };
+            case 3:
+                weights = { {11, 0.5f}, {3, 0.5f} };
                 for(auto i: _data->enemyPosition)
                 {
-                    if(i == 10)
+                    if(i == 11)
                     {
-                        weights[1].second += weights[1].second / 2;
-                        weights[2].second += weights[1].second / 2;
+                        weights[1].second += weights[0].second;
                         weights[0].second = 0.0f;
                         break;
                     }
                 }
                 break;
-            case 10:
-                weights = { {0, 1.0f} };
+                break;
+            case 4:
+                weights = { {9, 0.3f}, {8, 0.7f} };
+                break;
+            case 8:
+                weights = { {3, 0.7f}, {4, 0.3f} };
+                break;
+            case 9:
+                weights = { {4, 0.2f}, {8, 0.2f} };
                 break;
             default:
-                weights = { {0, 1.0f} };
+                weights = { {4, 1.0f} };
                 break;
         }
 
@@ -275,7 +268,7 @@ public:
     {
         _data = data;
         _ID = 2;
-        _enemyActive = config.getNight() > 2 ? 1 : 0;
+        _enemyActive = config.getNight() > 1 ? 1 : 0;
 
         _aggression = 0.5f;
         _speed = 0.7f;
@@ -297,9 +290,14 @@ public:
         {
             if(_moveCooldawn > getMoveCooldawn() + rand() % 1000)
             {
+                _moveCooldawn = 0;
+                if(_data->enemyPosition[_ID] == 11)
+                {
+                    _data->enemyPosition[_ID] = 0;
+                    return doorStatus;
+                }
                 getMovePosition();
                 doubleJump();
-                _moveCooldawn = 0;
             }
             else
             {
@@ -319,19 +317,16 @@ private:
 
         switch(_data->enemyPosition[1])
         {
-            case 0:
-                weights = { {4, 0.3f}, {7, 0.7f} };
-                break;
-            case 4:
-                weights = { {0, 0.3f}, {5, 0.7f} };
-                break;
-            case 5:
-                weights = { {4, 0.2f}, {9, 0.2f} };
+            case 3:
+                weights = { {8, 0.8f}, {5, 0.2f} };
                 break;
             case 7:
-                weights = { {0, 0.3f}, {9, 0.7f} };
+                weights = { {3, 0.5f}, {8, 0.3f}, {5, 0.2f} };
                 break;
-            case 9:
+            case 8:
+                weights = { {7, 0.8f}, {5, 0.2f} };
+                break;
+            case 5:
                 weights = { {10, 0.6f}, {7, 0.3f} };
                 for(auto i: _data->enemyPosition)
                 {
@@ -344,11 +339,8 @@ private:
                     }
                 }
                 break;
-            case 10:
-                weights = { {0, 1.0f} };
-                break;
             default:
-                weights = { {0, 1.0f} };
+                weights = { {3, 1.0f} };
                 break;
         }
 
@@ -364,7 +356,7 @@ public:
     MasterOfPuppet(std::shared_ptr<nightDB> data)
     {
         _data = data;
-        _ID = 2;
+        _ID = 3;
         _enemyActive = config.getNight() > 2 ? 1 : 0;
 
         _aggression = 0.5f;
@@ -378,9 +370,14 @@ public:
         {
             if(_moveCooldawn > getMoveCooldawn() + rand() % 1000)
             {
+                _moveCooldawn = 0;
+                if(_data->enemyPosition[_ID] == 10)
+                {
+                    _data->enemyPosition[_ID] = 0;
+                    return doorStatus;
+                }
                 getMovePosition();
                 useFake();
-                _moveCooldawn = 0;
             }
             else
             {

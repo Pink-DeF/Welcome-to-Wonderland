@@ -43,9 +43,9 @@ private:
     void enemyMove()
     {
         if(!_springTime.move(office.getRightDoorStatus())){ _live = 0; return; }
-        else if(!_errorTime.move(office.getRightDoorFlash())){ _live = 0; return; }
-        else if(!_foxDen.move(office.getRightDoorFlash())){ _live = 0; return; }
-        else if(!_master.move(office.getRightDoorFlash())){ _live = 0; return; }
+        else if(!_errorTime.move(office.getLeftDoorFlash())){ _live = 0; return; }
+        else if(!_foxDen.move(office.getLeftDoorStatus())){ _live = 0; return; }
+        else if(!_master.move(office.getRightDoorStatus())){ _live = 0; return; }
     }
 
 public:

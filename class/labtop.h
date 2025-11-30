@@ -72,9 +72,9 @@ public:
             }
             if(_data->MasterFakePosition == _cam)
             {
-                SDL_SetRenderDrawColor(renderer, _data->enemyFrame[ENEMY_COUNT][_cam].color.r, _data->enemyFrame[ENEMY_COUNT][_cam].color.g,
-                                                    _data->enemyFrame[ENEMY_COUNT][_cam].color.b, _data->enemyFrame[ENEMY_COUNT][_cam].color.a);
-                SDL_RenderFillRect(renderer, &_data->enemyFrame[ENEMY_COUNT][_cam].position);
+                SDL_SetRenderDrawColor(renderer, _data->enemyFrame[3][_cam].color.r, _data->enemyFrame[3][_cam].color.g,
+                                                    _data->enemyFrame[3][_cam].color.b, _data->enemyFrame[3][_cam].color.a);
+                SDL_RenderFillRect(renderer, &_data->enemyFrame[3][_cam].position);
             }
 
             _data->energy -= 1;

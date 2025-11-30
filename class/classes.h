@@ -45,17 +45,29 @@ struct nightDB
 
     size_t invertTime = 0;
 
-    std::array<size_t, 4> enemyPosition = {0, 0, 0, 0};
+    std::array<size_t, 4> enemyPosition = {0, 0, 4, 3};
     size_t MasterFakePosition = 10;
     std::map<size_t, size_t> _distanceToOffice = {
-        {0, 3}, {4, 2},
-        {5, 1}, {6, 2},
-        {7, 3}, {9, 1},
-        {10, 0}
+        {0, 4}, {1, 4},
+        {2, 3}, {3, 3,},
+        {4, 2}, {5, 2},
+        {6, 2}, {7, 3},
+        {8, 2}, {9, 2},
+        {10, 0}, {11, 0}
     };
     
-    std::array<std::map<size_t, object>, ENEMY_COUNT + 1> enemyFrame =
+    std::array<std::map<size_t, object>, ENEMY_COUNT> enemyFrame =
     {
+        std::map<size_t, object>
+        {
+            {0, object {SDL_FRect {100, 100, 400, 400}}},
+            {4, object {SDL_FRect {100, 100, 400, 400}}},
+            {5, object {SDL_FRect {100, 100, 400, 400}}},
+            {6, object {SDL_FRect {100, 100, 400, 400}}},
+            {7, object {SDL_FRect {100, 100, 400, 400}}},
+            {9, object {SDL_FRect {100, 100, 400, 400}}},
+            {10, object {SDL_FRect {30, 50, 300, 600}, SDL_Color{100, 100, 100, 255}}}
+        },
         std::map<size_t, object>
         {
             {0, object {SDL_FRect {100, 100, 400, 400}}},
