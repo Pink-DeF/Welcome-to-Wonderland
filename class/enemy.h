@@ -16,6 +16,7 @@ public:
     virtual bool move(bool doorStatus) = 0;
 
 protected:
+    virtual void getMovePosition() = 0;
     size_t selectPosition(std::vector<std::pair<size_t, float>>& weights, size_t enemyPosition)
     {
         size_t curDist = _data->_distanceToOffice[enemyPosition];
@@ -52,6 +53,7 @@ protected:
     std::shared_ptr<nightDB> _data;
 
     bool _enemyActive = 0;
+    size_t _ID = 10;
 
     size_t _moveCooldawn = 0;
 
@@ -62,9 +64,54 @@ protected:
 
 class SpringTime : public Enemy
 {
+private:
+    void getMovePosition() override
+    {
+        std::vector<std::pair<size_t, float>> weights;
+
+        switch(_data->enemyPosition[_ID])
+        {
+            case 0:
+                weights = { {4, 0.3f}, {7, 0.7f} };
+                break;
+            case 4:
+                weights = { {0, 0.3f}, {5, 0.7f} };
+                break;
+            case 5:
+                weights = { {4, 0.2f}, {6, 0.6f}, {9, 0.2f} };
+                break;
+            case 6:
+                _data->energy = -3000;
+                _data->enemyPosition[0] = 0;
+                break;
+            case 7:
+                weights = { {0, 0.3f}, {9, 0.7f} };
+                break;
+            case 9:
+                weights = { {10, 0.6f}, {7, 0.3f}, {6, 0.1f} };
+                for(auto i: _data->enemyPosition)
+                {
+                    if(i == 10)
+                    {
+                        weights[1].second += weights[1].second / 2;
+                        weights[2].second += weights[1].second / 2;
+                        weights[0].second = 0.0f;
+                        break;
+                    }
+                }
+                break;
+            default:
+                weights = { {0, 1.0f} };
+                break;
+        }
+
+        _data->enemyPosition[_ID] = selectPosition(weights, _data->enemyPosition[0]);
+    }
+
 public:
     SpringTime(std::shared_ptr<nightDB> data)
     {
+        _ID = 0;
         _data = data;
         _enemyActive = 1;
 
@@ -77,50 +124,13 @@ public:
     {
         if(_enemyActive && _moveCooldawn > getMoveCooldawn() + rand() % 1000)
         {
-            std::vector<std::pair<size_t, float>> weights;
-
-            switch(_data->enemyPosition[0])
-            {
-                case 0:
-                    weights = { {4, 0.3f}, {7, 0.7f} };
-                    break;
-                case 4:
-                    weights = { {0, 0.3f}, {5, 0.7f} };
-                    break;
-                case 5:
-                    weights = { {4, 0.2f}, {6, 0.6f}, {9, 0.2f} };
-                    break;
-                case 6:
-                    _data->energy = -3000;
-                    _data->enemyPosition[0] = 0;
-                    break;
-                case 7:
-                    weights = { {0, 0.3f}, {9, 0.7f} };
-                    break;
-                case 9:
-                    weights = { {10, 0.6f}, {7, 0.3f}, {6, 0.1f} };
-                    for(auto i: _data->enemyPosition)
-                    {
-                        if(i == 10)
-                        {
-                            weights[1].second += weights[1].second / 2;
-                            weights[2].second += weights[1].second / 2;
-                            weights[0].second = 0.0f;
-                            break;
-                        }
-                    }
-                    break;
-                case 10:
-                    _data->enemyPosition[0] = 0;
-                    return doorStatus;
-                    break;
-                default:
-                    weights = { {0, 1.0f} };
-                    break;
-            }
-
             _moveCooldawn = 0;
-            _data->enemyPosition[0] = selectPosition(weights, _data->enemyPosition[0]);
+            if(_data->enemyPosition[_ID] == 10)
+            {
+                _data->enemyPosition[0] = 0;
+                return doorStatus;
+            }
+            getMovePosition();
         }
         else { _moveCooldawn++; }
 
@@ -130,14 +140,58 @@ public:
 
 class ErrorTime : public Enemy
 {
+private:
+    void getMovePosition() override
+    {
+        std::vector<std::pair<size_t, float>> weights;
+
+        switch(_data->enemyPosition[1])
+        {
+            case 0:
+                weights = { {4, 0.3f}, {7, 0.7f} };
+                break;
+            case 4:
+                weights = { {0, 0.3f}, {5, 0.7f} };
+                break;
+            case 5:
+                weights = { {4, 0.2f}, {9, 0.2f} };
+                break;
+            case 7:
+                weights = { {0, 0.3f}, {9, 0.7f} };
+                break;
+            case 9:
+                weights = { {10, 0.6f}, {7, 0.3f} };
+                for(auto i: _data->enemyPosition)
+                {
+                    if(i == 10)
+                    {
+                        weights[1].second += weights[1].second / 2;
+                        weights[2].second += weights[1].second / 2;
+                        weights[0].second = 0.0f;
+                        break;
+                    }
+                }
+                break;
+            case 10:
+                weights = { {0, 1.0f} };
+                break;
+            default:
+                weights = { {0, 1.0f} };
+                break;
+        }
+
+        _data->enemyPosition[_ID] = selectPosition(weights, _data->enemyPosition[1]);
+    }
+
 public:
     ErrorTime(std::shared_ptr<nightDB> data)
     {
         _data = data;
+        _ID = 1;
         _enemyActive = config.getNight() > 1 ? 1 : 0;
 
         _aggression = 0.1f;
-        _speed = 0.7f;
+        _speed = 0.5f;
         setupNightParameters();
     }
 
@@ -156,48 +210,11 @@ public:
     {
         if(_enemyActive)
         {
-            if(_data->enemyPosition[1] == 10 && doorStatus){ return 0; }
+            if(_data->enemyPosition[_ID] == 10 && doorStatus){ return 0; }
             else if(_moveCooldawn > getMoveCooldawn() + rand() % 1000)
             {
-                std::vector<std::pair<size_t, float>> weights;
-
-                switch(_data->enemyPosition[1])
-                {
-                    case 0:
-                        weights = { {4, 0.3f}, {7, 0.7f} };
-                        break;
-                    case 4:
-                        weights = { {0, 0.3f}, {5, 0.7f} };
-                        break;
-                    case 5:
-                        weights = { {4, 0.2f}, {9, 0.2f} };
-                        break;
-                    case 7:
-                        weights = { {0, 0.3f}, {9, 0.7f} };
-                        break;
-                    case 9:
-                        weights = { {10, 0.6f}, {7, 0.3f} };
-                        for(auto i: _data->enemyPosition)
-                        {
-                            if(i == 10)
-                            {
-                                weights[1].second += weights[1].second / 2;
-                                weights[2].second += weights[1].second / 2;
-                                weights[0].second = 0.0f;
-                                break;
-                            }
-                        }
-                        break;
-                    case 10:
-                        weights = { {0, 1.0f} };
-                        break;
-                    default:
-                        weights = { {0, 1.0f} };
-                        break;
-                }
-
                 _moveCooldawn = 0;
-                _data->enemyPosition[1] = selectPosition(weights, _data->enemyPosition[1]);
+                getMovePosition();
             }
             else
             {
@@ -209,27 +226,167 @@ public:
     }
 };
 
-/*
-class MasterOfPuppet : public Enemy
-{
-public:
-    MasterOfPuppet()
-    {
-    }
-    size_t move() override {}
-
-private:
-
-};
-
 class FoxDen : public Enemy
 {
-public:
-    FoxDen()
-    {
-    }
-    size_t move() override {}
-
 private:
+    void getMovePosition() override
+    {
+        std::vector<std::pair<size_t, float>> weights;
+
+        switch(_data->enemyPosition[1])
+        {
+            case 0:
+                weights = { {4, 0.3f}, {7, 0.7f} };
+                break;
+            case 4:
+                weights = { {0, 0.3f}, {5, 0.7f} };
+                break;
+            case 5:
+                weights = { {4, 0.2f}, {9, 0.2f} };
+                break;
+            case 7:
+                weights = { {0, 0.3f}, {9, 0.7f} };
+                break;
+            case 9:
+                weights = { {10, 0.6f}, {7, 0.3f} };
+                for(auto i: _data->enemyPosition)
+                {
+                    if(i == 10)
+                    {
+                        weights[1].second += weights[1].second / 2;
+                        weights[2].second += weights[1].second / 2;
+                        weights[0].second = 0.0f;
+                        break;
+                    }
+                }
+                break;
+            case 10:
+                weights = { {0, 1.0f} };
+                break;
+            default:
+                weights = { {0, 1.0f} };
+                break;
+        }
+
+        _data->enemyPosition[_ID] = selectPosition(weights, _data->enemyPosition[1]);
+    }
+public:
+    FoxDen(std::shared_ptr<nightDB> data)
+    {
+        _data = data;
+        _ID = 2;
+        _enemyActive = config.getNight() > 2 ? 1 : 0;
+
+        _aggression = 0.5f;
+        _speed = 0.7f;
+        setupNightParameters();
+    }
+
+
+    void doubleJump()
+    {
+        if((_data->enemyPosition[_ID] != 10 && _data->enemyPosition[_ID] != 11) && rand() % 1 <= 0.2f)
+        {
+            getMovePosition();
+        }
+    }
+
+    bool move(bool doorStatus) override
+    {
+        if(_enemyActive)
+        {
+            if(_moveCooldawn > getMoveCooldawn() + rand() % 1000)
+            {
+                getMovePosition();
+                doubleJump();
+                _moveCooldawn = 0;
+            }
+            else
+            {
+                _moveCooldawn++;
+            }
+        }
+        return 1; 
+    }
 };
-*/
+
+class MasterOfPuppet : public Enemy
+{
+private:
+    void getMovePosition() override
+    {
+        std::vector<std::pair<size_t, float>> weights;
+
+        switch(_data->enemyPosition[1])
+        {
+            case 0:
+                weights = { {4, 0.3f}, {7, 0.7f} };
+                break;
+            case 4:
+                weights = { {0, 0.3f}, {5, 0.7f} };
+                break;
+            case 5:
+                weights = { {4, 0.2f}, {9, 0.2f} };
+                break;
+            case 7:
+                weights = { {0, 0.3f}, {9, 0.7f} };
+                break;
+            case 9:
+                weights = { {10, 0.6f}, {7, 0.3f} };
+                for(auto i: _data->enemyPosition)
+                {
+                    if(i == 10)
+                    {
+                        weights[1].second += weights[1].second / 2;
+                        weights[2].second += weights[1].second / 2;
+                        weights[0].second = 0.0f;
+                        break;
+                    }
+                }
+                break;
+            case 10:
+                weights = { {0, 1.0f} };
+                break;
+            default:
+                weights = { {0, 1.0f} };
+                break;
+        }
+
+        _data->enemyPosition[_ID] = selectPosition(weights, _data->enemyPosition[1]);
+    }
+
+    void useFake()
+    {
+        _data->MasterFakePosition = static_cast<size_t>(rand() % 30);
+    }
+
+public:
+    MasterOfPuppet(std::shared_ptr<nightDB> data)
+    {
+        _data = data;
+        _ID = 2;
+        _enemyActive = config.getNight() > 2 ? 1 : 0;
+
+        _aggression = 0.5f;
+        _speed = 0.7f;
+        setupNightParameters();
+    }
+
+    bool move(bool doorStatus) override
+    {
+        if(_enemyActive)
+        {
+            if(_moveCooldawn > getMoveCooldawn() + rand() % 1000)
+            {
+                getMovePosition();
+                useFake();
+                _moveCooldawn = 0;
+            }
+            else
+            {
+                _moveCooldawn++;
+            }
+        }
+        return 1; 
+    }
+};

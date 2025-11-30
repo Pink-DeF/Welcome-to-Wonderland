@@ -61,7 +61,7 @@ public:
         if(_visible)
         {
             _cams[_cam].draw();
-            for(size_t i = 0; i < 2; i++)
+            for(size_t i = 0; i < ENEMY_COUNT; i++)
             {
                 if(_data->enemyPosition[i] == _cam)
                 {
@@ -70,6 +70,13 @@ public:
                     SDL_RenderFillRect(renderer, &_data->enemyFrame[i][_cam].position);
                 }
             }
+            if(_data->MasterFakePosition == _cam)
+            {
+                SDL_SetRenderDrawColor(renderer, _data->enemyFrame[ENEMY_COUNT][_cam].color.r, _data->enemyFrame[ENEMY_COUNT][_cam].color.g,
+                                                    _data->enemyFrame[ENEMY_COUNT][_cam].color.b, _data->enemyFrame[ENEMY_COUNT][_cam].color.a);
+                SDL_RenderFillRect(renderer, &_data->enemyFrame[ENEMY_COUNT][_cam].position);
+            }
+
             _data->energy -= 1;
         }
         return;

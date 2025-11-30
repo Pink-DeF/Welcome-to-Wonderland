@@ -55,7 +55,7 @@ private:
 
             if(_flashStatus)
             {
-                for(size_t i = 0; i < 1; i++)
+                for(size_t i = 0; i < ENEMY_COUNT; i++)
                 {
                     if(_data->enemyPosition[i] == _ID)
                     {

@@ -46,6 +46,7 @@ struct nightDB
     size_t invertTime = 0;
 
     std::array<size_t, 4> enemyPosition = {0, 0, 0, 0};
+    size_t MasterFakePosition = 10;
     std::map<size_t, size_t> _distanceToOffice = {
         {0, 3}, {4, 2},
         {5, 1}, {6, 2},
@@ -53,7 +54,7 @@ struct nightDB
         {10, 0}
     };
     
-    std::array<std::map<size_t, object>, ENEMY_COUNT> enemyFrame =
+    std::array<std::map<size_t, object>, ENEMY_COUNT + 1> enemyFrame =
     {
         std::map<size_t, object>
         {

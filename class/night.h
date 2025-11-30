@@ -43,7 +43,9 @@ private:
     void enemyMove()
     {
         if(!_springTime.move(office.getRightDoorStatus())){ _live = 0; return; }
-        if(!_errorTime.move(office.getRightDoorFlash())){ _live = 0; return; }
+        else if(!_errorTime.move(office.getRightDoorFlash())){ _live = 0; return; }
+        else if(!_foxDen.move(office.getRightDoorFlash())){ _live = 0; return; }
+        else if(!_master.move(office.getRightDoorFlash())){ _live = 0; return; }
     }
 
 public:
@@ -127,6 +129,8 @@ private:
 
     SpringTime _springTime {_data};
     ErrorTime _errorTime {_data};
+    FoxDen _foxDen {_data};
+    MasterOfPuppet _master {_data};
 
     OfficeScene office; 
     LabtopScene labtop;
