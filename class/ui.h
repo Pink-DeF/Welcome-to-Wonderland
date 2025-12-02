@@ -1,8 +1,4 @@
 #pragma once
-#include <SDL3/SDL.h>
-#include <SDL3/SDL_main.h>
-#include <array>
-#include <cmath>
 #include "preset.h"
 
 class MainMenuScene : public Scene
@@ -39,9 +35,9 @@ private:
 public:
     MainMenuScene()
     {
-        _buttons[0]= _Button({{static_cast<float>(config.getWidth()) / 30, static_cast<float>(config.getHeight()) / 5, static_cast<float>(config.getWidth()) / 3, static_cast<float>(config.getHeight()) / 6}, {255, 255, 255, 255}});
-        _buttons[1] = _Button({{static_cast<float>(config.getWidth()) / 30, static_cast<float>(config.getHeight()) * 2 / 5, static_cast<float>(config.getWidth()) / 3, static_cast<float>(config.getHeight()) / 6}, {0, 0, 255, 255}});
-        _buttons[2]= _Button({{static_cast<float>(config.getWidth()) / 30, static_cast<float>(config.getHeight()) * 3 / 5, static_cast<float>(config.getWidth()) / 3, static_cast<float>(config.getHeight()) / 6}, {255, 0, 0, 255}});
+        _buttons[0]= _Button({{static_cast<float>(config.getWidth()) / 30, static_cast<float>(config.getHeight()) / 5, static_cast<float>(config.getWidth()) / 3, static_cast<float>(config.getHeight()) / 6}, {200, 200, 200, 255}});
+        _buttons[1] = _Button({{static_cast<float>(config.getWidth()) / 30, static_cast<float>(config.getHeight()) * 2 / 5, static_cast<float>(config.getWidth()) / 3, static_cast<float>(config.getHeight()) / 6}, {200, 200, 200, 255}});
+        _buttons[2]= _Button({{static_cast<float>(config.getWidth()) / 30, static_cast<float>(config.getHeight()) * 3 / 5, static_cast<float>(config.getWidth()) / 3, static_cast<float>(config.getHeight()) / 6}, {200, 200, 200, 255}});
     }
     SDL_AppResult iterate()
     {

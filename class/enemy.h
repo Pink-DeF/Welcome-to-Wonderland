@@ -1,11 +1,5 @@
 #pragma once
-#include <SDL3/SDL.h>
-#include <SDL3/SDL_main.h>
-#include <array>
 #include <vector>
-#include <cmath>
-#include <ctime>
-#include <cstdlib>
 
 #include "office.h"
 

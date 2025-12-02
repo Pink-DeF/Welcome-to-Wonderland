@@ -1,9 +1,4 @@
 #pragma once
-#include <SDL3/SDL.h>
-#include <SDL3/SDL_main.h>
-#include <array>
-#include <cmath>
-#include <memory>
 
 #include "office.h"
 #include "labtop.h"
