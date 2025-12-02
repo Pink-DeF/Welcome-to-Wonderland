@@ -21,6 +21,11 @@ namespace GameConstant
     constexpr size_t SIZE_OFFICE  = 3;
     constexpr float TIME_PAR = 0.05f;
     constexpr float PARALAX_INTENSITY = 0.3f;
+
+    constexpr size_t SPRINGTIME_ID = 0;
+    constexpr size_t ERRORTIME_ID = 1;
+    constexpr size_t MASTEROFPUPPET_ID = 2;
+    constexpr size_t FOXDEN_ID = 3;
 };
 
 using namespace GameConstant;
@@ -92,7 +97,7 @@ private:
 
     bool _gameStatus = 0;
     bool _startGame = 0;
-    size_t _night = 1;
+    size_t _night = 5;
 };
 static GameConfig& config = GameConfig::Instance();
 

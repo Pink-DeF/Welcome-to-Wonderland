@@ -17,6 +17,10 @@ public:
 
 protected:
     virtual void getMovePosition() = 0;
+    void jumpscare()
+    {
+
+    }
     size_t selectPosition(std::vector<std::pair<size_t, float>>& weights, size_t enemyPosition)
     {
         size_t curDist = _data->_distanceToOffice[enemyPosition];
@@ -72,13 +76,10 @@ private:
         switch(_data->enemyPosition[_ID])
         {
             case 0:
-                weights = { {4, 0.3f}, {7, 0.7f} };
-                break;
-            case 4:
-                weights = { {0, 0.3f}, {5, 0.7f} };
+                weights = { {5, 0.3f}, {7, 0.7f} };
                 break;
             case 5:
-                weights = { {4, 0.2f}, {6, 0.6f}, {9, 0.2f} };
+                weights = { {6, 0.6f}, {9, 0.2f} };
                 break;
             case 6:
                 _data->energy = -3000;
@@ -109,9 +110,9 @@ private:
     }
 
 public:
-    SpringTime(std::shared_ptr<nightDB> data)
+    SpringTime(std::shared_ptr<nightDB> data, size_t ID)
     {
-        _ID = 0;
+        _ID = ID;
         _data = data;
         _enemyActive = 1;
 
@@ -183,10 +184,10 @@ private:
     }
 
 public:
-    ErrorTime(std::shared_ptr<nightDB> data)
+    ErrorTime(std::shared_ptr<nightDB> data, size_t ID)
     {
+        _ID = ID;
         _data = data;
-        _ID = 1;
         _enemyActive = config.getNight() > 2 ? 1 : 0;
 
         _aggression = 0.1f;
@@ -209,7 +210,7 @@ public:
     {
         if(_enemyActive)
         {
-            if(_data->enemyPosition[_ID] == 10 && doorStatus){ return 0; }
+            if(_data->enemyPosition[_ID] == 11 && doorStatus){ return 0; }
             else if(_moveCooldawn > getMoveCooldawn() + rand() % 1000)
             {
                 _moveCooldawn = 0;
@@ -264,10 +265,10 @@ private:
         _data->enemyPosition[_ID] = selectPosition(weights, _data->enemyPosition[1]);
     }
 public:
-    FoxDen(std::shared_ptr<nightDB> data)
+    FoxDen(std::shared_ptr<nightDB> data, size_t ID)
     {
+        _ID = ID;
         _data = data;
-        _ID = 2;
         _enemyActive = config.getNight() > 1 ? 1 : 0;
 
         _aggression = 0.5f;
@@ -353,10 +354,10 @@ private:
     }
 
 public:
-    MasterOfPuppet(std::shared_ptr<nightDB> data)
+    MasterOfPuppet(std::shared_ptr<nightDB> data, size_t ID)
     {
+        _ID = ID;
         _data = data;
-        _ID = 3;
         _enemyActive = config.getNight() > 2 ? 1 : 0;
 
         _aggression = 0.5f;

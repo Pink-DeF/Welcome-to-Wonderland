@@ -8,6 +8,7 @@
 #include "office.h"
 #include "labtop.h"
 #include "enemy.h"
+#include "jumpscare.h"
 
 using namespace GameConstant;
 class Night : public Scene
@@ -40,12 +41,13 @@ private:
         _monitorTime += labtop.itVisible();
     }
 
-    void enemyMove()
+    size_t  enemyMove()
     {
-        if(!_springTime.move(office.getRightDoorStatus())){ _live = 0; return; }
-        else if(!_errorTime.move(office.getLeftDoorFlash())){ _live = 0; return; }
-        else if(!_foxDen.move(office.getLeftDoorStatus())){ _live = 0; return; }
-        else if(!_master.move(office.getRightDoorStatus())){ _live = 0; return; }
+        if(!_springTime.move(office.getRightDoorStatus())){ _live = 0; return SPRINGTIME_ID; }
+        else if(!_errorTime.move(office.getLeftDoorFlash())){ _live = 0; return ERRORTIME_ID; }
+        else if(!_foxDen.move(office.getLeftDoorStatus())){ _live = 0; return FOXDEN_ID; }
+        else if(!_master.move(office.getRightDoorStatus())){ _live = 0; return MASTEROFPUPPET_ID; }
+        return 100;
     }
 
 public:
@@ -85,11 +87,16 @@ public:
         _nightTime--;
 
         setRechargEnergy();
-        enemyMove();
+        _jumpscare = enemyMove();
 
         draw();
         if(_nightTime == 0 ) { config.win(); }
-        else if(_live == 0) { config.lose(); }
+        else if(_live == 0)
+        {
+            screamer = { _jumpscare };
+            screamer.draw();
+            config.lose();
+        }
         return SDL_APP_CONTINUE;
     }
 
@@ -125,12 +132,16 @@ private:
     bool _live = 1;
     size_t _nightTime = BASED_NIGHT_TIME;
     size_t _monitorTime = 0;
+
     std::shared_ptr<nightDB> _data;
 
-    SpringTime _springTime {_data};
-    ErrorTime _errorTime {_data};
-    FoxDen _foxDen {_data};
-    MasterOfPuppet _master {_data};
+    size_t _jumpscare = 100;
+    JumpscareScene screamer {100};
+
+    SpringTime _springTime {_data, SPRINGTIME_ID};
+    ErrorTime _errorTime {_data, ERRORTIME_ID};
+    FoxDen _foxDen {_data, FOXDEN_ID};
+    MasterOfPuppet _master {_data, MASTEROFPUPPET_ID};
 
     OfficeScene office; 
     LabtopScene labtop;
