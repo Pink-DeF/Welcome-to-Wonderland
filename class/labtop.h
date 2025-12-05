@@ -1,4 +1,5 @@
 #pragma once
+#include "memory"
 
 #include "preset.h"
 #include "classes.h"
@@ -61,16 +62,12 @@ public:
             {
                 if(_data->enemyPosition[i] == _cam)
                 {
-                    SDL_SetRenderDrawColor(renderer, _data->enemyFrame[i][_cam].color.r, _data->enemyFrame[i][_cam].color.g,
-                                                     _data->enemyFrame[i][_cam].color.b, _data->enemyFrame[i][_cam].color.a);
-                    SDL_RenderFillRect(renderer, &_data->enemyFrame[i][_cam].position);
+                    _enemyTexture[i].draw();
                 }
             }
             if(_data->MasterFakePosition == _cam)
             {
-                SDL_SetRenderDrawColor(renderer, _data->enemyFrame[3][_cam].color.r, _data->enemyFrame[3][_cam].color.g,
-                                                    _data->enemyFrame[3][_cam].color.b, _data->enemyFrame[3][_cam].color.a);
-                SDL_RenderFillRect(renderer, &_data->enemyFrame[3][_cam].position);
+                _enemyTexture[MASTEROFPUPPET_ID].draw();
             }
 
             _data->energy -= 1;
@@ -91,6 +88,14 @@ public:
 private:
     bool _rechargShock = 0;
     size_t _shockTimer = 0;
+
+    std::array<Texture, ENEMY_COUNT> _enemyTexture =
+    {
+        Texture{IMG_LoadTexture(renderer, "Texture/legenda.jpg"), SDL_FRect{600, 100, 300, 600}, SDL_FRect{180, 150, 350, 700}},
+        Texture{IMG_LoadTexture(renderer, "Texture/doomguy.jpg"), SDL_FRect{100, 100, 300, 600}, SDL_FRect{800, 0, 1250, 2400}},
+        Texture{IMG_LoadTexture(renderer, "Texture/Senko.png"), SDL_FRect{150, 200, 500, 500}, SDL_FRect{0, 0, 1447, 2039}},
+        Texture{IMG_LoadTexture(renderer, "Texture/master.jpg"), SDL_FRect{400, 100, 600, 610}, SDL_FRect{40, 130, 1400, 1450}}
+    };
 
     std::shared_ptr<nightDB> _data;
     std::array<CameraScene, SIZE_LABTOP> _cams;

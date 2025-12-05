@@ -1,5 +1,6 @@
 #define SDL_MAIN_USE_CALLBACKS 1
 
+#include "iostream"
 #include "class/night.h"
 #include "class/ui.h"
 

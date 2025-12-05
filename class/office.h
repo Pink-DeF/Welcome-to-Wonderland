@@ -18,26 +18,18 @@ private:
                 _timePar = 0; 
                 _closeAnimStatus = 0;
 
-                _close.position.h = _closeStatus ? _height : 0;
+                _textureDoor.position.h = _closeStatus ? _height : 0;
             }
             else if(_closeAnimStatus)
             {
-                _close.position.h += static_cast<int>(_height * _closeStatus - (_height * ! _closeStatus)) * TIME_PAR;
+                _textureDoor.position.h += static_cast<int>(_height * _closeStatus - (_height * ! _closeStatus)) * TIME_PAR;
                 _timePar += TIME_PAR;
             }
         }
 
     public:
         _Door(){}
-        _Door(std::shared_ptr<nightDB> data, object obj, size_t ID): _close(obj), _flash(obj), _height(obj.position.h), _data(data), _ID(ID)
-        {
-            _close.color.r = 255;
-            _close.color.g = 0;
-            _close.position.h = 0;
-
-            _flash.color.r = 255;
-            _flash.color.g = 255;
-        }
+        _Door(std::shared_ptr<nightDB> data, size_t ID, float height, Texture textureD, Texture hall): _height(height), _data(data), _ID(ID), _textureDoor(textureD), _hall(hall){}
 
         bool getStatus(){ return _closeStatus; }
         bool getFlashStatus(){ return _flashStatus; }
@@ -45,8 +37,8 @@ private:
         void draw()
         {
             animate();
-            if(_closeStatus || _closeAnimStatus){ _close.draw(); }
-            else if(_flashStatus){ _flash.draw(); }
+            if(_closeStatus || _closeAnimStatus){ _textureDoor.draw(); }
+            else if(_flashStatus){ _hall.draw(); }
 
             if(_flashStatus)
             {
@@ -54,12 +46,10 @@ private:
                 {
                     if(_data->enemyPosition[i] == _ID)
                     {
-                        SDL_SetRenderDrawColor(renderer, _data->enemyFrame[i][_ID].color.r, _data->enemyFrame[i][_ID].color.g,
-                                                        _data->enemyFrame[i][_ID].color.b, _data->enemyFrame[i][_ID].color.a);
-                        object tmp = _flash + _data->enemyFrame[i][_ID];
-                        SDL_RenderFillRect(renderer, &tmp.position);
+                        return;
                     }
                 }
+
             }
         }
 
@@ -92,11 +82,11 @@ private:
 
     private:
         std::shared_ptr<nightDB> _data;
+        Texture _hall = {};
+        Texture _textureDoor = {};
         size_t _ID = 0;
 
         size_t _height = 0;
-        object _close;
-        object _flash;
 
         bool inAnimation = 0;
         float _timePar = 0;
@@ -146,11 +136,22 @@ public:
     OfficeScene(std::array<object, SIZE_OFFICE> &&tmp, std::shared_ptr<nightDB> data): _data(data)
     {
         _office = tmp;
-        _leftDoor = _Door(_data, tmp[1], 11);
-        _rightDoor = _Door(_data, tmp[2], 10);
+        _leftDoor = _Door(_data, 11, static_cast<float>(config.getHeight()) * 5 / 10,
+            Texture{IMG_LoadTexture(renderer, "Texture/leftDoor.jpg"),
+            SDL_FRect{0, static_cast<float>(config.getHeight()) / 10, static_cast<float>(config.getWidth()) * 2 / 5, 0},
+            SDL_FRect{0, 0, 700, 700}},
+            Texture{IMG_LoadTexture(renderer, "Texture/leftDoor.jpg"),
+            SDL_FRect{0, static_cast<float>(config.getHeight()) / 10, static_cast<float>(config.getWidth()) * 2 / 5, static_cast<float>(config.getHeight()) * 5 / 10},
+            SDL_FRect{0, 0, 700, 700}});
+        _rightDoor = _Door(_data, 10, static_cast<float>(config.getHeight()) * 9 / 10,
+            Texture{IMG_LoadTexture(renderer, "Texture/rightDoor.jpg"),
+            SDL_FRect{static_cast<float>(config.getWidth()) * 13 / 5, static_cast<float>(config.getHeight()) / 10, static_cast<float>(config.getWidth()) * 2 / 5, 0},
+            SDL_FRect{0, 0, 700, 1400}},
+            Texture{IMG_LoadTexture(renderer, "Texture/rightDoor.jpg"),
+            SDL_FRect{static_cast<float>(config.getWidth()) * 13 / 5, static_cast<float>(config.getHeight()) / 10, static_cast<float>(config.getWidth()) * 2 / 5, static_cast<float>(config.getHeight()) * 9 / 10},
+            SDL_FRect{0, 0, 700, 1400}});
 
-        _posViewport = {-config.getWidth(), 0, 3 * config.getWidth(), config.getHeight()};
-        _viewport = _posViewport;
+        _viewport = _posViewport = {-config.getWidth(), 0, 3 * config.getWidth(), config.getHeight()};
     }
 
     //Ппросто отрисовка

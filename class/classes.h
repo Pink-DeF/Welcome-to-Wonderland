@@ -3,6 +3,18 @@
 #include "preset.h"
 
 using namespace GameConstant;
+
+struct Texture
+{
+    Texture(){}
+    Texture(SDL_Texture* img, SDL_FRect pos, SDL_FRect siz): texture(img), position(pos), size(siz){}
+
+    void draw() { SDL_RenderTexture(renderer, texture, &(size), &(position)); }
+    SDL_Texture* texture = nullptr;
+    SDL_FRect position = {0, 0, 0 ,0};
+    SDL_FRect size = {0, 0, 0, 0};
+};
+
 struct object
 {
     void draw()
@@ -43,6 +55,7 @@ struct nightDB
 
     std::array<size_t, 4> enemyPosition = {0, 0, 4, 3};
     size_t MasterFakePosition = 10;
+
     std::map<size_t, size_t> _distanceToOffice = {
         {0, 4}, {1, 4},
         {2, 3}, {3, 3,},
@@ -50,44 +63,6 @@ struct nightDB
         {6, 2}, {7, 3},
         {8, 2}, {9, 2},
         {10, 0}, {11, 0}
-    };
-    
-    std::array<std::map<size_t, object>, ENEMY_COUNT> enemyFrame =
-    {
-        std::map<size_t, object>
-        {
-            {0, object {SDL_FRect {50, 100, 400, 400}, SDL_Color {50, 100, 60, 255}}},
-            {5, object {SDL_FRect {50, 100, 400, 400}, SDL_Color {50, 100, 60, 255}}},
-            {6, object {SDL_FRect {50, 100, 400, 400}, SDL_Color {50, 100, 60, 255}}},
-            {7, object {SDL_FRect {50, 100, 400, 400}, SDL_Color {50, 100, 60, 255}}},
-            {9, object {SDL_FRect {50, 100, 400, 400}, SDL_Color {50, 100, 60, 255}}},
-            {10, object {SDL_FRect {30, 50, 300, 600}, SDL_Color{100, 200, 100, 255}}}
-        },
-        std::map<size_t, object>
-        {
-            {0, object {SDL_FRect {600, 200, 300, 300}, SDL_Color {150, 150, 0, 255}}},
-            {4, object {SDL_FRect {600, 200, 300, 300}, SDL_Color {150, 150, 0, 255}}},
-            {5, object {SDL_FRect {600, 200, 300, 300}, SDL_Color {150, 150, 0, 255}}},
-            {7, object {SDL_FRect {600, 200, 300, 300}, SDL_Color {150, 150, 0, 255}}},
-            {9, object {SDL_FRect {600, 200, 300, 300}, SDL_Color {150, 150, 0, 255}}},
-            {11, object {SDL_FRect {30, 50, 300, 300}, SDL_Color{150, 150, 0, 255}}}
-        },
-        std::map<size_t, object>
-        {
-            {3, object {SDL_FRect {500, 100, 300, 300}, SDL_Color {100, 100, 100, 100}}},
-            {4, object {SDL_FRect {500, 100, 300, 300}, SDL_Color {100, 100, 100, 100}}},
-            {8, object {SDL_FRect {500, 100, 300, 300}, SDL_Color {100, 100, 100, 100}}},
-            {9, object {SDL_FRect {500, 100, 300, 300}, SDL_Color {100, 100, 100, 100}}},
-            {11, object {SDL_FRect {30, 50, 300, 600}, SDL_Color {100, 100, 100, 100}}},
-        },
-        std::map<size_t, object>
-        {
-            {3, object {SDL_FRect {100, 400, 300, 350}, SDL_Color {255, 0, 100, 255}}},
-            {5, object {SDL_FRect {100, 400, 300, 350}, SDL_Color {255, 0, 100, 255}}},
-            {7, object {SDL_FRect {100, 400, 300, 350}, SDL_Color {255, 0, 100, 255}}},
-            {8, object {SDL_FRect {100, 400, 300, 350}, SDL_Color {255, 0, 100, 255}}},
-            {10, object {SDL_FRect {30, 50, 400, 300}, SDL_Color {255, 0, 100, 255}}},
-        }
     };
 };
 
