@@ -28,7 +28,7 @@ private:
     void draw() override
     {
         SDL_SetRenderViewport(renderer, NULL);
-        SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
         SDL_RenderClear(renderer);
 
         office.draw();
@@ -48,15 +48,7 @@ private:
 public:
     Night(): _data(std::make_shared<nightDB>())
     {
-        office = OfficeScene //Сцена Офиса и его компонентов
-        {
-            std::array<object, SIZE_OFFICE>
-                {
-                    object {{-static_cast<float>(config.getWidth()), -static_cast<float>(config.getHeight()) * 0.5f, static_cast<float>(config.getWidth())* 4, static_cast<float>(config.getHeight()) * 2}, {0, 0, 255, 255}}, //Офисс
-                    object {{0, static_cast<float>(config.getHeight()) / 10, static_cast<float>(config.getWidth()) * 2 / 5, static_cast<float>(config.getHeight()) * 5 / 10}, {0, 255, 0, 255}},//Окно
-                    object {{static_cast<float>(config.getWidth()) * 13 / 5, static_cast<float>(config.getHeight()) / 10, static_cast<float>(config.getWidth()) * 2 / 5, static_cast<float>(config.getHeight()) * 9 / 10}, {0, 255, 0, 255}}//Дверь
-                }, _data
-        };
+        office = OfficeScene {_data};//Сцена Офиса и его компонентов 
 
         labtop = LabtopScene //Сцена планшета и камер
         {

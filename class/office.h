@@ -46,6 +46,7 @@ private:
                 {
                     if(_data->enemyPosition[i] == _ID)
                     {
+                        _data->enemyDoorTexture[i].draw();
                         return;
                     }
                 }
@@ -133,26 +134,8 @@ private:
 public:
     //Конструктор
     OfficeScene(){}
-    OfficeScene(std::array<object, SIZE_OFFICE> &&tmp, std::shared_ptr<nightDB> data): _data(data)
-    {
-        _office = tmp;
-        _leftDoor = _Door(_data, 11, static_cast<float>(config.getHeight()) * 5 / 10,
-            Texture{IMG_LoadTexture(renderer, "Texture/leftDoor.jpg"),
-            SDL_FRect{0, static_cast<float>(config.getHeight()) / 10, static_cast<float>(config.getWidth()) * 2 / 5, 0},
-            SDL_FRect{0, 0, 700, 700}},
-            Texture{IMG_LoadTexture(renderer, "Texture/leftDoor.jpg"),
-            SDL_FRect{0, static_cast<float>(config.getHeight()) / 10, static_cast<float>(config.getWidth()) * 2 / 5, static_cast<float>(config.getHeight()) * 5 / 10},
-            SDL_FRect{0, 0, 700, 700}});
-        _rightDoor = _Door(_data, 10, static_cast<float>(config.getHeight()) * 9 / 10,
-            Texture{IMG_LoadTexture(renderer, "Texture/rightDoor.jpg"),
-            SDL_FRect{static_cast<float>(config.getWidth()) * 13 / 5, static_cast<float>(config.getHeight()) / 10, static_cast<float>(config.getWidth()) * 2 / 5, 0},
-            SDL_FRect{0, 0, 700, 1400}},
-            Texture{IMG_LoadTexture(renderer, "Texture/rightDoor.jpg"),
-            SDL_FRect{static_cast<float>(config.getWidth()) * 13 / 5, static_cast<float>(config.getHeight()) / 10, static_cast<float>(config.getWidth()) * 2 / 5, static_cast<float>(config.getHeight()) * 9 / 10},
-            SDL_FRect{0, 0, 700, 1400}});
-
-        _viewport = _posViewport = {-config.getWidth(), 0, 3 * config.getWidth(), config.getHeight()};
-    }
+    OfficeScene(std::shared_ptr<nightDB> data): _data(data)
+    { _viewport = _posViewport = {-config.getWidth(), 0, 3 * config.getWidth(), config.getHeight()}; }
 
     //Ппросто отрисовка
     void draw() override
@@ -164,10 +147,8 @@ public:
             move();
 
             SDL_SetRenderViewport(renderer, &_viewport);
-            for(size_t i = 0; i < SIZE_OFFICE; i++)
-            {
-                _office[i].draw();
-            }
+
+            _office.draw();
             _leftDoor.draw();
             _rightDoor.draw();
         }
@@ -230,9 +211,24 @@ public:
 private:
     std::shared_ptr<nightDB> _data;
 
-    std::array<object,SIZE_OFFICE> _office;
-    _Door _leftDoor;
-    _Door _rightDoor;
+    Texture _office = Texture{IMG_LoadTexture(renderer, "Texture/office.jpg"),
+            SDL_FRect{0, 0, static_cast<float>(config.getWidth())* 3, static_cast<float>(config.getHeight())},
+            SDL_FRect{0, 0, 3072, 800}};
+
+    _Door _leftDoor = _Door(_data, 11, static_cast<float>(config.getHeight()) * 5 / 10,
+            Texture{IMG_LoadTexture(renderer, "Texture/kirbi.jpg"),
+            SDL_FRect{0, static_cast<float>(config.getHeight()) / 10, static_cast<float>(config.getWidth()) * 2 / 5, 0},
+            SDL_FRect{50, 0, 800, 900}},
+            Texture{IMG_LoadTexture(renderer, "Texture/leftFlash.png"),
+            SDL_FRect{0, static_cast<float>(config.getHeight()) / 10, static_cast<float>(config.getWidth()) * 2 / 5, static_cast<float>(config.getHeight()) * 4 / 10},
+            SDL_FRect{0, 0, 960, 934}});
+    _Door _rightDoor = _Door(_data, 10, static_cast<float>(config.getHeight()) * 9 / 10,
+            Texture{IMG_LoadTexture(renderer, "Texture/rightDoor.jpg"),
+            SDL_FRect{static_cast<float>(config.getWidth()) * 13 / 5, static_cast<float>(config.getHeight()) / 10, static_cast<float>(config.getWidth()) * 2 / 5, 0},
+            SDL_FRect{0, 0, 700, 1400}},
+            Texture{IMG_LoadTexture(renderer, "Texture/rightFlash.jpg"),
+            SDL_FRect{static_cast<float>(config.getWidth()) * 13 / 5, static_cast<float>(config.getHeight()) * 2 / 10, static_cast<float>(config.getWidth()) * 2 / 5, static_cast<float>(config.getHeight()) * 6 / 10},
+            SDL_FRect{0, 0, 960, 934}});
 
     paralax _paralax;
     SDL_Rect _posViewport;

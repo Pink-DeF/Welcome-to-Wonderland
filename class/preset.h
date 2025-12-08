@@ -10,8 +10,8 @@ namespace GameConstant
     constexpr int WIDTH = 1024;
     constexpr int HEIGHT = 800;
 
-    constexpr float ENERGY_CAPACITY = 3000.0;
-    constexpr size_t BASED_NIGHT_TIME = 100000;
+    constexpr float ENERGY_CAPACITY = 2000.0;
+    constexpr size_t BASED_NIGHT_TIME = 200000;
 
     constexpr size_t ENEMY_COUNT = 4;
 
@@ -100,7 +100,7 @@ private:
 
     bool _gameStatus = 0;
     bool _startGame = 0;
-    size_t _night = 5;
+    size_t _night = 0;
 };
 
 static GameConfig& config = GameConfig::Instance();
