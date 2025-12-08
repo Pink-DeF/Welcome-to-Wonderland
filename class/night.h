@@ -27,6 +27,7 @@ private:
     }
     void draw() override
     {
+        SDL_RenderClear(renderer);
         office.draw();
         labtop.draw();
         _monitorTime += labtop.itVisible();
@@ -68,6 +69,7 @@ public:
     SDL_AppResult iterate()
     {
         _nightTime--;
+        std::cout<<_nightTime<<std::endl;
 
         setRechargEnergy();
         _jumpscare = enemyMove();

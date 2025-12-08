@@ -11,7 +11,7 @@ namespace GameConstant
     constexpr int HEIGHT = 800;
 
     constexpr float ENERGY_CAPACITY = 2000.0;
-    constexpr size_t BASED_NIGHT_TIME = 200000;
+    constexpr size_t BASED_NIGHT_TIME = 14000;
 
     constexpr size_t ENEMY_COUNT = 4;
 
