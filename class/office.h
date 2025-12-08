@@ -173,7 +173,12 @@ public:
     //chengers
     void changeDoorStatus(size_t target)
     {
-        if(noMove() && target <= 3)
+        if(target == 0)
+        {
+            _leftDoor.changeDoorStatus(target);
+            _rightDoor.changeDoorStatus(target);
+        }
+        else if(noMove() && target <= 3)
         {
             switch(_cameraPosition)
             {

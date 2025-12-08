@@ -191,7 +191,7 @@ public:
 
     void joke()
     {
-        size_t random = static_cast<size_t>(rand() % 100);
+        size_t random = static_cast<size_t>(rand() % 10000);
         switch(random)
         {
             case(1):
@@ -352,7 +352,7 @@ public:
     {
         _ID = ID;
         _data = data;
-        _enemyActive = config.getNight() > 2 ? 1 : 0;
+        _enemyActive = config.getNight() > 3 ? 1 : 0;
 
         _aggression = 0.5f;
         _speed = 0.7f;
