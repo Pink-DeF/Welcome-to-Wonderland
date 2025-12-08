@@ -18,9 +18,8 @@ namespace GameConstant
     constexpr size_t SIZE_LABTOP = 10;
     constexpr size_t SHOCK_TIME_RELOAD = 300;
 
-    constexpr size_t SIZE_OFFICE  = 3;
     constexpr float TIME_PAR = 0.05f;
-    constexpr float PARALAX_INTENSITY = 0.3f;
+    constexpr float PARALAX_INTENSITY = 0.05f;
 
     constexpr size_t SPRINGTIME_ID = 0;
     constexpr size_t ERRORTIME_ID = 1;

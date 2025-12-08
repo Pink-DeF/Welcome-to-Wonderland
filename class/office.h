@@ -216,7 +216,7 @@ private:
             SDL_FRect{0, 0, 3072, 800}};
 
     _Door _leftDoor = _Door(_data, 11, static_cast<float>(config.getHeight()) * 5 / 10,
-            Texture{IMG_LoadTexture(renderer, "Texture/kirbi.jpg"),
+            Texture{IMG_LoadTexture(renderer, "Texture/leftDoor.jpg"),
             SDL_FRect{0, static_cast<float>(config.getHeight()) / 10, static_cast<float>(config.getWidth()) * 2 / 5, 0},
             SDL_FRect{50, 0, 800, 900}},
             Texture{IMG_LoadTexture(renderer, "Texture/leftFlash.png"),

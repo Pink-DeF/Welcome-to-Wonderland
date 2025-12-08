@@ -7,48 +7,8 @@
 using namespace GameConstant;
 class LabtopScene: public Scene
 {
-private:
-    class CameraScene : public Scene
-    {
-    public:
-        //Конструктор
-        CameraScene(){}
-        CameraScene(SDL_Color tmp, std::shared_ptr<nightDB> data): _data(data)
-        {
-            _object = object { SDL_FRect { 0, 0, static_cast<float>(config.getWidth()), static_cast<float>(config.getHeight())}, tmp};
-            _viewport = {0, 0, 2 * config.getWidth(), config.getHeight()};
-        }
- 
-        void move(bool direct)
-        {
-            if(direct && config.getWidth() <= config.getWidth() / 2){ _viewport.x += config.getWidth() * 0.05; }
-            else if(!direct && config.getWidth() >= 0){ _viewport.x -= config.getWidth() * 0.05; }
-        }
-
-        //Ппросто отрисовка
-        void draw() override
-        { 
-            SDL_SetRenderViewport(renderer, &_viewport);
-            SDL_SetRenderDrawColor(renderer, _object.color.r, _object.color.g, _object.color.b, _object.color.a);
-            SDL_RenderFillRect(renderer, &(_object.position));
-            return;
-        }
-
-    private:
-        std::shared_ptr<nightDB> _data;
-
-        SDL_Rect _viewport;
-        object _object;
-    };
-
 public:
-    LabtopScene(std::array<SDL_Color, SIZE_LABTOP> tmp, std::shared_ptr<nightDB> data): _data(data)
-    {
-        for(size_t i = 0; i < SIZE_LABTOP; i++)
-        {
-            _cams[i] = CameraScene(tmp[i], data);
-        }
-    }
+    LabtopScene(std::array<SDL_Color, SIZE_LABTOP> tmp, std::shared_ptr<nightDB> data): _data(data){}
     LabtopScene(){}
 
     void draw() override
@@ -57,6 +17,7 @@ public:
         _rechargShock = _shockTimer ? 1 : 0;
         if(_visible)
         {
+            SDL_SetRenderViewport(renderer, NULL);
             _cams[_cam].draw();
             for(size_t i = 0; i < ENEMY_COUNT; i++)
             {
@@ -98,6 +59,38 @@ private:
     };
 
     std::shared_ptr<nightDB> _data;
-    std::array<CameraScene, SIZE_LABTOP> _cams;
     size_t _cam = 0;
+    std::array<Texture, SIZE_LABTOP> _cams =
+    {
+        Texture{IMG_LoadTexture(renderer, "Texture/camera/null.png"),
+                SDL_FRect{0, 0, static_cast<float>(config.getWidth()), static_cast<float>(config.getHeight())},
+                SDL_FRect{0, 0, 1024, 800}},
+        Texture{IMG_LoadTexture(renderer, "Texture/camera/first.png"),
+                SDL_FRect{0, 0, static_cast<float>(config.getWidth()), static_cast<float>(config.getHeight())},
+                SDL_FRect{0, 0, 1024, 800}},
+        Texture{IMG_LoadTexture(renderer, "Texture/camera/second.png"),
+                SDL_FRect{0, 0, static_cast<float>(config.getWidth()), static_cast<float>(config.getHeight())},
+                SDL_FRect{0, 0, 1024, 800}},
+        Texture{IMG_LoadTexture(renderer, "Texture/camera/third.png"),
+                SDL_FRect{0, 0, static_cast<float>(config.getWidth()), static_cast<float>(config.getHeight())},
+                SDL_FRect{0, 0, 1024, 800}},
+        Texture{IMG_LoadTexture(renderer, "Texture/camera/fourth.png"),
+                SDL_FRect{0, 0, static_cast<float>(config.getWidth()), static_cast<float>(config.getHeight())},
+                SDL_FRect{0, 0, 1024, 800}},
+        Texture{IMG_LoadTexture(renderer, "Texture/camera/fifth.png"),
+                SDL_FRect{0, 0, static_cast<float>(config.getWidth()), static_cast<float>(config.getHeight())},
+                SDL_FRect{0, 0, 1024, 800}},
+        Texture{IMG_LoadTexture(renderer, "Texture/camera/sixth.png"),
+                SDL_FRect{0, 0, static_cast<float>(config.getWidth()), static_cast<float>(config.getHeight())},
+                SDL_FRect{0, 0, 1024, 800}},
+        Texture{IMG_LoadTexture(renderer, "Texture/camera/seventh.png"),
+                SDL_FRect{0, 0, static_cast<float>(config.getWidth()), static_cast<float>(config.getHeight())},
+                SDL_FRect{0, 0, 1024, 800}},
+        Texture{IMG_LoadTexture(renderer, "Texture/camera/eight.png"),
+                SDL_FRect{0, 0, static_cast<float>(config.getWidth()), static_cast<float>(config.getHeight())},
+                SDL_FRect{0, 0, 1024, 800}},
+        Texture{IMG_LoadTexture(renderer, "Texture/camera/ninth.png"),
+                SDL_FRect{0, 0, static_cast<float>(config.getWidth()), static_cast<float>(config.getHeight())},
+                SDL_FRect{0, 0, 1024, 800}},
+    };
 };

@@ -27,10 +27,6 @@ private:
     }
     void draw() override
     {
-        SDL_SetRenderViewport(renderer, NULL);
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-        SDL_RenderClear(renderer);
-
         office.draw();
         labtop.draw();
         _monitorTime += labtop.itVisible();
