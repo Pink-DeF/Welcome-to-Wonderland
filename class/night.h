@@ -69,7 +69,6 @@ public:
     SDL_AppResult iterate()
     {
         _nightTime--;
-        std::cout<<_nightTime<<std::endl;
 
         setRechargEnergy();
         _jumpscare = enemyMove();
