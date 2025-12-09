@@ -15,25 +15,6 @@ struct Texture
     SDL_FRect size = {0, 0, 0, 0};
 };
 
-struct object
-{
-    void draw()
-    {
-        SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
-        SDL_RenderFillRect(renderer, &position);
-    }
-
-    SDL_FRect position = {0, 0 , 0, 0};
-    SDL_Color color = {0, 0, 0, 0};
-
-    object operator+(object obj)
-    {
-        obj.position.x += position.x;
-        obj.position.y += position.y;
-        return obj;
-    }
-};
-
 struct paralax
 {
     float currentPositionX = 0.0f;
@@ -41,6 +22,27 @@ struct paralax
 
     float targetPositionX = 0.0f;
     float targetPositionY= 0.0f;
+};
+
+class Button
+{
+public:
+    Button() {}
+    Button(Texture &&texture)
+    {
+        _texture = std::move(texture);
+        // std::cout<< texture.texture << std::endl;
+    }
+
+    void draw(){ _texture.draw(); }
+    bool touch(float x, float y)
+    {
+        return _texture.position.x < x && (_texture.position.w + _texture.position.x) > x &&
+            _texture.position.y < y && (_texture.position.h + _texture.position.y) > y ? 1 : 0;
+    }
+
+private:
+    Texture _texture = {};
 };
 
 struct nightDB

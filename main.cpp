@@ -15,6 +15,7 @@ SDL_AppResult SDL_AppInit(void** appstate, int argc, char* argv[])
     if(!SDL_Init(SDL_INIT_VIDEO)) return SDL_APP_FAILURE;
 
     SDL_CreateWindowAndRenderer("Welcome to Wonderland", config.getWidth(), config.getHeight(), 0, &window, &renderer);
+    mainMenu = MainMenuScene();
 
     srand(time(nullptr));
 
