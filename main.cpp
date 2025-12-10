@@ -1,8 +1,8 @@
 #define SDL_MAIN_USE_CALLBACKS 1
 
 #include "iostream"
-#include "class/night.h"
-#include "class/ui.h"
+#include "main/night.h"
+#include "main/scene/mainMenu.h"
 
 SDL_Window* window = nullptr;
 SDL_Renderer* renderer = nullptr;

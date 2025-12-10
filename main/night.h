@@ -1,9 +1,9 @@
 #pragma once
 
-#include "office.h"
-#include "labtop.h"
-#include "enemy.h"
-#include "jumpscare.h"
+#include "scene/office.h"
+#include "scene/labtop.h"
+#include "scene/jumpscare.h"
+#include "enemy/enemy.h"
 
 using namespace GameConstant;
 class Night : public Scene

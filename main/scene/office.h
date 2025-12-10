@@ -1,8 +1,8 @@
 #pragma once
 #include <memory>
 
-#include "preset.h"
-#include "classes.h"
+#include "../based/init.h"
+#include "../based/classes.h"
 
 using namespace GameConstant;
 class OfficeScene : public Scene

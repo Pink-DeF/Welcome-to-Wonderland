@@ -1,6 +1,8 @@
 #pragma once
 #include <map>
-#include "preset.h"
+
+// #include "global.h"
+#include "init.h"
 
 using namespace GameConstant;
 

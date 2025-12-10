@@ -1,6 +1,6 @@
 #pragma once
-#include "preset.h"
-#include "classes.h"
+#include "../based/init.h"
+#include "../based/classes.h"
 
 class MainMenuScene : public Scene
 {

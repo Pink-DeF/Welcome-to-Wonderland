@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 
-#include "office.h"
+#include "../scene/office.h"
 
 using namespace GameConstant;
 class Enemy

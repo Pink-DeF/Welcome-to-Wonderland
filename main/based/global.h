@@ -1,7 +1,4 @@
 #pragma once
-#include <SDL3/SDL.h>
-#include <SDL3/SDL_main.h>
-#include <SDL3_image/SDL_image.h>
 #include <array>
 #include <fstream>
 
@@ -26,9 +23,6 @@ namespace GameConstant
     constexpr size_t MASTEROFPUPPET_ID = 2;
     constexpr size_t FOXDEN_ID = 3;
 };
-
-extern SDL_Window* window;
-extern SDL_Renderer* renderer;
 
 using namespace GameConstant;
 class GameConfig
@@ -101,5 +95,3 @@ private:
     bool _startGame = 0;
     size_t _night = 0;
 };
-
-static GameConfig& config = GameConfig::Instance();
