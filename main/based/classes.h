@@ -1,7 +1,6 @@
 #pragma once
 #include <map>
 
-// #include "global.h"
 #include "init.h"
 
 using namespace GameConstant;
