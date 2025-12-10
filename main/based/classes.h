@@ -2,19 +2,9 @@
 #include <map>
 
 #include "init.h"
+#include "../struct/texture.h"
 
 using namespace GameConstant;
-
-struct Texture
-{
-    Texture(){}
-    Texture(SDL_Texture* img, SDL_FRect pos, SDL_FRect siz): texture(img), position(pos), size(siz){}
-
-    void draw() { SDL_RenderTexture(renderer, texture, &(size), &(position)); }
-    SDL_Texture* texture = nullptr;
-    SDL_FRect position = {0, 0, 0 ,0};
-    SDL_FRect size = {0, 0, 0, 0};
-};
 
 struct paralax
 {
@@ -23,27 +13,6 @@ struct paralax
 
     float targetPositionX = 0.0f;
     float targetPositionY= 0.0f;
-};
-
-class Button
-{
-public:
-    Button() {}
-    Button(Texture &&texture)
-    {
-        _texture = std::move(texture);
-        // std::cout<< texture.texture << std::endl;
-    }
-
-    void draw(){ _texture.draw(); }
-    bool touch(float x, float y)
-    {
-        return _texture.position.x < x && (_texture.position.w + _texture.position.x) > x &&
-            _texture.position.y < y && (_texture.position.h + _texture.position.y) > y ? 1 : 0;
-    }
-
-private:
-    Texture _texture = {};
 };
 
 struct nightDB
@@ -83,15 +52,4 @@ struct nightDB
         {8, 2}, {9, 2},
         {10, 0}, {11, 0}
     };
-};
-
-class Scene
-{
-public:
-    virtual void draw() = 0;
-    void changeVisible(){ _visible = !_visible; }
-    bool itVisible(){ return _visible; }
-
-protected:
-    bool _visible = false;
 };

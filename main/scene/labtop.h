@@ -3,6 +3,7 @@
 
 #include "../based/init.h"
 #include "../based/classes.h"
+#include "../struct/scene.h"
 
 using namespace GameConstant;
 class LabtopScene: public Scene

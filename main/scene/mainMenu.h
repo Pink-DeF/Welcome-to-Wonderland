@@ -2,6 +2,9 @@
 #include "../based/init.h"
 #include "../based/classes.h"
 
+#include "../struct/scene.h"
+#include "../struct/button.h"
+
 class MainMenuScene : public Scene
 {
 private:
