@@ -3,7 +3,7 @@
 #include "scene/office.h"
 #include "scene/labtop.h"
 #include "scene/jumpscare.h"
-#include "enemy/enemy.h"
+#include "enemy/allEnemy.h"
 
 using namespace GameConstant;
 class Night : public Scene
